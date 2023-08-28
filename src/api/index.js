@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ref ,reactive} from 'vue'
 
 
-const api_path = "https://dog-luminous-slice.glitch.me/"
+const api_path = "https://whisky-code-server.onrender.com"
 
 export const step = ref('')
 export const playerList = ref([])

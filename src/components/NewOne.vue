@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div class="logo"></div>
+    <div class="content">
     <p>幫自己設定一個暱稱吧!</p>
     <a-form
       :model="formState"
@@ -15,13 +17,17 @@
         :rules="[{ required: true, message: '輸入您的暱稱!' }]"
         placeholder="輸入您的暱稱"
       >
-        <a-input v-model:value="formState.name" />
+        <a-input class="input" v-model:value="formState.name" />
       </a-form-item>
 
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-        <a-button type="primary" html-type="submit">Submit</a-button>
+        <a-button class="btn" type="primary" html-type="submit">送出</a-button>
       </a-form-item>
     </a-form>
+    </div>
+    <div class="footer">
+      <div class="shadow"></div>
+    </div>
   </div>
 </template>
 <script setup>

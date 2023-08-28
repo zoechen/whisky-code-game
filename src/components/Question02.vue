@@ -1,27 +1,69 @@
 <template>
-  <div class="flex flex-col justify-center" v-if="game == 'rule'">
-    <p class="title">{{ player.name }},來增加您的資產吧!</p>
-    <p>
-      隨機配對,二人一組<br />
-      雙人都選合作,各得 1 2 萬<br />
-      雙人都選獨享,各賠 8 萬<br />
-      一人獨享一人合作,獨享得 1 5 萬
+  <div class="logo"></div>
+  <div class="question s02">
+  <div v-if="countdownn"></div>
+  <div v-if="game == 'rule'">
+    <br/>
+    <br/>
+    <br/>
+    <p class="title">{{ player.name }},來增加您的資產吧！</p>
+    <p class="tips">
+      隨機配對，二人一組<br />
+      雙人都選合作，各得 1 2 萬<br />
+      雙人都選獨享，各賠 8 萬<br />
+      一人獨享一人合作，選獨享得 1 5 萬<br />
+      選合作賠 8 萬
     </p>
-    <a-card>您目前有 {{ player.scroe }}</a-card>
-    <a-button @click="matchPlayer">開始配對!</a-button>
+    <div class="action"><a-button size="large" class="btn" @click="matchPlayer">開始配對!</a-button></div>
   </div>
-  <div class="flex flex-col justify-center" v-if="game == 'gamble'">
+  <div class="pk" v-if="game == 'gamble01'">
+    <p class="tips">第一局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
-    <a-button @click="goGamble('team')">合作</a-button>
-    <a-button @click="goGamble('sole')">獨享</a-button>
+    <!-- <a-button class="btn w50" size="large" @click="goGamble('team')">合作</a-button>
+    <a-button class="btn w50" size="large" @click="goGamble('sole')">獨享</a-button> -->
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result01'}">合作</a-button>
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result01'}">獨享</a-button>
   </div>
-  <div class="flex flex-col justify-center" v-if="game == 'result'">
-    <a-card v-if="result == 1">恭喜!您和{{ competitor }}各得 120,000</a-card>
-    <a-card v-if="result == 2">啊,賠了 80,000</a-card>
-    <a-card v-if="result == 3">恭喜獨享 150,000</a-card>
+  <div v-if="game == 'result01'">
+    <!-- <div class="los" v-if="result == 1">恭喜!您和{{ competitor }}各得 120,000</div>
+    <div class="pin" v-if="result == 2">啊,賠了 80,000</div>
+    <div class="win" v-if="result == 3">恭喜獨享 150,000</div> -->
+    <div class="los">
+      <p class="res">啊,賠了 80,000</p>
+    </div>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble02'}">下一題</a-button>
+  </div>
+  <div class="pk" v-if="game == 'gamble02'">
+    <p class="tips">第二局</p>
+    <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result02'}">合作</a-button>
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result02'}">獨享</a-button>
+  </div>
+  <div v-if="game == 'result02'">
+    <div class="pin" >
+      <p class="res">恭喜!<br/>您和{{ competitor }}<br/>各得 120,000</p>
+    </div>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble03'}">下一題</a-button>
+  </div>
+  <div class="pk" v-if="game == 'gamble03'">
+    <p class="tips">第三局</p>
+    <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result03'}">合作</a-button>
+    <a-button class="btn w50" size="large" @click="()=>{game = 'result03'}">獨享</a-button>
+  </div>
+  <div v-if="game == 'result03'">
+    <div class="win">
+      <p class="res">
+        恭喜獨享 150,000
+      </p>
+    </div>
+    <a-button class="btn next" size="large" type="primary" @click="goNext">下一題</a-button>
 
-    <a-button class="w-full" type="primary" @click="goNext">下一題</a-button>
   </div>
+</div>
+<div class="footer">
+  <div class="shadow">您目前有 {{ player.scroe }}</div>
+</div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -43,17 +85,17 @@ function matchPlayer() {
   console.log(competitorList)
   let rnd = Math.floor(Math.random() * competitorList.length)
   competitor.value = competitorList[rnd]
-  game.value = 'gamble'
+  game.value = 'gamble01'
 }
 
-function goGamble(g) {
-  if (g == 'team') {
-    result.value = Math.floor(Math.random() * 2 + 1)
-  } else {
-    result.value = Math.floor(Math.random() * 3 + 2)
-  }
-  game.value = 'result'
-}
+// function goGamble(g) {
+//   if (g == 'team') {
+//     result.value = Math.floor(Math.random() * 2) + 1
+//   } else {
+//     result.value = Math.floor(Math.random() * 3) + 2
+//   }
+//   game.value = 'result'
+// }
 
 function goNext() {
   let scroe = Number(player.scroe)
@@ -79,21 +121,99 @@ function goNext() {
 }
 </script>
 <style>
-.title {
-  color: #1677ff;
+.question.s02{
+  position: relative;
+  width: 105vw;
+  height: 82vh;
+  background: url('../assets/images/wine-bottle.jpg') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 100%;
+  padding: 0;
+  text-align: center;
+}
+.question.s02 .title {
+  text-align: center;
+  color: #cda674;
   font-size: 2rem;
+  padding-bottom: 1.6rem;
+}
+.question.s02 .btn{
+  background-color: #cda674;
+}
+.question.s02 .btn.w50{
+  width: 40vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+
+}
+.question.s02 .btn.next{
+  background-color: #552917;
+  margin-top: 30rem;
+}
+.question.s02 .tips{
+  color: #d5cdc4;
+  font-size: 1.4rem;
+}
+.question.s02 .pk{
+  height: 100%;
+  background: url('../assets/images/battle-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 100%;
+  padding:25rem 0rem;
+  color: #cda674;
+  text-shadow: #000 0.1rem 0.1rem;
+}
+.question.s02 .res{
+  color: #f5f1ea;
+  font-size: 2.4rem;
+  margin-top:18rem;
+  text-shadow: #000 0.01rem 0.01rem;
+}
+.question.s02 .pin{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/pin-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+.question.s02 .los{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/los-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+.question.s02 .win{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/win-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+.action{
+  text-align: center;
+  padding-top: 1.6rem;
 }
 .result {
   color: #aaa;
   font-size: 1rem;
 }
 .active {
-  background: #1677ff;
+  background: #552917;
   color: #fff;
 }
 .normal {
   background: #fff;
-  color: #000;
+  color: #552917;
 }
 .ant-checkbox {
   display: none;

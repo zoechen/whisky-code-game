@@ -21,3 +21,38 @@ onMounted(() => {
     step.value = "Start"
 })
 </script>
+<style>
+#app{
+  padding:0 !important;
+  overflow: hidden;
+}
+body{
+  background-color: #342a1a;
+}
+.waxy{
+  color: #552917;
+  font-style: opitma;
+}
+.warm{
+  color: #d97e31;
+}
+.oily{
+  color: #cda674;
+}
+.fino{
+  color: #d5cdc4;
+}
+.deli{
+  color: #f5f1ea;
+}
+.sulp{
+  color: #342a1a;
+}
+.crea{
+  color: #f1bd3f;
+}
+.manz{
+  color: #d5cdc4;
+}
+
+</style>

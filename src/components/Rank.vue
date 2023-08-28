@@ -1,14 +1,22 @@
 <template>
-    <div class="flex flex-col justify-center" v-if="game == 'rule'">
+      <div class="box">
+      <div class="logo"></div>
+      <div class="rank">
+    <div class="flex flex-col justify-center" v-if="game == 'rank'">
     <p class="title"> 你目前的得分是  
       {{player.scroe}}</p>
     </div>
+    </div>
+    <div class="footer">
+        <div class="shadow"></div>
+      </div>
+  </div>
   </template>
   <script setup>
   import { ref,  onMounted,  } from 'vue'
   import { player, getPlayerscroe } from '../api/index'
   
-  const game = ref('rule')
+  const game = ref('rank')
 
 
   onMounted(() => {
@@ -16,27 +24,22 @@
   })
  
   </script>
-  <style>
-  .title {
-    color: #1677ff;
-    font-size: 2rem;
-  }
-  .result {
-    color: #aaa;
-    font-size: 1rem;
-  }
-  .active{
-    background: #1677ff;
-    color: #fff;
-  }
-  .normal{
-    background: #fff;
-    color: #000;
-  }
-  .ant-checkbox{
-    display: none;
-  }
-  .ant-card{
-    min-width: 100%;
-  }
-  </style>
+ <style>
+ .rank{
+   text-align: center;
+   width: 105vw;
+   height: 82vh;
+   background: url('../assets/images/rank-bg.png') no-repeat center;
+   background-position: bottom center;
+   background-size: auto 100%;
+   padding: 10% 4rem;
+ }
+ .rank .title {
+   color: #cda674;
+   font-size: 2rem;
+ }
+ .rank .btn{
+   background-color: #cda674;
+ }
+ 
+ </style>
