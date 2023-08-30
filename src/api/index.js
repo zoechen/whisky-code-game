@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { ref ,reactive} from 'vue'
+import { message } from 'ant-design-vue'
 
 
-const api_path = "https://whisky-code-server.onrender.com"
+const api_path = "https://whisky-code-server.onrender.com" //"http://localhost:8888"
 
 export const step = ref('')
+export const loading = ref(false)
 export const playerList = ref([])
 export const player = reactive({
     name: '',
@@ -14,6 +16,8 @@ export const player = reactive({
   })
 
 export function findID(userID){
+    getPlayerList()
+    loading.value = true
     axios.get(`${api_path+'/player?userID='+userID}`).then((res)=>{
         if(res.data[0]){
             localStorage.setItem('userID', res.data[0].userID)
@@ -28,9 +32,11 @@ export function findID(userID){
             signUpID(userID)
         } 
     })
+    loading.value = false
 }
 
 export function signUpID(userID){
+    loading.value = true
     axios.post(`${api_path+'/player'}`,{
         name: "",
         userID: userID,
@@ -44,28 +50,38 @@ export function signUpID(userID){
         localStorage.setItem('id', res.data.id)
         step.value = 'NewOne'
     })
+    
+    loading.value = false
 }
 
 export function setupName(name,id){
-    
-    axios.put(`${api_path+'/player/'+id}`,{
-        name: name,
-        userID: player.userID,
-        step: 'Question01'
-    }).then((res)=>{
-        player.name = res.data.name
-        player.userID = res.data.userID
-        player.id = res.data.id
-        localStorage.setItem('userID', res.data.userID)
-        localStorage.setItem('name', res.data.name)
-        localStorage.setItem('id', res.data.id)
-        step.value = 'Question01'
-    })
+    loading.value = true
+    let taken = playerList.value.includes(name)
+    if(taken) {
+        message.error('這個名字已經有人用了，再想想吧！')
+    }else{
+        axios.put(`${api_path+'/player/'+id}`,{
+            name: name,
+            userID: player.userID,
+            step: 'Question1_1'
+        }).then((res)=>{
+            player.name = res.data.name
+            player.userID = res.data.userID
+            player.id = res.data.id
+            localStorage.setItem('userID', res.data.userID)
+            localStorage.setItem('name', res.data.name)
+            localStorage.setItem('id', res.data.id)
+        })
+        step.value = 'Question1_1'
+    }
+
+    loading.value = false
 }
 
 export function getPlayerList(){
     axios.get(`${api_path+'/player/'}`).then((res)=>{
         playerList.value = Object.values(res.data).map(item => item.name)
+        console.log(playerList.value)
     })
 }
 
