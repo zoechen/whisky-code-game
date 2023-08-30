@@ -1,11 +1,14 @@
 <template>
-  <div class="logo"></div>
+  <div class="logo"> <div v-if="!notYet" class="scroe">您目前有 {{ player.scroe }}</div> </div>
   <div class="question s02">
-  <div v-if="countdownn"></div>
+  <div v-if="notYet">
+    <p class="title">恭喜您現在的籌碼有<br/>{{  player.scroe  }}</p>
+    <p class="tip">請耐心等待，我們將於</p>
+    <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
+    <p class="tip">後進行下一個有趣的遊戲!</p>
+  </div>
+  <div v-else>
   <div v-if="game == 'rule'">
-    <br/>
-    <br/>
-    <br/>
     <p class="title">{{ player.name }},來增加您的資產吧！</p>
     <p class="tips">
       隨機配對，二人一組<br />
@@ -61,22 +64,56 @@
 
   </div>
 </div>
+</div>
 <div class="footer">
-  <div class="shadow">您目前有 {{ player.scroe }}</div>
+  
 </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
 import { step, setStep, setupscroe, getPlayerscroe, getPlayerList, playerList, player } from '../api/index'
+import dayjs from 'dayjs'
 
 const game = ref('rule')
 const result = ref(0)
 const competitor = ref('')
+const notYet =ref(true)
+const hours = ref(0)
+const mins = ref(0)
+const secs = ref(0)
+const nowscroe = ref(0)
+
 
 onMounted(() => {
   getPlayerList()
   getPlayerscroe(player.userID)
+  countdown()
 })
+
+function countdown(){
+  let timesUp = 10
+  let time = setInterval(() => {
+  let future  = Date.parse("August 31, 2023 10:30:00");
+  let now     = new Date();
+  let diff    = future - now;
+  let days  = Math.floor( diff / (1000*60*60*24) );
+  let h = Math.floor( diff / (1000*60*60) );
+  let m  = Math.floor( diff / (1000*60) );
+  let s  = Math.floor( diff / 1000 );
+    timesUp -=1
+    nowscroe.value = localStorage.getItem('scroe')
+
+    if(timesUp < 0){
+      notYet.value = false
+      clearInterval(time)
+    }else{
+      hours.value  = h - days  * 24;
+      mins.value = m  - h * 60;
+      secs.value = s  - m * 60;
+    }
+  }, 1000);
+
+}
 
 function matchPlayer() {
   let index = playerList.value.indexOf(player.name)
@@ -202,6 +239,11 @@ function goNext() {
 .action{
   text-align: center;
   padding-top: 1.6rem;
+}
+.scroe{ 
+  float: right;
+  line-height: 6vh;
+  margin-right: 2vw;
 }
 .result {
   color: #aaa;

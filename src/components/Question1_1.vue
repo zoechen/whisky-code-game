@@ -19,7 +19,7 @@
       <p class="tip">(最多選四個)</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group v-model:value="selected" >
-          <a-row :gutter="[4, 16]" class="w25">
+          <a-row :gutter="[4, 16]">
             <a-col :span="8">
               <a-checkbox value="100001">
                 <a-card :class="selected.includes('100001') ? 'active' : 'normal'">檸檬</a-card>
@@ -129,9 +129,9 @@
       <p class="title">{{ player.name }},<br/>您覺得裡面有什麼味道?</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group v-model:value="selected" >
-          <a-row :gutter="[4, 16]" class="w25">
+          <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="20">
+              <a-checkbox value="100001">
                 <a-card :class="selected.includes('100001') ? 'active' : 'normal'">阿薩姆紅茶</a-card>
               </a-checkbox>
             </a-col>
@@ -141,12 +141,12 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="30">
+              <a-checkbox value="80">
                 <a-card :class="selected.includes('80') ? 'active' : 'normal'">巧克力</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="40">
+              <a-checkbox value="90">
                 <a-card :class="selected.includes('90') ? 'active' : 'normal'">肉桂</a-card>
               </a-checkbox>
             </a-col>
@@ -156,8 +156,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="100001">
-                <a-card :class="selected.includes('70') ? 'active' : 'normal'">接骨木</a-card>
+              <a-checkbox value="30">
+                <a-card :class="selected.includes('30') ? 'active' : 'normal'">接骨木</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -174,7 +174,7 @@
         </a-checkbox-group>
         <a-row :gutter="[4, 16]">
           <a-col :span="24" style="margin-top: 2rem; float: right;">
-            <a-button class="btn" size="large" type="primary" @click="sentAns">確定</a-button>
+            <a-button class="btn" size="large" type="primary" @click="sentAns();game='softDrinkA'">確定</a-button>
           </a-col>
           <!-- <a-col :span="24">
           <p class="result">{{ player.userID }} 得分 {{ nowscroe }}</p>
@@ -184,27 +184,28 @@
     </div>
     <div v-if="game=='softDrinkA'">
       <p class="title">{{ player.name }},猜對了嗎??</p>
+      <p class="result">恭喜獲得 ${{ nowscroe }}</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group disabled>
-          <a-row :gutter="[4, 16]" class="w25">
+          <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="20">
-                <a-card :class="selected.includes('100001') ? 'active' : 'normal'">阿薩姆紅茶</a-card>
+              <a-checkbox value="100001">
+                <a-card :class="selected.includes('100001') ? 'active' : 'normal'">阿薩姆紅茶<br/>100000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
               <a-checkbox value="100002">
-                <a-card :class="selected.includes('100002') ? 'active' : 'normal'">伯爵茶</a-card>
+                <a-card :class="selected.includes('100002') ? 'active' : 'normal'">伯爵茶<br/>100000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="30">
-                <a-card :class="selected.includes('80') ? 'active' : 'normal'">巧克力</a-card>
+              <a-checkbox value="80">
+                <a-card :class="selected.includes('80') ? 'active' : 'normal'">巧克力<br/>X</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="40">
-                <a-card :class="selected.includes('90') ? 'active' : 'normal'">肉桂</a-card>
+              <a-checkbox value="90">
+                <a-card :class="selected.includes('90') ? 'active' : 'normal'">肉桂<br/>X</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -213,13 +214,13 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="100001">
-                <a-card :class="selected.includes('70') ? 'active' : 'normal'">接骨木</a-card>
+              <a-checkbox value="30">
+                <a-card :class="selected.includes('30') ? 'active' : 'normal'">接骨木<br/>X</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
               <a-checkbox value="60">
-                <a-card :class="selected.includes('60') ? 'active' : 'normal'">生薑</a-card>
+                <a-card :class="selected.includes('60') ? 'active' : 'normal'">生薑<br/>X</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -232,7 +233,6 @@
        
         <a-row :gutter="[4, 16]">
           <a-col  class="result" :span="24">
-            <p class="result">恭喜獲得 ${{ nowscroe }}</p>
             <a-button class="btn"  size="large" type="primary" @click="goNext">下一題</a-button>
           </a-col>
         </a-row>
