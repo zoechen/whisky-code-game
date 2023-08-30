@@ -1,18 +1,25 @@
 <template>
+  <a-spin v-if="loading" />
   <Start v-if="step == 'Start'"/>
   <NewOne v-if="step == 'NewOne'"/>
-  <Question01 v-if="step == 'Question01'"/>
+  <Question1_1 v-if="step == 'Question1_1'"/>
+  <Question1_2 v-if="step == 'Question1_2'"/>
+  <Question1_3 v-if="step == 'Question1_3'"/>
+  <Question1_4 v-if="step == 'Question1_4'"/>
   <Question02 v-if="step == 'Question02'"/>
   <Question03 v-if="step == 'Question03'"/>
   <Rank v-if="step == 'Rank'"/>
 </template>
 
 <script setup>
-import { step } from './api/index'
+import { step, loading } from './api/index'
 import { onMounted } from 'vue'
 import Start from "./components/Start.vue"
 import NewOne from "./components/NewOne.vue"
-import Question01 from "./components/Question01.vue"
+import Question1_1 from "./components/Question1_1.vue"
+import Question1_2 from "./components/Question1_2.vue"
+import Question1_3 from "./components/Question1_3.vue"
+import Question1_4 from "./components/Question1_4.vue"
 import Question02 from "./components/Question02.vue"
 import Question03 from "./components/Question03.vue"
 import Rank from "./components/Rank.vue"

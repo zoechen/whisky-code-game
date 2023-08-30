@@ -21,7 +21,7 @@
             <a-input class="input" v-model:value="formState.userID" size="large"/>
           </a-form-item>
 
-          <a-form-item :wrapper-col="{ offset: 10 }">
+          <a-form-item style="text-align: center;">
             <a-button class="btn" type="primary" html-type="submit">送出</a-button>
           </a-form-item>
         </a-form>
@@ -46,32 +46,26 @@ const onFinishFailed = (errorInfo) => {
 }
 </script>
 <style>
-.box{
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  flex-direction: column;
-}
+
 .logo{
   width: 100vw;
-  background: url('../assets/images/logo-01.png') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 90%;
-  height: 8vh;
+  background: url('../assets/images/logo-01.png') no-repeat;
+  background-position: center left;
+  background-size: auto 60%;
+  height: 6vh;
 }
 
 .content{
-  width: 105vw;
-  height: 82vh;
+  width: 100vw;
+  height: 84vh;
   background: url('../assets/images/suit-whisky.png') no-repeat center;
   background-position: bottom center;
   background-size: auto 100%;
-  padding: 50% 4rem;
+  padding: 18vh 8vw;
 }
 .content p{
   color: #cda674;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 1.6rem;
   text-align: center;
   text-shadow: #000 0.01rem 0.01rem;

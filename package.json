@@ -2,6 +2,9 @@
   "name": "onepage-game",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,13 +17,11 @@
     "ant-design-vue": "^4.0.0",
     "axios": "^1.4.0",
     "chart.js": "^4.4.0",
-    "fullpage.js": "^4.0.20",
     "gaxios": "^6.0.4",
     "google-auth-library": "^8.9.0",
     "google-spreadsheet": "^4.0.2",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
-    "vue-fullpage.js": "^0.2.15",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -33,7 +34,6 @@
     "postcss": "^8.4.28",
     "prettier": "^3.0.1",
     "prettier-plugin-tailwindcss": "^0.5.2",
-    "tailwindcss": "^3.3.3",
     "vite": "^4.4.6"
   }
 }
