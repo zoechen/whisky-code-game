@@ -3,7 +3,8 @@ import { ref ,reactive} from 'vue'
 import { message } from 'ant-design-vue'
 
 
-const api_path = 'https://mongodb-whisky-code.onrender.com/api/' //depoly
+//const api_path = 'https://mongodb-whisky-code.onrender.com/api/' //depoly
+const api_path = 'https://whisky-code-server.onrender.com/api/'
 //const api_path = 'http://localhost:3000/api/'    //localhost
 
 
