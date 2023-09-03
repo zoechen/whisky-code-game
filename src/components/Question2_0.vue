@@ -1,4 +1,4 @@
-<template>
+<template><div>
   <div class="logo"> <div v-if="!notYet" class="score">您目前有 {{ player.score }}</div> </div>
   <div class="question s02">
   <div v-if="notYet" class="info">
@@ -20,8 +20,8 @@
       配對的二人都選獨享<br />
       <b>各賠8萬</b><br />
       一人選獨享一人選合作<br />
-      <b>獨享得15萬</b>
-      <b>合作賠8萬</b>
+      <b>獨享者得15萬</b>
+      <b>合作者賠8萬</b>
     </p>
   </div>
     <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer">開始配對!</a-button></div>
@@ -73,6 +73,7 @@
 </div>
 <div class="footer">
   
+</div>
 </div>
 </template>
 <script setup>

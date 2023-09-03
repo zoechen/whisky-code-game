@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="logo"></div>
   <div class="question s01">
   <div v-if="isQuest">
@@ -75,6 +76,7 @@
   </div>
   <div class="footer">
   <div class="shadow"></div>
+</div>
 </div>
 </template>
 <script setup>

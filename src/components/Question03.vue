@@ -1,103 +1,105 @@
 <template>
-  <div class="logo"></div>
-  <div class="question s03">
-    <div class="flex flex-col justify-center" v-if="game == 'rule'">
-      <p class="title">
-        {{ player.name }}探員,<br />
-        我們發現三支值得投資的酒，利用他們來增加您的資產吧!!
-        <br /><br /><br />
-        先聽聽 whisky code 的分享
-      </p>
-      <a-button
-        class="btn"
-        @click="
-          () => {
-            game = 'buyit'
-          }
-        "
-        >好</a-button
-      >
-    </div>
-    <div class="flex flex-col justify-center" v-if="game == 'buyit'">
-      <p class="tip">您目前有 {{ player.score }}</p>
-      <a-carousel :after-change="onChange">
-        <div class="item">
-          <h2>Dr. No</h2>
+  <div>
+    <div class="logo"></div>
+    <div class="question s03">
+      <div class="flex flex-col justify-center" v-if="game == 'rule'">
+        <p class="title">
+          {{ player.name }}探員,<br />
+          我們發現三支值得投資的酒，利用他們來增加您的資產吧!!
+          <br /><br /><br />
+          先聽聽 whisky code 的分享
+        </p>
+        <a-button
+          class="btn"
+          @click="
+            () => {
+              game = 'buyit'
+            }
+          "
+          >好</a-button
+        >
+      </div>
+      <div class="flex flex-col justify-center" v-if="game == 'buyit'">
+        <p class="tip">您目前有 {{ player.score }}</p>
+        <a-carousel :after-change="onChange">
+          <div class="item">
+            <h2>Dr. No</h2>
+            <img src="../assets/images/macallan-30y.png" class="pic" alt="" />
+            目前市場價格 100,000/支<br />
+            最低購買量 ___ 支
+
+            <a-input-group compact>
+              <a-button @click="wine1num--">-</a-button>
+              <a-input type="number" v-model:value="wine1num" style="width: 50px" />
+              <a-button @click="wine1num++">+</a-button>
+            </a-input-group>
+            <p class="amount">金額{{ 100000 * wine1num }}</p>
+          </div>
+          <div class="item">
+            <h2>Goldfinger</h2>
+            <img src="../assets/images/macallan12.png" class="pic" alt="" />
+
+            目前市場價格 2,200/支<br />
+            最低購買量 ___ 支
+            <a-input-group compact>
+              <a-button @click="wine2num--">-</a-button>
+              <a-input type="number" v-model:value="wine2num" style="width: 50px" />
+              <a-button @click="wine2num++">+</a-button>
+            </a-input-group>
+            金額{{ 2200 * wine2num }}
+          </div>
+          <div class="item">
+            <h2>Thunderbal</h2>
+            <img src="../assets/images/macallan-edition-no.1.png" class="pic" alt="" />
+            目前市場價格 4,000/支<br />
+            最低購買量 ___ 支
+            <a-input-group compact>
+              <a-button @click="wine3num--">-</a-button>
+              <a-input type="number" v-model:value="wine3num" style="width: 50px" />
+              <a-button @click="wine3num++">+</a-button>
+            </a-input-group>
+            金額{{ 4000 * wine3num }}
+          </div>
+        </a-carousel>
+
+        <a-button class="btn" @click="buyWine">買下去</a-button>
+      </div>
+      <div v-if="game == 'chart'">
+        <div class="flexChart">
+          <div class="title">2年後</div>
+          <Line :data="lineData" :options="lineOptions" />
+        </div>
+        <a-button class="btn" @click="game = 'result'">查看獲利</a-button>
+      </div>
+      <div class="flex flex-col justify-center" v-if="game == 'result'">
+        <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" class="pic" alt="" />
-          目前市場價格 100,000/支<br />
-          最低購買量 ___ 支
-
-          <a-input-group compact>
-            <a-button @click="wine1num--">-</a-button>
-            <a-input type="number" v-model:value="wine1num" style="width: 50px" />
-            <a-button @click="wine1num++">+</a-button>
-          </a-input-group>
-          <p class="amount">金額{{ 100000 * wine1num }}</p>
+          <div class="itemContent">
+            <h2>Dr. No</h2>
+            漲幅140%<br />恭喜賺了<br />
+            金額{{ wine1win }}
+          </div>
         </div>
-        <div class="item">
-          <h2>Goldfinger</h2>
+        <div class="itemCard">
           <img src="../assets/images/macallan12.png" class="pic" alt="" />
-
-          目前市場價格 2,200/支<br />
-          最低購買量 ___ 支
-          <a-input-group compact>
-            <a-button @click="wine2num--">-</a-button>
-            <a-input type="number" v-model:value="wine2num" style="width: 50px" />
-            <a-button @click="wine2num++">+</a-button>
-          </a-input-group>
-          金額{{ 2200 * wine2num }}
+          <div class="itemContent">
+            <h2>Goldfinger</h2>
+            漲幅386.36%<br />恭喜賺了<br />金額{{ wine2win }}
+          </div>
         </div>
-        <div class="item">
-          <h2>Thunderbal</h2>
+        <div class="itemCard">
           <img src="../assets/images/macallan-edition-no.1.png" class="pic" alt="" />
-          目前市場價格 4,000/支<br />
-          最低購買量 ___ 支
-          <a-input-group compact>
-            <a-button @click="wine3num--">-</a-button>
-            <a-input type="number" v-model:value="wine3num" style="width: 50px" />
-            <a-button @click="wine3num++">+</a-button>
-          </a-input-group>
-          金額{{ 4000 * wine3num }}
+          <div class="itemContent">
+            <h2>Thunderbal</h2>
+            漲幅137.5%<br />恭喜賺了<br />金額{{ wine3win }}
+          </div>
         </div>
-      </a-carousel>
-
-      <a-button class="btn" @click="buyWine">買下去</a-button>
+        <a-button class="btn" @click="goNext">下一題</a-button>
+      </div>
     </div>
-    <div v-if="game == 'chart'">
-      <div class="flexChart">
-        <div class="title">2年後</div>
-        <Line :data="lineData" :options="lineOptions" />
-      </div>
-      <a-button class="btn" @click="game = 'result'">查看獲利</a-button>
+    <div class="footer">
+      <div class="shadow"></div>
     </div>
-    <div class="flex flex-col justify-center" v-if="game == 'result'">
-      <div class="itemCard">
-        <img src="../assets/images/macallan-30y.png" class="pic" alt="" />
-        <div class="itemContent">
-          <h2>Dr. No</h2>
-          漲幅140%<br />恭喜賺了<br />
-          金額{{ wine1win }}
-        </div>
-      </div>
-      <div class="itemCard">
-        <img src="../assets/images/macallan12.png" class="pic" alt="" />
-        <div class="itemContent">
-          <h2>Goldfinger</h2>
-          漲幅386.36%<br />恭喜賺了<br />金額{{ wine2win }}
-        </div>
-      </div>
-      <div class="itemCard">
-        <img src="../assets/images/macallan-edition-no.1.png" class="pic" alt="" />
-        <div class="itemContent">
-          <h2>Thunderbal</h2>
-          漲幅137.5%<br />恭喜賺了<br />金額{{ wine3win }}
-        </div>
-      </div>
-      <a-button class="btn" @click="goNext">下一題</a-button>
-    </div>
-  </div>
-  <div class="footer">
-    <div class="shadow"></div>
   </div>
 </template>
 <script setup>
@@ -251,7 +253,6 @@ function goNext() {
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
-  
 }
 .itemCard .pic {
   height: 18vh;
@@ -259,7 +260,7 @@ function goNext() {
   float: left;
   padding: 0.8rem;
 }
-.itemCard .itemContent{
+.itemCard .itemContent {
   color: #cda674;
   padding-top: 1.4rem;
   padding-right: 2rem;
