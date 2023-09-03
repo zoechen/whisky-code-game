@@ -7,7 +7,7 @@ export default createStore({
         name:localStorage.getItem('name'),
         userID:localStorage.getItem('userID'),
         id:localStorage.getItem('id'),
-        scroe: localStorage.getItem('scroe')
+        score: localStorage.getItem('score')
       }
     },
     mutations: {

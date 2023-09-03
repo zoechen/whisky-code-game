@@ -23,6 +23,7 @@
     "google-spreadsheet": "^4.0.2",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
+    "vue-router": "^4.2.4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

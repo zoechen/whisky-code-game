@@ -71,7 +71,7 @@
     </div>
     <div v-if="game=='wineDrinkA'">
       <p class="title">{{ player.name }},猜對了嗎??</p>
-      <p class="result">恭喜獲得 ${{ nowscroe }}</p>
+      <p class="result">恭喜獲得 ${{ nowscore }}</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
@@ -177,14 +177,14 @@
             <a-button class="btn" size="large" type="primary" @click="sentAns();game='softDrinkA'">確定</a-button>
           </a-col>
           <!-- <a-col :span="24">
-          <p class="result">{{ player.userID }} 得分 {{ nowscroe }}</p>
+          <p class="result">{{ player.userID }} 得分 {{ nowscore }}</p>
         </a-col> -->
         </a-row>
       </a-form>
     </div>
     <div v-if="game=='softDrinkA'">
       <p class="title">{{ player.name }},猜對了嗎??</p>
-      <p class="result">恭喜獲得 ${{ nowscroe }}</p>
+      <p class="result">恭喜獲得 ${{ player.score }}</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
@@ -246,10 +246,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { message } from 'ant-design-vue'
-import { createScroe, setStep, player, step} from '../api/index'
+import { player, step, setupScore, setStep } from '../api/index'
 
 const selected = ref([])
-const nowscroe = ref(0)
+const nowScore = ref(0)
 const game = ref('isQuest')
 
 watch(selected, (newX) => {
@@ -266,13 +266,13 @@ function sentAns() {
     return Number(a) + Number(b)
   })
   counter = Math.floor(temp/1000)*1000
-  createScroe(counter, player.userID)
-  nowscroe.value = localStorage.getItem('scroe')
+  setupScore(counter, player)
+  nowScore.value = localStorage.getItem('score')
 }
 
 function goNext() {
   let next = 'Question1_2'
-  setStep(next, player.id)
+  setStep(next, player)
   step.value = next
 }
 </script>

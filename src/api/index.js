@@ -3,7 +3,21 @@ import { ref ,reactive} from 'vue'
 import { message } from 'ant-design-vue'
 
 
-const api_path = "https://whisky-code-server.onrender.com" //"http://localhost:8888"
+const api_path = 'https://mongodb-whisky-code.onrender.com/api/' //depoly
+//const api_path = 'http://localhost:3000/api/'    //localhost
+
+
+const $http = axios.create(
+    {
+        baseURL: api_path,
+        headers: {
+            'Content-Type': 'application/json',
+            //'Access-Control-Request-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            //'api-key': 'JS4QSxjXUgQYgixzo3iFnHgkneYmlzz6aYb1OMO1FPQlsBVJ5yzzwvuiMkXhTM5p'
+          },
+      }
+)
 
 export const step = ref('')
 export const loading = ref(false)
@@ -12,22 +26,24 @@ export const player = reactive({
     name: '',
     userID: '',
     id: 0,
-    scroe: 0
+    score: 0
   })
 
 export function findID(userID){
     getPlayerList()
     loading.value = true
-    axios.get(`${api_path+'/player?userID='+userID}`).then((res)=>{
-        if(res.data[0]){
-            localStorage.setItem('userID', res.data[0].userID)
-            localStorage.setItem('name', res.data[0].name)
-            localStorage.setItem('id', res.data[0].id)
-            localStorage.setItem('step', res.data[0].step)
-            player.name = res.data[0].name
-            player.userID = res.data[0].userID
-            player.id = res.data[0].id
-            step.value = res.data[0].step
+    $http.get(`/getOne/${userID}`).then((res)=>{
+        if(res.data){
+            localStorage.setItem('userID', res.data.userID)
+            localStorage.setItem('name', res.data.name)
+            localStorage.setItem('id', res.data._id)
+            localStorage.setItem('step', res.data.step)
+            localStorage.setItem('score', res.data.score)
+            player.name = res.data.name
+            player.userID = res.data.userID
+            player.id = res.data._id
+            player.score = res.data.score
+            step.value = res.data.step
         }else{
             signUpID(userID)
         } 
@@ -37,10 +53,11 @@ export function findID(userID){
 
 export function signUpID(userID){
     loading.value = true
-    axios.post(`${api_path+'/player'}`,{
-        name: "",
+    $http.post('/new',{
+        name: "0",
         userID: userID,
-        step: 'NewOne'
+        step: 'NewOne',
+        score: '0'
     }).then((res)=>{
         player.name = res.data.name
         player.userID = res.data.userID
@@ -60,10 +77,11 @@ export function setupName(name,id){
     if(taken) {
         message.error('這個名字已經有人用了，再想想吧！')
     }else{
-        axios.put(`${api_path+'/player/'+id}`,{
+        $http.put(`/update/${player.userID}`,{
             name: name,
             userID: player.userID,
-            step: 'Question1_1'
+            step: 'Question1_1',
+            score: '0'
         }).then((res)=>{
             player.name = res.data.name
             player.userID = res.data.userID
@@ -79,51 +97,78 @@ export function setupName(name,id){
 }
 
 export function getPlayerList(){
-    axios.get(`${api_path+'/player/'}`).then((res)=>{
-        playerList.value = Object.values(res.data).map(item => item.name)
-        console.log(playerList.value)
+    $http.get('/getAll').then((res)=>{
+        let teamA = []
+        let teamB = []
+        let templist = []
+        for (let i = 0; i < res.data.length; i++){
+           if(i%2){
+            teamA.push(res.data[i]) 
+           }else{
+            teamB.push(res.data[i]) 
+           }
+        }
+        for (let i = 0; i < teamA.length; i++){
+            let matchData = {
+                match_id: i,
+                teamA: teamA[i],
+                teamB: teamB[i]
+            }
+            templist.push(matchData)
+        }
+        playerList.value = templist
+
+        console.log("playerList:",playerList.value)
+
     })
 }
 
-export function getPlayerscroe(userID){
-    axios.get(`${api_path+'/scroe/'+userID}`).then((res)=>{
-        localStorage.setItem('scroe', res.data.record)
-        player.scroe = res.data.record
+export function getPlayerScore(userID){
+    $http.get(`/getOne/${userID}`).then((res)=>{
+        localStorage.setItem('score', res.data.score)
+        player.score = res.data.score
     })
 }
 
-export function createScroe(scroe,userID){
-    axios.post(`${api_path+'/scroe/'}`,{
-        id: userID,
-        record: scroe,
-    })
-    localStorage.setItem('scroe', scroe)
-    player.scroe = scroe
-}
-
-export function setupscroe(scroe,userID){
-    axios.put(`${api_path+'/scroe/'+userID}`,{
-        record: scroe,
-    })
-    localStorage.setItem('scroe', scroe)
-    player.scroe = scroe
-}
-
-
-export function setStep(step,id){
-    axios.put(`${api_path+'/player/'+id}`,{
-        step: step,
+export function setupScore(score,player){
+    $http.put(`/update/${player.userID}`,{
         name: player.name,
         userID: player.userID,
+        step: player.step,
+        score: score   
+    })
+    localStorage.setItem('score', score)
+    player.score = score
+}
+
+
+export function setStep(step,player){
+    $http.put(`/update/${player.userID}`,{
+        name: player.name,
+        userID: player.userID,
+        step: step,
+        score: player.score 
     })
     localStorage.setItem('step', step)
 }
  
 
-export function rankscroe(){
+export function rankScore(){
     let data 
-    axios.get(`${api_path+'/scroe/'}`).then((res)=>{
+    $http.get(`${api_path+'/score/'}`).then((res)=>{
         data = res.data
     })
     return data
+}
+
+export function pk(match,result){
+    loading.value = true
+    $http.post('/pk',{
+        match: match,
+        result: result
+    }).then((res)=>{
+        console.log(res)
+    })
+    console.log("game finished")
+    loading.value = false
 }

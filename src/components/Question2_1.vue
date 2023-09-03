@@ -1,8 +1,8 @@
 <template>
-  <div class="logo"> <div v-if="!notYet" class="scroe">您目前有 {{ player.scroe }}</div> </div>
+  <div class="logo"> <div v-if="!notYet" class="score">您目前有 {{ player.score }}</div> </div>
   <div class="question s02">
   <div v-if="notYet">
-    <p class="title">恭喜您現在的籌碼有<br/>{{  player.scroe  }}</p>
+    <p class="title">恭喜您現在的籌碼有<br/>{{  player.score  }}</p>
     <p class="tip">請耐心等待，我們將於</p>
     <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
     <p class="tip">後進行下一個有趣的遊戲!</p>
@@ -71,7 +71,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
-import { step, setStep, setupscroe, getPlayerscroe, getPlayerList, playerList, player } from '../api/index'
+import { step, setStep, setupScore, getPlayerScore, getPlayerList, playerList, player } from '../api/index'
 import dayjs from 'dayjs'
 
 const game = ref('rule')
@@ -81,12 +81,12 @@ const notYet =ref(true)
 const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
-const nowscroe = ref(0)
+const nowscore = ref(0)
 
 
 onMounted(() => {
   getPlayerList()
-  getPlayerscroe(player.userID)
+  getPlayerScore(player.userID)
   countdown()
 })
 
@@ -101,7 +101,7 @@ function countdown(){
   let m  = Math.floor( diff / (1000*60) );
   let s  = Math.floor( diff / 1000 );
     timesUp -=1
-    nowscroe.value = localStorage.getItem('scroe')
+    nowscore.value = localStorage.getItem('score')
 
     if(timesUp < 0){
       notYet.value = false
@@ -135,132 +135,25 @@ function matchPlayer() {
 // }
 
 function goNext() {
-  let scroe = Number(player.scroe)
+  let score = Number(player.score)
   switch (result.value) {
     case 1:
-      scroe += 120000
+      score += 120000
       break
     case 2:
-      scroe += 150000
+      score += 150000
       break
     case 3:
-      scroe -= 80000
+      score -= 80000
       break
     default:
       break
   }
-  console.log(scroe)
-  setupscroe(scroe, player.userID)
+  console.log(score)
+  setupScore(score, player)
   let next = 'Question03'
-  setStep(next,player.id)
+setStep(next, player)
   step.value = next
   
 }
 </script>
-<style>
-.question.s02{
-  position: relative;
-  width: 105vw;
-  height: 82vh;
-  background: url('../assets/images/wine-bottle.jpg') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 100%;
-  padding: 0;
-  text-align: center;
-}
-.question.s02 .title {
-  text-align: center;
-  color: #cda674;
-  font-size: 2rem;
-  padding-bottom: 1.6rem;
-}
-.question.s02 .btn{
-  background-color: #cda674;
-}
-.question.s02 .btn.w50{
-  width: 40vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
-
-}
-.question.s02 .btn.next{
-  background-color: #552917;
-  margin-top: 30rem;
-}
-.question.s02 .tips{
-  color: #d5cdc4;
-  font-size: 1.4rem;
-}
-.question.s02 .pk{
-  height: 100%;
-  background: url('../assets/images/battle-bg.png') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 100%;
-  padding:25rem 0rem;
-  color: #cda674;
-  text-shadow: #000 0.1rem 0.1rem;
-}
-.question.s02 .res{
-  color: #f5f1ea;
-  font-size: 2.4rem;
-  margin-top:18rem;
-  text-shadow: #000 0.01rem 0.01rem;
-}
-.question.s02 .pin{
-  position: absolute;
-  top:0;
-  left:0;
-  height: 82vh;
-  width: 100vw;
-  background: url('../assets/images/pin-bg.png') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 100%;
-}
-.question.s02 .los{
-  position: absolute;
-  top:0;
-  left:0;
-  height: 82vh;
-  width: 100vw;
-  background: url('../assets/images/los-bg.png') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 100%;
-}
-.question.s02 .win{
-  position: absolute;
-  top:0;
-  left:0;
-  height: 82vh;
-  width: 100vw;
-  background: url('../assets/images/win-bg.png') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 100%;
-}
-.action{
-  text-align: center;
-  padding-top: 1.6rem;
-}
-.scroe{ 
-  float: right;
-  line-height: 6vh;
-  margin-right: 2vw;
-}
-.result {
-  color: #aaa;
-  font-size: 1rem;
-}
-.active {
-  background: #552917;
-  color: #fff;
-}
-.normal {
-  background: #fff;
-  color: #552917;
-}
-.ant-checkbox {
-  display: none;
-}
-.ant-card {
-  min-width: 100%;
-}
-</style>

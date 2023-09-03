@@ -1,26 +1,27 @@
 <template>
-      <div class="box">
-      <div class="logo"></div>
-      <div class="rank">
-    <div class="flex flex-col justify-center" v-if="game == 'rank'">
-    <p class="title"> 你目前的得分是  
-      {{player.scroe}}</p>
-    </div>
+    <div class="logo"></div>
+    <div class="rank">
+      <a-row :gutter="[4, 16]">
+        <a-col :span="12">teamA</a-col>
+        <a-col :span="12">teamB</a-col>
+       </a-row>
+       <a-row :gutter="[4, 16]" v-for="player in playerList">
+        <a-col :span="12">{{ player.teamA.name }}</a-col>
+        <a-col :span="12">{{ player.teamB.name }}</a-col>
+       </a-row>
     </div>
     <div class="footer">
         <div class="shadow"></div>
       </div>
-  </div>
   </template>
   <script setup>
-  import { ref,  onMounted,  } from 'vue'
-  import { player, getPlayerscroe } from '../api/index'
+  import { ref, onMounted, reactive } from 'vue'
+  import { getPlayerList, playerList } from '../api/index'
   
   const game = ref('rank')
 
-
   onMounted(() => {
-    getPlayerscroe(player.userID)
+    getPlayerList()
   })
  
   </script>

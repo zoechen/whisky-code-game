@@ -40,7 +40,7 @@
     <div v-else>
     <a-row :gutter="[4, 16]">
       <a-col :span="24"><p class="title">{{ player.name }},猜對了嗎??</p></a-col>
-      <a-col :span="24"><p class="result"> <span v-if="counter > 0">恭喜獲得{{ counter }},</span>目前累積金額{{ nowscroe }}</p></a-col>
+      <a-col :span="24"><p class="result"> <span v-if="counter > 0">恭喜獲得{{ counter }},<br/></span>目前累積金額{{ nowscore }}</p></a-col>
     </a-row>
         <a-row :gutter="[4, 16]">
             <a-col :span="12">
@@ -79,10 +79,10 @@
 </template>
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import { setupscroe, setStep, player, step, getPlayerscroe } from '../api/index'
+import { setupScore, setStep, player, step, getPlayerScore } from '../api/index'
 
 const selected = ref([])
-const nowscroe = ref(0)
+const nowscore = ref(0)
 const counter = ref(0)
 const isQuest = ref(true)
 
@@ -93,25 +93,25 @@ watch(selected, (newX) => {
   }
 })
 onMounted(() => {
-  getPlayerscroe(player.userID)
-  nowscroe.value = localStorage.getItem('scroe')
+  getPlayerScore(player.userID)
+  nowscore.value = localStorage.getItem('score')
 })
 
 function sentAns() {
-  let oldScroe = localStorage.getItem('scroe')
+  let oldScore = localStorage.getItem('score')
   let temp = selected.value.reduce((a, b) => {
     return Number(a) + Number(b)
   })
   counter.value = Math.floor(temp/1000)*1000 
-  nowscroe.value = Number(counter.value) + Number(oldScroe)
+  nowscore.value = Number(counter.value) + Number(oldScore)
   console.log('counter: ' + counter.value)
-  setupscroe(nowscroe.value, player.userID)
+  setupScore(nowscore.value, player)
   isQuest.value = false
 }
 
 function goNext() {
-  let next = 'Question02'
-  setStep(next, player.id)
+  let next = 'Question2_0'
+  setStep(next, player)
   step.value = next
 }
 </script>

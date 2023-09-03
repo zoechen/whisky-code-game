@@ -19,7 +19,7 @@
       >
     </div>
     <div class="flex flex-col justify-center" v-if="game == 'buyit'">
-      <p class="tip">您目前有 {{ player.scroe }}</p>
+      <p class="tip">您目前有 {{ player.score }}</p>
       <a-carousel :after-change="onChange">
         <div class="item">
           <h2>Dr. No</h2>
@@ -103,7 +103,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupscroe, setStep, getPlayerscroe, player, step } from '../api/index'
+import { setupScore, setStep, getPlayerScore, player, step } from '../api/index'
 import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -179,7 +179,7 @@ const lineOptions = {
 }
 
 onMounted(() => {
-  getPlayerscroe(player.userID)
+  getPlayerScore(player.userID)
 })
 
 function buyWine() {
@@ -187,19 +187,19 @@ function buyWine() {
   wine2win.value = wine1num.value * 4000 * 2.86
   wine3win.value = wine1num.value * 2200 * 0.37
   let cost = wine1win.value + wine2win.value + wine3win.value + 106200
-  let win = player.scroe + wine1win.value + wine2win.value + wine3win.value
+  let win = player.score + wine1win.value + wine2win.value + wine3win.value
   console.log(win)
-  if (cost > player.scroe) {
+  if (cost > player.score) {
     openMessage()
   } else {
-    setupscroe(win, player.userID)
+    setupScore(win, player)
     game.value = 'chart'
   }
 }
 
 function goNext() {
-  let next = 'Rank'
-  setStep(next, player.id)
+  let next = 'MyScore'
+  setStep(next, player)
   step.value = next
 }
 </script>
