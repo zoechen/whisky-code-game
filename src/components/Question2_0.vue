@@ -142,7 +142,7 @@ function goGamble() {
         if(result.value == '0'){
            let temp = Math.floor(Math.random() * 2) + 1
            result.value = (temp == '1') ? 'team' : 'solo'
-           pk({competitor.value},result.value)
+           pk(competitor.value,result.value)
         }else{
           pk(competitor.value,result.value)
         }
