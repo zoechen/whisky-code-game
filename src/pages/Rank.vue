@@ -16,13 +16,15 @@
   </template>
   <script setup>
   import { ref, onMounted, reactive } from 'vue'
-  import { getPlayerList, playerList } from '../api/index'
+  import { getMatchList, matchList } from '../api/index'
   
   const game = ref('rank')
 
   onMounted(() => {
-    getPlayerList()
+    getMatchList()
   })
+
+  
  
   </script>
  <style>

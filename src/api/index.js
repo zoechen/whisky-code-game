@@ -23,6 +23,7 @@ const $http = axios.create(
 export const step = ref('')
 export const loading = ref(false)
 export const playerList = ref([])
+export const matchList = ref([])
 export const player = reactive({
     name: '',
     userID: '',
@@ -98,6 +99,12 @@ export function setupName(name,id){
 }
 
 export function getPlayerList(){
+    axios.get('/getAll').then((res)=>{
+        playerList.value = Object.values(res.data).map(item => item.name)
+        console.log(playerList.value)
+    })
+}
+export function getMatchList(){
     $http.get('/getAll').then((res)=>{
         let teamA = []
         let teamB = []
@@ -112,14 +119,15 @@ export function getPlayerList(){
         for (let i = 0; i < teamA.length; i++){
             let matchData = {
                 match_id: i,
-                teamA: teamA[i],
-                teamB: teamB[i]
+                teamA: teamA[i].userID,
+                teamB: teamB[i].userID,
             }
             templist.push(matchData)
+            $http.post()
         }
-        playerList.value = templist
+        matchList.value = templist
 
-        console.log("playerList:",playerList.value)
+        console.log("matchList:",matchList.value)
 
     })
 }

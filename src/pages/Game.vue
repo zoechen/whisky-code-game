@@ -9,7 +9,8 @@
     <Question2_0 v-if="step == 'Question2_0'"/>
     <Question2_1 v-if="step == 'Question2_1'"/>
     <Question2_2 v-if="step == 'Question2_2'"/>
-    <Question03 v-if="step == 'Question03'"/>
+    <Question3_1 v-if="step == 'Question3_1'"/>
+    <Question3_2 v-if="step == 'Question3_2'"/>
     <MyScore v-if="step == 'MyScore'" />
   </template>
   
@@ -25,7 +26,8 @@
   import Question2_0 from "../components/Question2_0.vue"
   import Question2_1 from "../components/Question2_1.vue"
   import Question2_2 from "../components/Question2_2.vue"
-  import Question03 from "../components/Question03.vue"
+  import Question3_1 from "../components/Question3_1.vue"
+  import Question3_2 from "../components/Question3_2.vue"
   import MyScore from "../components/MyScore.vue"
   onMounted(() => {
       localStorage.clear()

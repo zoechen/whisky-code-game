@@ -27,10 +27,12 @@
     <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer">開始配對!</a-button></div>
   </div>
   <div class="pk" v-if="game == 'gamble01'">
-    <p class="tips">試玩一局</p>
+    <p class="tips">試玩第一局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
-    <a-button class="btn w50" size="large" @click="()=>{result = 'team'}">合作</a-button>
-    <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button>
+    <a-button class="btn w50" :class="{ team: isActiveTeam }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false}">合作</a-button>
+    <a-button class="btn w50" :class="{ solo: isActiveSolo }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true}">獨享</a-button>
+    <!-- <a-button class="btn w50" size="large" @click="()=>{result = 'team'}">合作</a-button>
+    <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button> -->
     <p class="tips"><b>{{ wait }}</b></p>
   </div>
   <div v-if="game == 'result01'">
@@ -40,25 +42,27 @@
     <div class="los">
       <p class="res">啊,賠了 80,000</p>
     </div>
-    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble02'}">下一題</a-button>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble02';goGamble('gamble02')}">下一題</a-button>
   </div>
   <div class="pk" v-if="game == 'gamble02'">
-    <p class="tips">第二局</p>
+    <p class="tips">試玩第二局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
-    <a-button class="btn w50" size="large" @click="()=>{game = 'result02'}">合作</a-button>
-    <a-button class="btn w50" size="large" @click="()=>{game = 'result02'}">獨享</a-button>
+    <a-button class="btn w50" :class="{ team: isActiveTeam }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false}">合作</a-button>
+    <a-button class="btn w50" :class="{ solo: isActiveSolo }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true}">獨享</a-button>
+    <p class="tips"><b>{{ wait }}</b></p>
   </div>
   <div v-if="game == 'result02'">
     <div class="pin" >
       <p class="res">恭喜!<br/>您和{{ competitor }}<br/>各得 120,000</p>
     </div>
-    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble03'}">下一題</a-button>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble03';goGamble('gamble03')}">下一題</a-button>
   </div>
   <div class="pk" v-if="game == 'gamble03'">
-    <p class="tips">第三局</p>
+    <p class="tips">試玩第三局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitor }}</p>
-    <a-button class="btn w50" size="large" @click="()=>{game = 'result03'}">合作</a-button>
-    <a-button class="btn w50" size="large" @click="()=>{game = 'result03'}">獨享</a-button>
+    <a-button class="btn w50" :class="{ team: isActiveTeam }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false}">合作</a-button>
+    <a-button class="btn w50" :class="{ solo: isActiveSolo }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true}">獨享</a-button>
+    <p class="tips"><b>{{ wait }}</b></p>
   </div>
   <div v-if="game == 'result03'">
     <div class="win">
@@ -77,13 +81,13 @@
 </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
-import { step, setStep, setupScore, getPlayerScore, getPlayerList, playerList, player, pk } from '../api/index'
+import { ref, onMounted, reactive } from 'vue'
+import { step, setStep, setupScore, getPlayerScore, matchList, player, pk } from '../api/index'
 import dayjs from 'dayjs'
 
 const game = ref('rule')
 const result = ref('0')
-const competitor = ref('')
+const competitor = ref('Zoe')
 const notYet =ref(true)
 const hours = ref(0)
 const mins = ref(0)
@@ -92,8 +96,8 @@ const nowscore = ref(0)
 const wait = ref(8)
 
 
+
 onMounted(() => {
-  getPlayerList()
   getPlayerScore(player.userID)
   countdown()
 })
@@ -101,7 +105,7 @@ onMounted(() => {
 function countdown(){
   let timesUp = 10
   let time = setInterval(() => {
-  let future  = Date.parse("2023-09-01T11:00:00");
+  let future  = Date.parse("2023-09-15T18:00:00");
   let now     = new Date();
   let diff    = future - now;
   let days  = Math.floor( diff / (1000*60*60*24) );
@@ -115,43 +119,69 @@ function countdown(){
       notYet.value = false
       clearInterval(time)
     }else{
-      hours.value  = h - days  * 24;
-      mins.value = m  - h * 60;
-      secs.value = s  - m * 60;
+      hours.value = addZero(h - days  * 24);
+      mins.value = addZero(m  - h * 60);
+      secs.value = addZero(s  - m * 60);
     }
   }, 1000);
 }
 
+function addZero(num){
+  if(parseInt(num)<10){
+    return '0'+ num
+  }else{
+    return num
+  }
+}
+
 function matchPlayer() {
-  let index = playerList.value.indexOf(player.name)
-  playerList.value.splice(index, 1)
-  let competitorList = playerList.value
-  console.log(competitorList)
-  let rnd = Math.floor(Math.random() * competitorList.length)
-  competitor.value = competitorList[rnd]
+  //matchList.value.
   game.value = 'gamble01'
-  goGamble() 
+  goGamble('gamble01') 
 }
 
 
-function goGamble() {
-  let waitTime = setInterval(() => { 
+function goGamble(key) {
+ let waitTime = setInterval(() => { 
       wait.value -= 1
-      if (wait.value < 0){
-        wait.value = 0
-        clearInterval(waitTime)
-        if(result.value == '0'){
-           let temp = Math.floor(Math.random() * 2) + 1
-           result.value = (temp == '1') ? 'team' : 'solo'
-           pk(competitor.value,result.value)
-        }else{
-          pk(competitor.value,result.value)
+      if(wait.value < 0){
+        switch (key) {
+          case 'gamble01':
+              game.value = 'result01'
+              wait.value = 8
+              clearInterval(waitTime)
+            break;
+          case 'gamble02':
+              game.value = 'result02'
+              wait.value = 8
+              clearInterval(waitTime)
+            break;
+          case 'gamble03':
+              game.value = 'result03'
+              wait.value = 8
+              clearInterval(waitTime)
+            break;
+        
+          default:
+            break;
         }
+        
       }
+      // if (wait.value < 0){
+      //   wait.value = 0
+      //   clearInterval(waitTime)
+      //   if(result.value == '0'){
+      //      let temp = Math.floor(Math.random() * 2) + 1
+      //      result.value = (temp == '1') ? 'team' : 'solo'
+      //      pk(competitor.value,result.value)
+      //   }else{
+      //     pk(competitor.value,result.value)
+      //   }
+      // }
   },1000)
   
-  
 }
+
 
 function goNext() {
   let score = Number(player.score)
@@ -170,10 +200,9 @@ function goNext() {
   }
   console.log(score)
   setupScore(score, player)
-  let next = 'Question03'
-setStep(next, player)
+  let next = 'Question3_1'
+  setStep(next, player)
   step.value = next
-  
 }
 </script>
 <style>
@@ -197,6 +226,15 @@ setStep(next, player)
 .question.s02 .btn{
   background-color: #cda674;
 }
+.question.s02 .btn:hover {
+  color: #d5cdc4;
+  border-color: #d5cdc4;
+  background-color: #552917;
+}
+.question.s02 .btn.w50.team .question.s02 .btn.w50.solo{
+  background-color: #552917;
+  color: #d5cdc4;
+}
 .question.s02 .btn.w50{
   width: 40vw;
   margin-left: 5vw;
@@ -212,7 +250,7 @@ setStep(next, player)
   background-color: rgba(0, 0, 0, 0.8);
   width: 80%;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 2rem;
 }
 .question.s02 .tips{
   color: #d5cdc4;

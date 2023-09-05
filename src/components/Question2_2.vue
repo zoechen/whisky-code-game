@@ -151,8 +151,8 @@ function goNext() {
   }
   console.log(score)
   setupScore(score, player)
-  let next = 'Question03'
-setStep(next, player)
+  let next = 'Question3_1'
+  setStep(next, player)
   step.value = next
   
 }

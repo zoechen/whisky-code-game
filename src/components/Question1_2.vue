@@ -16,8 +16,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="12">
-              <a-checkbox value="100000">
-                <a-card :class="selected.includes('100000') ? 'active' : 'normal'" style="width: 40vw;">可可果</a-card>
+              <a-checkbox value="250000">
+                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="12">
@@ -51,8 +51,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="12">
-              <a-checkbox value="100000">
-                <a-card :class="selected.includes('100000') ? 'active' : 'normal'" style="width: 40vw;">可可果<br/>100000</a-card>
+              <a-checkbox value="250000">
+                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果<br/>100000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="12">
@@ -100,7 +100,9 @@ onMounted(() => {
 
 function sentAns() {
   let oldScore = localStorage.getItem('score')
-  
+  if(selected.value.length<1){
+    message.error("選一個")
+  }
   let temp = selected.value.reduce((a, b) => {
     return Number(a) + Number(b)
   })
