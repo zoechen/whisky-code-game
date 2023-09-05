@@ -111,7 +111,7 @@
             </div>
           </div>
           <!-- <a-button class="btn" @click="noRedeem">不要贖回</a-button>  -->
-          <a-button class="btn" @click="isVisible = true">比賽結果</a-button>
+          <a-button class="btn" @click="redeemMoney">比賽結果</a-button>
           
         </div>
     
@@ -299,9 +299,9 @@ function buyWine() {
   wine2win.value = Number(wine3num.value * 5500 * 11.11) + Number(wine2own.value * 15)
   wine3win.value = Number(wine2num.value * 8500 * 2) + Number(wine3own.value * 3.37)
   profit.value = wine1win.value + wine2win.value + wine3win.value
-  money.value = player.score - cost.value
+  money.value = Number(player.score) - cost.value
   console.log(money.value)
-  if (cost.value > player.score) {
+  if (cost.value > Number(player.score)) {
     message.error(cost.value +":"+ player.score)
   } else {
     
@@ -309,20 +309,10 @@ function buyWine() {
   }
 }
 
+
 function redeemMoney(){
-  localStorage.setItem('wine1num',0)
-  localStorage.setItem('wine2num',0)
-  localStorage.setItem('wine3num',0)
   let win = Number(player.score) + profit.value
   setupScore(win, player)
-  goNext()
-}
-
-function noRedeem(){
-  localStorage.setItem('wine1num',wine1num.value)
-  localStorage.setItem('wine2num',wine2num.value)
-  localStorage.setItem('wine3num',wine3num.value)
-  setupScore(money.value, player)
   goNext()
 }
 

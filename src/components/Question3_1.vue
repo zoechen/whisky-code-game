@@ -301,9 +301,9 @@ function buyWine() {
   wine2win.value = Number(wine3num.value * 4000 * 2.86)
   wine3win.value = Number(wine2num.value * 2200 * 0.37)
   profit.value = wine1win.value + wine2win.value + wine3win.value
-  money.value = player.score - cost.value
+  money.value = Number(player.score) - cost.value
   console.log(money.value)
-  if (cost.value > player.score) {
+  if (cost.value > Number(player.score)) {
     message.error(cost.value +":"+ player.score)
   } else {
     
