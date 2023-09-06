@@ -16,7 +16,7 @@
           <div class="rule">
             <p class="title">{{ player.name }}探員,<br /></p>
           <p class="tips">
-            我們發現三支值得投資的酒，利用他們來增加您的資產吧!!
+            推薦給您三款值得珍藏的威士忌,不僅好喝,更是能夠隨著時間提高價值喔!
           </p>
           <p class="title">先聽聽<br/> whisky code 的分享</p>
         </div>
@@ -25,103 +25,125 @@
             class="btn"
             @click="
               () => {
-                game = 'buyit'
+                game = 'wineinfo'
               }
             "
             >好</a-button>
         
         </div>
-        <div v-if="game == 'buyit'">
-          <div class="rule"><p class="tip">您目前有 {{ player.score }}</p></div>
-          
+        <div v-if="game == 'wineinfo'">
           <a-carousel :after-change="onChange" arrows>
             <template #prevArrow>
-              <div style="left: 10px; z-index: 999;color: #fff; font-size: 2rem;">
-                 
+              <div style="left: 10px; z-index: 999;color: #fff; font-size: 1.2rem;">
               </div>
             </template>
             <template #nextArrow>
-              <div style="right: 10px;color: #fff;font-size: 2rem;">
-                 
+              <div style="right: 10px;color: #fff;font-size: 1.2rem;">
               </div>
             </template>
-            <div class="item">
-              <h2>Dr. No</h2>
-              <img src="../assets/images/macallan-30y.png" class="pic" alt="" />
+          <div class="bloc">
+            <h2>Dr. No</h2>
+            <img src="../assets/images/dr_no.png" alt="" class="pic"/>
+            <p>獨家採用西班牙赫雷斯省精選出來的雪莉桶釀製熟成。
+              30年的純天然深紅木酒色是該系列中最濃豔的一款，擁有深遂酒色，
+              這渾然天成的色澤可不是一般酒廠添加人工香料或焦糖可調配成的，此酒款約1970年蒸餾，2000年發售的單一麥芽威士忌。
+            </p>
+              <ul>
+            <li>色澤：深紅木色。</li>
+            <li>香氣：濃郁甘醇的雪莉酒桶的氣味，帶有柳橙丁香、肉荳蔻和煙燻木氣息。</li>
+            <li>口感：果乾、雪莉酒、柳橙與煙燻木形成醇美柔順的風味。</li>
+            <li>餘韻：綿長馥郁的柳橙與香料氣息。</li>
+            <li>ABV：43%</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <h2>Goldfinger</h2>
+            <img src="../assets/images/Goldfinger.png" alt="" class="pic"/>
+          <p>使用首次西班牙Oloroso雪莉桶來熟成，稀少珍貴，每一滴都令人屏息以待。
+            2007年上市時針對日本與台灣市場發售，當時僅發行90,000瓶。是口感濃郁、豐富的威士忌的超高級品質。
+            色澤深沈誘人，以首次裝桶的小型雪莉桶熟成，未經冷卻過濾，淬煉出的十二年單一純麥威士忌。不僅要滿足您對高級氣味的追求，更要豐富您的味蕾感官。
+        </p>  
+          <ul>
+            <li>色澤：黑檀木色。</li>
+            <li>香氣：濃郁甘醇，與雪莉酒桶的氣味緊密相合。</li>
+            <li>口感：豐富的果香、蜂蜜甜味與辛香料味，舌尖富含絲綢的圓潤感。</li>
+            <li>餘韻：每一口深藏辛香料、雪茄、柑橘、黑巧克力的氣味。</li>
+            <li>ABV：45.6%</li>
+            </ul>
+          </div>
+          <div class="bloc">
+            <h2>Thunderball</h2>
+            <img src="../assets/images/Thunderball.png" alt="" class="pic"/>
+          <p>單一麥芽威士忌，精選八款來自歐洲與美國的優質雪莉橡木桶勾兌，是完美詮釋極致桶藝的年度限量酒款。
+            橡木桶大師從最源頭的產地挑選、採購木材、手工製桶與潤桶等龐大又複雜的過程中，每一個細節都無可挑剔。
+            這款經雪莉酒潤桶並陳釀至完美熟成後所勾兌融合的威士忌，口感豐富且層次多變，可充分品嘗到每種橡木桶的特色風味。
+          </p><ul>
+            <li>色澤：天然蜂蜜。</li>
+            <li>香氣：柳橙、蘋果和果乾交融，散發鮮明豐郁的香氣。 橡木香氣中隱約透出香草、太妃糖和巧克力香。</li>
+            <li>口感：初嚐即現的木質辛香讓人心中浮現暖意，隨之出現豆蔻、肉桂味，還有些許乾薑與太妃糖香。 最後顯現的果香清新，和新鮮橡木香和諧交織。</li>
+            <li>餘韻：柔順悠長。</li>
+            <li>ABV：48.1%</li>
+            </ul>
+          </div>
+          </a-carousel>
+          <small>酒可以選擇哦!請左右滑滑看。</small><br/>
+          <a-button
+            class="btn"
+            @click="
+              () => {
+                game = 'buyit'
+              }
+            "
+            >我要買酒</a-button>
+        </div>
+        <div v-if="game == 'buyit'">
+          <div class="rule"><p class="tip">目前的籌碼有 {{ player.score }}</p></div>
+          <div class="itemCard">
+            <img src="../assets/images/dr_no.png" alt="" />
+            <div class="itemContent">
+            <h2>Dr. No</h2>
+              
               目前市場價格 100,000/支<br />
               最低購買量 <b>1</b> 支
-
-              <a-input-group compact>
-                <a-button @click="wine1num--">-</a-button>
-                <a-input-number min="0" type="number" v-model:value="wine1num" style="width: 50px" />
-                <a-button @click="wine1num++">+</a-button>
+                <a-input-group compact>
+                <a-button @click="wine1num-=1">-</a-button>
+                <a-input-number min="0" type="number" v-model:value="wine1num" style="width: 50px" disabled />
+                <a-button @click="wine1num+=1">+</a-button>
               </a-input-group>
-              <p class="amount">金額{{ 100000 * wine1num }}</p>
             </div>
-            <div class="item">
-              <h2>Goldfinger</h2>
-              <img src="../assets/images/macallan12.png" class="pic" alt="" />
+           </div>
+          <div class="itemCard">
+            <img src="../assets/images/Goldfinger.png" alt="" />
+            <div class="itemContent">
+            <h2>Goldfinger</h2>
 
               目前市場價格 2,200/支<br />
               最低購買量 <b>10</b> 支
               <a-input-group compact>
-                <a-button @click="wine2num--">-</a-button>
-                <a-input-number min="0" type="number" v-model:value="wine2num" style="width: 50px" />
-                <a-button @click="wine2num++">+</a-button>
+                <a-button @click="wine2num-=10">-</a-button>
+                <a-input-number min="0" type="number" v-model:value="wine2num" style="width: 50px" disabled />
+                <a-button @click="wine2num+=10">+</a-button>
               </a-input-group>
-              <p class="amount">金額{{ 2200 * wine2num }}</p>
-            </div>
-            <div class="item">
-              <h2>Thunderbal</h2>
-              <img src="../assets/images/macallan-edition-no.1.png" class="pic" alt="" />
+              </div>
+          </div>
+          <div class="itemCard">
+            <img src="../assets/images/Thunderball.png" alt="" />
+            <div class="itemContent">
+            <h2>Thunderball</h2>
               目前市場價格 4,000/支<br />
               最低購買量 <b>5</b> 支
               <a-input-group compact>
-                <a-button @click="wine3num--">-</a-button>
-                <a-input-number min="0" type="number" v-model:value="wine3num" style="width: 50px" />
-                <a-button @click="wine3num++">+</a-button>
+                <a-button @click="wine3num-=5">-</a-button>
+                <a-input-number min="0" type="number" v-model:value="wine3num" style="width: 50px" disabled />
+                <a-button @click="wine3num+=5">+</a-button>
               </a-input-group>
-              <p class="amount">金額{{ 2200 * wine2num }}</p>
-            </div>
-          </a-carousel>
+              </div>
+          </div>
+          <div class="rule"><p class="tip">投入的籌碼共 {{ cost }}</p></div>
 
-          <a-button class="btn" @click="buyWine">買下去</a-button>
+          <a-button class="btn" @click="tobuyWine">買下去</a-button>
         </div>
-        <div v-if="game == 'chart'">
-          <div class="flexChart">
-            <div class="title">2年後</div>
-            <Line :data="lineData" :options="lineOptions" />
-          </div>
-          <a-button class="btn" @click="game = 'result'">查看獲利</a-button>
-        </div>
-        <div v-if="game == 'result'">
-          <div class="rule"><div class="tip">投入成本{{ cost }} <br/> 可動用資金{{ money }}</div></div>
-          
-          <div class="itemCard">
-            <img src="../assets/images/macallan-30y.png" class="pic" alt="" />
-            <div class="itemContent">
-              <h2>Dr. No</h2>
-              漲幅140%<br />恭喜賺了<br />
-              金額{{ wine1win }}
-            </div>
-          </div>
-          <div class="itemCard">
-            <img src="../assets/images/macallan12.png" class="pic" alt="" />
-            <div class="itemContent">
-              <h2>Goldfinger</h2>
-              漲幅386.36%<br />恭喜賺了<br />金額{{ wine2win }}
-            </div>
-          </div>
-          <div class="itemCard">
-            <img src="../assets/images/macallan-edition-no.1.png" class="pic" alt="" />
-            <div class="itemContent">
-              <h2>Thunderbal</h2>
-              漲幅137.5%<br />恭喜賺了<br />金額{{ wine3win }}
-            </div>
-          </div>
-          <a-button class="btn" @click="noRedeem">不要贖回</a-button> <a-button class="btn" @click="isVisible = true">我要贖回</a-button>
-          
-        </div>
+       
       </div>
     </div>
     <div class="footer">
@@ -129,23 +151,12 @@
     </div>
   </div>
 
-  <a-modal
-      v-model:visible="isVisible"
-      title=""
-      ok-text="確認"
-      cancel-text="取消"
-      id="redeemDialog"
-      :bodyStyle="{color: '#d5cdc4'}"
-      @ok="redeemMoney"
-    >
-      <p>贖回將賣出全部的品項，<br/>你確定嗎？<br/>你的利潤是{{ profit }}</p>
-  </a-modal>
+ 
 </template>
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupScore, setStep, getPlayerScore, player, step } from '../api/index'
-import { Line } from 'vue-chartjs'
+import { setupMoneyCost, setStep, getPlayerScore, player, step, createWine } from '../api/index'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -161,9 +172,9 @@ import dayjs from 'dayjs'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const game = ref('rule')
-const wine1num = ref(1)
-const wine2num = ref(10)
-const wine3num = ref(5)
+const wine1num = ref(0)
+const wine2num = ref(0)
+const wine3num = ref(0)
 const wine1win = ref(0)
 const wine2win = ref(0)
 const wine3win = ref(0)
@@ -174,10 +185,7 @@ const notYet =ref(true)
 const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
-const isVisible = ref(false)
-const openMessage = () => {
-  message.error('錢錢不太夠唷！')
-}
+
 
 watch(wine1num, (newX) => {
   console.log(newX)
@@ -187,6 +195,7 @@ watch(wine1num, (newX) => {
   if(newX <0) {
     wine1num.value = 0
   }
+  cost.value = wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200
 })
 watch(wine2num, (newX) => {
   console.log(newX)
@@ -196,6 +205,7 @@ watch(wine2num, (newX) => {
   if(newX <0) {
     wine2num.value = 0
   }
+  cost.value = wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200
 })
 watch(wine3num, (newX) => {
   console.log(newX)
@@ -205,31 +215,10 @@ watch(wine3num, (newX) => {
   if(newX <0) {
     wine3num.value = 0
   }
+  cost.value = wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200
 })
 
-const lineData = {
-  labels: ['2016', '2017', '2018'], // '2019', '2020', '2021', '2022', '2023'
-  datasets: [
-    {
-      label: 'Dr. No',
-      backgroundColor: '#d97e31',
-      borderColor: '#d97e31',
-      data: [100, 115, 140]
-    },
-    {
-      label: 'Goldfinger',
-      backgroundColor: '#cda674',
-      borderColor: '#cda674',
-      data: [100, 181, 386]
-    },
-    {
-      label: 'Thunderbal',
-      backgroundColor: '#fff',
-      borderColor: '#fff',
-      data: [100, 112, 137]
-    }
-  ]
-}
+
 
 const lineOptions = {
   responsive: true,
@@ -259,11 +248,11 @@ const lineOptions = {
 onMounted(() => {
   countdown()
   getPlayerScore(player.userID)
-  setupScore(8800000, player)
+  //setupScore(8800000, player) //for test
 })
 
 function countdown(){
-  let timesUp = 5
+  let timesUp = 5 //for test
   let time = setInterval(() => {
   let future  = Date.parse("2023-09-15T18:00:00");
   let now     = new Date();
@@ -272,7 +261,7 @@ function countdown(){
   let h = Math.floor( diff / (1000*60*60) );
   let m  = Math.floor( diff / (1000*60) );
   let s  = Math.floor( diff / 1000 );
-    timesUp -=1
+    timesUp -=1 
 
     if(timesUp < 0){
       notYet.value = false
@@ -293,57 +282,39 @@ function addZero(num){
   }
 }
 
-function buyWine() {
-
-  cost.value = wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200
- 
-  wine1win.value = Number(wine1num.value * 100000 * 0.4)
-  wine2win.value = Number(wine3num.value * 4000 * 2.86)
-  wine3win.value = Number(wine2num.value * 2200 * 0.37)
-  profit.value = wine1win.value + wine2win.value + wine3win.value
-  money.value = Number(player.score) - cost.value
-  console.log(money.value)
-  if (cost.value > Number(player.score)) {
-    message.error(cost.value +":"+ player.score)
+function tobuyWine() {
+  if (cost.value == 0 ) {
+    message.error("都不買太可惜了!!!")
+  }else if (cost.value > Number(player.score)) {
+    message.error("籌碼不夠!!!再調整一下數量吧")
   } else {
-    
-    game.value = 'chart'
+    money.value = Number(player.score) - cost.value
+    createWine(player.userID,wine1num.value,wine2num.value,wine3num.value)
+    setupMoneyCost( player, cost.value, money.value )
+    goNext()
   }
 }
 
-function redeemMoney(){
-  localStorage.setItem('wine1num',0)
-  localStorage.setItem('wine2num',0)
-  localStorage.setItem('wine3num',0)
-  localStorage.setItem('cost',cost.value)
-  let win = Number(player.score) + profit.value
-  setupScore(win, player)
-  goNext()
-}
 
-function noRedeem(){
-  localStorage.setItem('wine1num',wine1num.value)
-  localStorage.setItem('wine2num',wine2num.value)
-  localStorage.setItem('wine3num',wine3num.value)
-  localStorage.setItem('cost',cost.value)
-  setupScore(money.value, player)
-  goNext()
-}
 
 function goNext() {
   let next = 'Question3_2'
   setStep(next, player)
   step.value = next
 }
+
+
+
+
 </script>
 <style>
 .question.s03 {
-  width: 105vw;
+  width: 100vw;
   height: 82vh;
   background: url('../assets/images/oak-bg.jpg') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
-  padding: 10% 4rem;
+  background-size: auto 105%;
+  padding: 5% 2rem;
   text-align: center;
 }
 .question.s03 .title {
@@ -386,7 +357,6 @@ function goNext() {
   margin: 0 auto;
   width: auto;
   height: 12rem;
-  filter: blur(5px);
 }
 .flexChart {
   height: 54vh;
@@ -404,20 +374,26 @@ function goNext() {
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
+  display: flex;
 }
-.itemCard .pic {
-  height: 15vh;
-  filter: blur(2px);
-  float: left;
-  padding: 0.8rem;
+.itemCard img {
+  flex: 1;
+  width: auto;
 }
 .itemCard .itemContent {
+  flex: 12rem;
+  float: left;
   color: #cda674;
-  padding-top: 0.4rem;
-  padding-right: 2rem;
+  padding: 0.4rem;
+  text-align: left;
 }
 .itemCard .itemContent h2{
   color: #d5cdc4;
+}
+.itemCard .btn{
+  flex: auto;
+  margin-top: 2.8rem;
+  margin-right: 0.8rem;
 }
 
 .ant-modal .ant-modal-content{
@@ -431,4 +407,33 @@ function goNext() {
 .ant-modal-footer .ant-btn-primary{
   background-color: #552917;
 }
+.ant-input-number-disabled{
+  background-color: #d5cdc4;
+}
+.bloc {
+  width: 100%;
+  text-align: center;
+  color: #d5cdc4;
+  border-radius: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  height: 40rem;
+  
+}
+.bloc ul{
+  text-align: left;
+  font-size: 0.8rem;
+
+}
+.bloc p{
+  text-align: left;
+  font-size: 1.0rem;
+}
+
+.bloc .pic{
+  margin: 0 auto;
+  width: auto;
+  height: 8rem;
+}
 </style>
+

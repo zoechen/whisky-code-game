@@ -60,7 +60,7 @@ const onFinishFailed = (errorInfo) => {
   height: 84vh;
   background: url('../assets/images/suit-whisky.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 105%;
   padding: 18vh 8vw;
 }
 .content p{

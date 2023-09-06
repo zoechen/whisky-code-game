@@ -30,11 +30,11 @@
  <style>
  .rank{
    text-align: center;
-   width: 105vw;
+   width: 100vw;
    height: 82vh;
    background: url('../assets/images/rank-bg.png') no-repeat center;
    background-position: bottom center;
-   background-size: auto 100%;
+   background-size: auto 105%;
    padding: 10% 4rem;
  }
  .rank .title {

@@ -211,11 +211,11 @@ function goNext() {
   text-align: center;
 }
 .question.s02 .info{
-  width: 105vw;
+  width: 100vw;
   height: 82vh;
   background: url('../assets/images/wine-bottle.jpg') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 130%;
   padding-top: 6vh;
 }
 .question.s02 .title {
@@ -268,8 +268,8 @@ function goNext() {
   height: 82vh;
   background: url('../assets/images/battle-bg.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
-  padding:10rem 0rem;
+  background-size: auto 105%;
+  padding-top:10rem;
   color: #cda674;
 }
 .question.s02 .res{
@@ -286,7 +286,7 @@ function goNext() {
   width: 100vw;
   background: url('../assets/images/pin-bg.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 105%;
 }
 .question.s02 .los{
   position: absolute;
@@ -296,7 +296,7 @@ function goNext() {
   width: 100vw;
   background: url('../assets/images/los-bg.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 105%;
 }
 .question.s02 .win{
   position: absolute;
@@ -306,7 +306,7 @@ function goNext() {
   width: 100vw;
   background: url('../assets/images/win-bg.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 105%;
 }
 .action{
   text-align: center;

@@ -52,7 +52,7 @@
             </a-col>
             <a-col :span="12">
               <a-checkbox value="250000">
-                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果<br/>100000</a-card>
+                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果<br/>250000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="12">
@@ -81,6 +81,7 @@
 </template>
 <script setup>
 import { ref, watch, onMounted } from 'vue'
+import { message } from 'ant-design-vue'
 import { setupScore, setStep, player, step, getPlayerScore } from '../api/index'
 
 const selected = ref([])
@@ -92,6 +93,7 @@ watch(selected, (newX) => {
   console.log(newX)
   if(newX.length >1) {
     message.error("最多選一個")
+    selected.value.splice(1,1)
   }
 })
 onMounted(() => {

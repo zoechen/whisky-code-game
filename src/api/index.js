@@ -28,11 +28,13 @@ export const player = reactive({
     name: '',
     userID: '',
     id: 0,
-    score: 0
+    score: 0,
+    cost: 0,
+    money: 0
   })
 
 export function findID(userID){
-    getPlayerList()
+    //getPlayerList()
     loading.value = true
     $http.get(`/getOne/${userID}`).then((res)=>{
         if(res.data){
@@ -139,6 +141,17 @@ export function getPlayerScore(userID){
     })
 }
 
+export function getPlayerMoneyCost(userID){
+    $http.get(`/getOne/${userID}`).then((res)=>{
+        localStorage.setItem('score', res.data.score)
+        localStorage.setItem('cost', res.data.cost)
+        localStorage.setItem('money', res.data.money)
+        player.score = res.data.score
+        player.cost = res.data.cost
+        player.money = res.data.money
+    })
+}
+
 export function setupScore(score,player){
     $http.put(`/update/${player.userID}`,{
         name: player.name,
@@ -148,6 +161,21 @@ export function setupScore(score,player){
     })
     localStorage.setItem('score', score)
     player.score = score
+}
+
+export function setupMoneyCost(player, cost, money){
+    $http.put(`/update/${player.userID}`,{
+        name: player.name,
+        userID: player.userID,
+        step: player.step,
+        score: player.score,
+        cost: cost,
+        money: money   
+    })
+    localStorage.setItem('cost', cost)
+    localStorage.setItem('money', money)
+    player.cost = cost
+    player.money = money
 }
 
 
@@ -180,4 +208,43 @@ export function pk(match,result){
     })
     console.log("game finished")
     loading.value = false
+}
+
+export function createWine(userID,wine1,wine2,wine3){
+    loading.value = true
+    $http.post('/createWine',{
+        userID: userID,
+        wine1_1: wine1,
+        wine2_1: wine2,
+        wine3_1: wine3,
+    }).then((res)=>{
+        console.log(res)
+    })
+    localStorage.setItem('wine1_1', wine1)
+    localStorage.setItem('wine2_1', wine2)
+    localStorage.setItem('wine3_1', wine3)
+    loading.value = false
+}
+
+export function getWine(userID){
+    $http.get(`/wine/${userID}`).then((res)=>{
+        if(res.data){
+            localStorage.setItem('wine1_1', res.data.wine1_1)
+            localStorage.setItem('wine1_2', res.data.wine1_2)
+            localStorage.setItem('wine1_3', res.data.wine1_3)
+            localStorage.setItem('wine2_1', res.data.wine2_1)
+            localStorage.setItem('wine2_2', res.data.wine2_2)
+            localStorage.setItem('wine2_3', res.data.wine2_3)
+            localStorage.setItem('wine3_1', res.data.wine3_1)
+            localStorage.setItem('wine3_2', res.data.wine3_2)
+            localStorage.setItem('wine3_3', res.data.wine3_3)
+        }
+    }).then((res)=>{
+       // console.log(res)
+    })
+}
+
+
+export function setWineNumber(player,data){
+    $http.put(`/newBuyWine/${player.userID}`,data)
 }

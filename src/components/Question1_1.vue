@@ -300,11 +300,11 @@ function goNext() {
 </script>
 <style>
 .question.s01{
-  width: 105vw;
+  width: 100vw;
   height: 84vh;
   background: url('../assets/images/s01-bg.png') no-repeat center;
   background-position: bottom center;
-  background-size: auto 100%;
+  background-size: auto 105%;
   padding: 8vh 8vw;
 }
 .question.s01 .title{
