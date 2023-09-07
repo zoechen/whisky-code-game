@@ -43,7 +43,7 @@
 
         <div v-if="game == 'buyit'">
           <div class="title">加碼或贖回</div>
-          <div class="rule"><p class="tip">可動用籌碼有 {{ money }}</p></div>
+          <div class="rule"><p class="tip">可動用籌碼有 {{ money }} <br/> 投入的籌碼共 {{ cost }}</p></div>
           <div class="itemCard">
             <img src="../assets/images/dr_no.png" alt="" />
             <div class="itemContent">
@@ -85,7 +85,7 @@
               </a-input-group>
               </div>
           </div>
-          <div class="rule"><p class="tip">投入的籌碼共 {{ cost }}</p></div>
+         
 
           <a-button class="btn" @click="tobuyWine()">看看放三年後的變化</a-button>
         </div>
@@ -256,13 +256,13 @@ onMounted(() => {
 
 
 function seeProfit(){
-  wine1old.value = localStorage.getItem('wine1_1')
-  wine2old.value = localStorage.getItem('wine2_1')
-  wine3old.value = localStorage.getItem('wine3_1')
+  wine1old.value = Number(localStorage.getItem('wine1_1'))
+  wine2old.value = Number(localStorage.getItem('wine2_1'))
+  wine3old.value = Number(localStorage.getItem('wine3_1'))
   // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
-  score.value = Number(player.score)
-  cost.value = Number(player.cost)
-  money.value = Number(player.money)
+  score.value = Number(localStorage.getItem('score'))
+  cost.value = Number(localStorage.getItem('cost'))
+  money.value = Number(localStorage.getItem('money'))
 }
 
 
@@ -323,132 +323,4 @@ function goNext() {
 }
 
 </script>
-<style>
-.question.s03 {
-  width: 100vw;
-  height: 82vh;
-  background: url('../assets/images/oak-bg.jpg') no-repeat center;
-  background-position: bottom center;
-  background-size: auto 105%;
-  padding: 5% 2rem;
-  text-align: center;
-}
-.question.s03 .title {
-  color: #d5cdc4;
-  font-size: 1.6rem;
-  text-shadow: #000 0.01rem 0.01rem;
-}
-.question.s03 .tips {
-  color: #cda674;
-  font-size: 1.4rem;
-  text-shadow: #000 0.01rem 0.01rem;
-}
-.question.s03 .btn {
-  background-color: #cda674;
-}
-.question.s03 .btn:hover {
-  color: #d5cdc4;
-  border-color: #d5cdc4;
-  background-color: #552917;
-}
-.question.s03 .rule{
-  margin: 0.4rem auto;
-  background-color: rgba(0, 0, 0, 0.8);
-  width: 100%;
-  padding: 18px;
-  border-radius: 2rem;
-}
-.amount {
-  color: #cda674;
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-}
-.item {
-  text-align: center;
-  padding: 1rem 0;
-  color: #d5cdc4;
-}
 
-.pic {
-  margin: 0 auto;
-  width: auto;
-  height: 12rem;
-}
-.flexChart {
-  height: 54vh;
-  width: calc(100vw-8rem);
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2rem 0.8rem 4rem 0.8rem;
-  margin-bottom: 2rem;
-}
-
-
-.itemCard {
-  height: 15vh;
-  width: calc(100vw-8rem);
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
-  display: flex;
-}
-.itemCard img {
-  flex: 1;
-  width: auto;
-}
-.itemCard .itemContent {
-  flex: 12rem;
-  float: left;
-  color: #cda674;
-  padding: 0.4rem;
-  text-align: left;
-}
-.itemCard .itemContent h2{
-  color: #d5cdc4;
-}
-.itemCard .btn{
-  flex: auto;
-  margin-top: 2.8rem;
-  margin-right: 0.8rem;
-}
-
-.ant-modal .ant-modal-content{
-  color: #d5cdc4;
-  background-color: #000;
-  
-}
-.ant-modal .ant-modal-content p{
-  font-size: 1.4rem;
-}
-.ant-modal-footer .ant-btn-primary{
-  background-color: #552917;
-}
-.ant-input-number-disabled{
-  background-color: #d5cdc4;
-}
-.bloc {
-  width: 100%;
-  text-align: center;
-  color: #d5cdc4;
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
-  height: 40rem;
-  
-}
-.bloc ul{
-  text-align: left;
-  font-size: 0.8rem;
-
-}
-.bloc p{
-  text-align: left;
-  font-size: 1.0rem;
-}
-
-.bloc .pic{
-  margin: 0 auto;
-  width: auto;
-  height: 8rem;
-}
-</style>

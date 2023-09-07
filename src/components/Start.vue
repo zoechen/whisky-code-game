@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-spin :spinning="loading">
       <div class="logo"></div>
       <div class="content">
         <p>嗨!晚安探員,<br/>請先輸入您的探員ID</p>
@@ -29,11 +30,12 @@
       <div class="footer">
         <div class="shadow"></div>
       </div>
+    </a-spin>
     </div>
 </template>
 <script setup>
 import { reactive } from 'vue'
-import { findID } from '../api/index'
+import { findID, loading } from '../api/index'
 
 const formState = reactive({
   userID: ''

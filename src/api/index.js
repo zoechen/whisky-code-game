@@ -2,10 +2,8 @@ import axios from 'axios'
 import { ref ,reactive} from 'vue'
 import { message } from 'ant-design-vue'
 
-
-//const api_path = 'https://mongodb-whisky-code.onrender.com/api/' //depoly
-const api_path = 'https://whisky-code-server.onrender.com/api/'
-//const api_path = 'http://localhost:3000/api/'    //localhost
+//depoly const api_path = 'https://whisky-code-server.onrender.com/api/'
+const api_path = 'http://localhost:3000/api/'    //localhost
 
 
 const $http = axios.create(
@@ -21,9 +19,14 @@ const $http = axios.create(
 )
 
 export const step = ref('')
+export const competitorName = ref('')
+export const competitorResult = ref('')
 export const loading = ref(false)
-export const playerList = ref([])
+export const playerListNAME = ref([])
+export const playerListID = ref([])
 export const matchList = ref([])
+export const matchRecord = ref(null)
+export const pkData = ref(null)
 export const player = reactive({
     name: '',
     userID: '',
@@ -34,10 +37,9 @@ export const player = reactive({
   })
 
 export function findID(userID){
-    //getPlayerList()
     loading.value = true
     $http.get(`/getOne/${userID}`).then((res)=>{
-        if(res.data){
+        if(res.data && res.data.userID === userID){
             localStorage.setItem('userID', res.data.userID)
             localStorage.setItem('name', res.data.name)
             localStorage.setItem('id', res.data._id)
@@ -48,11 +50,18 @@ export function findID(userID){
             player.id = res.data._id
             player.score = res.data.score
             step.value = res.data.step
-        }else{
+        }else if(!res.data){
             signUpID(userID)
-        } 
+        }
+    }).catch((err)=>{
+        console.error(err)
     })
     loading.value = false
+}
+export function getNameByID(userID){
+    $http.get(`/getOne/${userID}`).then((res)=>{
+        return res.data.name
+    })
 }
 
 export function signUpID(userID){
@@ -77,7 +86,7 @@ export function signUpID(userID){
 
 export function setupName(name,id){
     loading.value = true
-    let taken = playerList.value.includes(name)
+    let taken = playerListNAME.value.includes(name)
     if(taken) {
         message.error('這個名字已經有人用了，再想想吧！')
     }else{
@@ -100,37 +109,95 @@ export function setupName(name,id){
     loading.value = false
 }
 
-export function getPlayerList(){
-    axios.get('/getAll').then((res)=>{
-        playerList.value = Object.values(res.data).map(item => item.name)
-        console.log(playerList.value)
+export function getPlayerNameList(){
+    $http.get('/getAll').then((res)=>{
+        playerListNAME.value = Object.values(res.data).map(item => item.name)
+        console.log(playerListNAME)
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+export function getPlayerIDList(){
+    $http.get('/getAll').then((res)=>{
+        playerListID.value = Object.values(res.data).map(item => item.userID)
+        console.log(playerListID)
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+export function createMatchList(data){
+
+    $http.post('/createMatchList',{
+        matchID: data.matchID,
+        teamA: data.teamA,
+        teamB: data.teamB,
+    }
+    ).then((res)=>{
+        createPK(res.data.teamA,res.data.matchID,'teamA',res.data.teamB)
+        createPK(res.data.teamB,res.data.matchID,'teamB',res.data.teamA)
+    }).catch((err)=>{
+        console.error(err)
     })
 }
 export function getMatchList(){
-    $http.get('/getAll').then((res)=>{
-        let teamA = []
-        let teamB = []
-        let templist = []
-        for (let i = 0; i < res.data.length; i++){
-           if(i%2){
-            teamA.push(res.data[i]) 
-           }else{
-            teamB.push(res.data[i]) 
-           }
-        }
-        for (let i = 0; i < teamA.length; i++){
-            let matchData = {
-                match_id: i,
-                teamA: teamA[i].userID,
-                teamB: teamB[i].userID,
-            }
-            templist.push(matchData)
-            $http.post()
-        }
-        matchList.value = templist
+    $http.get('/getMatchList').then((res)=>{
+        matchList.value = res.data
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
 
-        console.log("matchList:",matchList.value)
+export function createPK(userID,matchID,team,pk){
+    loading.value = true
+    $http.post('/pk',{
+        userID: userID,
+        matchID: matchID,
+        team: team,
+        pk:pk
+    }).catch((err)=>{
+        console.error(err)
+    })
+    loading.value = false
+}
 
+export function updateResult(data){
+    $http.put(`/updateResult/${data.userID}`,data).catch((err)=>{
+        console.error(err)
+    })
+}
+export function getPK(userID){
+    $http.get(`/getPK/${userID}`).then((res)=>{
+        pkData.value = res.data
+        getCompetitorName(res.data.pk)
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+
+export function getMatchRecord(matchID){
+    $http.get(`/matchResult/${matchID}`).then((res)=>{
+        matchRecord.value = res.data
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+
+export function getRecordByMatchID(){
+    $http.get('/getMatchList').then((res)=>{
+        matchList.value = res.data
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+export function getCompetitorName(userID){
+    $http.get(`/getOne/${userID}`).then((res)=>{
+        competitorName.value = res.data.name
+    })
+}
+
+export function getCompetitorResult(userID){
+    $http.get(`/getPK/${userID}`).then((res)=>{
+        competitorResult.value = res.data.result
     })
 }
 
@@ -198,17 +265,7 @@ export function rankScore(){
     return data
 }
 
-export function pk(match,result){
-    loading.value = true
-    $http.post('/pk',{
-        match: match,
-        result: result
-    }).then((res)=>{
-        console.log(res)
-    })
-    console.log("game finished")
-    loading.value = false
-}
+
 
 export function createWine(userID,wine1,wine2,wine3){
     loading.value = true

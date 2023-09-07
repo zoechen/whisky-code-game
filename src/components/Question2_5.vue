@@ -4,18 +4,8 @@
       <div class="score">您目前有 {{ player.score }}</div>
     </div>
     <div class="question s02">
-      <div v-if="game == 'rule'" class="info">
-        <p class="title">{{ player.name }},我們要正式開始了</p>
-        <div class="rule">
-          <p class="tips">
-            接下來五局，你的對手是{{ competitorName }}
-          </p>
-        </div>
-        <div class="action"><a-button size="large" class="btn" style="width: 80%;"
-            @click="game = 'gamble01'; goGamble()">正式開始!</a-button></div>
-      </div>
       <div class="pk" v-if="game == 'gamble01'">
-        <p class="tips">第一局</p>
+        <p class="tips">最後一局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
         <a-button class="btn w50" :class="{ team: isActiveTeam || result.value == 'team' }" size="large"
           @click="() => { isActiveTeam = true; isActiveSolo = false; result = 'team' }">合作</a-button>
@@ -35,7 +25,7 @@
             恭喜獨享 150,000
           </p>
         </div>
-        <a-button class="btn next" size="large" type="primary" @click="()=>{goNext()}">第二局</a-button>
+        <a-button class="btn next" size="large" type="primary" @click="()=>{goNext()}">中場休息</a-button>
       </div>
     </div>
     <div class="footer">
@@ -47,7 +37,7 @@ import { ref, onMounted, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
 import dayjs from 'dayjs'
 
-const game = ref('rule')
+const game = ref('gamble01')
 const end = ref('0')
 const result = ref('0')
 const wait = ref(8)
@@ -57,6 +47,7 @@ const timer = ref(5)
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
+  goGamble()
 })
 
 
@@ -131,7 +122,7 @@ function goNext() {
   }
   console.log(score)
   setupScore(score, player)
-  let next = 'Question2_2'
+  let next = 'Question3_1'
   setStep(next, player)
   step.value = next
   clearInterval(timer)

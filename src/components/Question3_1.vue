@@ -43,7 +43,7 @@
             </template>
           <div class="bloc">
             <h2>Dr. No</h2>
-            <img src="../assets/images/dr_no.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <p>獨家採用西班牙赫雷斯省精選出來的雪莉桶釀製熟成。
               30年的純天然深紅木酒色是該系列中最濃豔的一款，擁有深遂酒色，
               這渾然天成的色澤可不是一般酒廠添加人工香料或焦糖可調配成的，此酒款約1970年蒸餾，2000年發售的單一麥芽威士忌。
@@ -58,7 +58,7 @@
           </div>
           <div class="bloc">
             <h2>Goldfinger</h2>
-            <img src="../assets/images/Goldfinger.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
           <p>使用首次西班牙Oloroso雪莉桶來熟成，稀少珍貴，每一滴都令人屏息以待。
             2007年上市時針對日本與台灣市場發售，當時僅發行90,000瓶。是口感濃郁、豐富的威士忌的超高級品質。
             色澤深沈誘人，以首次裝桶的小型雪莉桶熟成，未經冷卻過濾，淬煉出的十二年單一純麥威士忌。不僅要滿足您對高級氣味的追求，更要豐富您的味蕾感官。
@@ -73,7 +73,7 @@
           </div>
           <div class="bloc">
             <h2>Thunderball</h2>
-            <img src="../assets/images/Thunderball.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
           <p>單一麥芽威士忌，精選八款來自歐洲與美國的優質雪莉橡木桶勾兌，是完美詮釋極致桶藝的年度限量酒款。
             橡木桶大師從最源頭的產地挑選、採購木材、手工製桶與潤桶等龐大又複雜的過程中，每一個細節都無可挑剔。
             這款經雪莉酒潤桶並陳釀至完美熟成後所勾兌融合的威士忌，口感豐富且層次多變，可充分品嘗到每種橡木桶的特色風味。
@@ -97,7 +97,7 @@
             >我要買酒</a-button>
         </div>
         <div v-if="game == 'buyit'">
-          <div class="rule"><p class="tip">目前的籌碼有 {{ player.score }}</p></div>
+          <div class="rule"><p class="tip">目前的籌碼有 {{ player.score }} | 投入的籌碼共 {{ cost }}</p></div>
           <div class="itemCard">
             <img src="../assets/images/dr_no.png" alt="" />
             <div class="itemContent">
@@ -139,7 +139,7 @@
               </a-input-group>
               </div>
           </div>
-          <div class="rule"><p class="tip">投入的籌碼共 {{ cost }}</p></div>
+          
 
           <a-button class="btn" @click="tobuyWine">買下去</a-button>
         </div>
@@ -339,8 +339,11 @@ function goNext() {
   margin: 0.4rem auto;
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
-  padding: 18px;
+  padding: 10px;
   border-radius: 2rem;
+}
+.question.s03 .rule .tips{
+  color: #cda674;
 }
 .amount {
   color: #cda674;
@@ -369,7 +372,7 @@ function goNext() {
 
 
 .itemCard {
-  height: 15vh;
+  height: 10rem;
   width: calc(100vw-8rem);
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
@@ -379,6 +382,7 @@ function goNext() {
 .itemCard img {
   flex: 1;
   width: auto;
+  filter:grayscale(100%)
 }
 .itemCard .itemContent {
   flex: 12rem;
@@ -402,7 +406,7 @@ function goNext() {
   
 }
 .ant-modal .ant-modal-content p{
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .ant-modal-footer .ant-btn-primary{
   background-color: #552917;
@@ -417,7 +421,7 @@ function goNext() {
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 2rem;
-  height: 40rem;
+  height: 36rem;
   
 }
 .bloc ul{
@@ -427,7 +431,7 @@ function goNext() {
 }
 .bloc p{
   text-align: left;
-  font-size: 1.0rem;
+  font-size: 0.8rem;
 }
 
 .bloc .pic{
