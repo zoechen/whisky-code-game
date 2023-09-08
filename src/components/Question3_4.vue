@@ -12,7 +12,7 @@
         <div v-if="game == 'result'">
           <div class="rule"><div class="tip">投入成本 {{ cost }} | 可動用籌碼有 {{ money }}</div></div>
           <div class="itemCard">
-            <img src="../assets/images/dr_no.png" alt="" />
+            <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Dr. No</h2>
               漲幅 <b>230%</b><br/>總價值提昇為<br />
@@ -20,14 +20,14 @@
             </div>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/Goldfinger.png" alt="" />
+            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Goldfinger</h2>
               漲幅<b>4295.45%</b><br/>總價值提昇為<br />金額{{ (wine2old + wine2two + wine2new)  * 95400 }}<br/>
             </div>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/Thunderball.png" alt="" />
+            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Thunderbal</h2>
               漲幅<b>912.5%</b><br/>總價值提昇為<br />金額{{ (wine3old + wine3two + wine3new) * 36500 }}<br/>

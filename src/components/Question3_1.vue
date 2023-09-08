@@ -43,7 +43,6 @@
             </template>
           <div class="bloc">
             <h2>Dr. No</h2>
-            <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <p>獨家採用西班牙赫雷斯省精選出來的雪莉桶釀製熟成。
               30年的純天然深紅木酒色是該系列中最濃豔的一款，擁有深遂酒色，
               這渾然天成的色澤可不是一般酒廠添加人工香料或焦糖可調配成的，此酒款約1970年蒸餾，2000年發售的單一麥芽威士忌。
@@ -58,7 +57,6 @@
           </div>
           <div class="bloc">
             <h2>Goldfinger</h2>
-            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
           <p>使用首次西班牙Oloroso雪莉桶來熟成，稀少珍貴，每一滴都令人屏息以待。
             2007年上市時針對日本與台灣市場發售，當時僅發行90,000瓶。是口感濃郁、豐富的威士忌的超高級品質。
             色澤深沈誘人，以首次裝桶的小型雪莉桶熟成，未經冷卻過濾，淬煉出的十二年單一純麥威士忌。不僅要滿足您對高級氣味的追求，更要豐富您的味蕾感官。
@@ -73,7 +71,6 @@
           </div>
           <div class="bloc">
             <h2>Thunderball</h2>
-            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
           <p>單一麥芽威士忌，精選八款來自歐洲與美國的優質雪莉橡木桶勾兌，是完美詮釋極致桶藝的年度限量酒款。
             橡木桶大師從最源頭的產地挑選、採購木材、手工製桶與潤桶等龐大又複雜的過程中，每一個細節都無可挑剔。
             這款經雪莉酒潤桶並陳釀至完美熟成後所勾兌融合的威士忌，口感豐富且層次多變，可充分品嘗到每種橡木桶的特色風味。
@@ -99,10 +96,9 @@
         <div v-if="game == 'buyit'">
           <div class="rule"><p class="tip">目前的籌碼有 {{ player.score }} | 投入的籌碼共 {{ cost }}</p></div>
           <div class="itemCard">
-            <img src="../assets/images/dr_no.png" alt="" />
+            <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
             <h2>Dr. No</h2>
-              
               目前市場價格 100,000/支<br />
               最低購買量 <b>1</b> 支
                 <a-input-group compact>
@@ -113,10 +109,9 @@
             </div>
            </div>
           <div class="itemCard">
-            <img src="../assets/images/Goldfinger.png" alt="" />
+            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
             <h2>Goldfinger</h2>
-
               目前市場價格 2,200/支<br />
               最低購買量 <b>10</b> 支
               <a-input-group compact>
@@ -127,7 +122,8 @@
               </div>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/Thunderball.png" alt="" />
+            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+
             <div class="itemContent">
             <h2>Thunderball</h2>
               目前市場價格 4,000/支<br />
@@ -139,8 +135,6 @@
               </a-input-group>
               </div>
           </div>
-          
-
           <a-button class="btn" @click="tobuyWine">買下去</a-button>
         </div>
        
@@ -156,7 +150,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupMoneyCost, setStep, getPlayerScore, player, step, createWine } from '../api/index'
+import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber } from '../api/index'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -289,7 +283,11 @@ function tobuyWine() {
     message.error("籌碼不夠!!!再調整一下數量吧")
   } else {
     money.value = Number(player.score) - cost.value
-    createWine(player.userID,wine1num.value,wine2num.value,wine3num.value)
+    setWineNumber(player, {
+    wine1_1: wine1num.value,
+    wine2_1: wine2num.value,
+    wine3_1: wine3num.value
+    })
     setupMoneyCost( player, cost.value, money.value )
     goNext()
   }
@@ -341,6 +339,7 @@ function goNext() {
   width: 100%;
   padding: 10px;
   border-radius: 2rem;
+  font-size: 1rem;
 }
 .question.s03 .rule .tips{
   color: #cda674;
@@ -356,11 +355,6 @@ function goNext() {
   color: #d5cdc4;
 }
 
-.pic {
-  margin: 0 auto;
-  width: auto;
-  height: 12rem;
-}
 .flexChart {
   height: 54vh;
   width: calc(100vw-8rem);
@@ -370,9 +364,8 @@ function goNext() {
   margin-bottom: 2rem;
 }
 
-
 .itemCard {
-  height: 10rem;
+  height: 18vh;
   width: calc(100vw-8rem);
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
@@ -380,12 +373,12 @@ function goNext() {
   display: flex;
 }
 .itemCard img {
+  height: 12vh;
   flex: 1;
-  width: auto;
   filter:grayscale(100%)
 }
 .itemCard .itemContent {
-  flex: 12rem;
+  flex: 50vw;
   float: left;
   color: #cda674;
   padding: 0.4rem;
@@ -421,7 +414,7 @@ function goNext() {
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 2rem;
-  height: 36rem;
+  height: 65vh;
   
 }
 .bloc ul{
@@ -437,7 +430,8 @@ function goNext() {
 .bloc .pic{
   margin: 0 auto;
   width: auto;
-  height: 8rem;
+  height: 4rem;
+  filter:grayscale(100%)
 }
 </style>
 

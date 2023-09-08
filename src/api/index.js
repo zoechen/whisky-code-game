@@ -268,19 +268,16 @@ export function rankScore(){
 
 
 
-export function createWine(userID,wine1,wine2,wine3){
+export function createWine(userID,data){
     loading.value = true
     $http.post('/createWine',{
         userID: userID,
-        wine1_1: wine1,
-        wine2_1: wine2,
-        wine3_1: wine3,
+        wine1_1: data.wine1_1,
+        wine2_1: data.wine2_1,
+        wine3_1: data.wine3_1,
     }).then((res)=>{
         console.log(res)
     })
-    localStorage.setItem('wine1_1', wine1)
-    localStorage.setItem('wine2_1', wine2)
-    localStorage.setItem('wine3_1', wine3)
     loading.value = false
 }
 
@@ -304,5 +301,9 @@ export function getWine(userID){
 
 
 export function setWineNumber(player,data){
-    $http.put(`/newBuyWine/${player.userID}`,data)
+    $http.put(`/newBuyWine/${player.userID}`,data).then((res)=>{
+        if(!res.data){
+            createWine(player.userID,data)
+        }
+    })
 }
