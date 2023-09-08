@@ -125,6 +125,5 @@ function goNext() {
   let next = 'Question2_3'
   setStep(next, player)
   step.value = next
-  clearInterval(timer)
 }
 </script>

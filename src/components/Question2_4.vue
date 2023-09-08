@@ -108,7 +108,6 @@ function whoWin(me, yo) {
 function goNext() {
   let score = Number(player.score)
   switch (end.value) {
-    switch (end.value) {
     case '1':
       score += 120000
       break
@@ -126,6 +125,5 @@ function goNext() {
   let next = 'Question2_5'
   setStep(next, player)
   step.value = next
-  clearInterval(timer)
 }
 </script>

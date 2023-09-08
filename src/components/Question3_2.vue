@@ -264,9 +264,9 @@ function seeProfit() {
   wine2old.value = localStorage.getItem('wine2_1')
   wine3old.value = localStorage.getItem('wine3_1')
   // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
-  score.value = player.cost
-  cost.value = player.cost
-  money.value = player.money
+  //score.value = localStorage.getItem('score') || player.score
+  cost.value = localStorage.getItem('cost') || player.cost
+  money.value = localStorage.getItem('money') || player.money
 }
 
 

@@ -263,8 +263,8 @@ function seeProfit(){
   wine3two.value = Number(localStorage.getItem('wine3_2'))
   // profit.value = (wine1old.value * 14000 + wine2old.value * 33000 + wine3old.value * 13500) - Number(cost.value)
   score.value = Number(localStorage.getItem('score'))
-  cost.value = Number(localStorage.getItem('cost'))
-  money.value = Number(localStorage.getItem('money'))
+  cost.value = localStorage.getItem('cost') || player.cost
+  money.value = localStorage.getItem('money') || player.money
 }
 
 
@@ -272,23 +272,23 @@ function redeemMoney(){
   
   switch (redeemItem.value) {
     case 'wine1':
-      cost.value -= wine1old.value * 100000
-      cost.value -= wine1two.value * 140000
-      money.value += (wine1old.value + wine1two.value) * 190000
+      cost.value = Number(cost.value) - wine1old.value * 100000
+      cost.value = Number(cost.value) - wine1two.value * 140000
+      money.value = Number(money.value) + (wine1old.value + wine1two.value) * 190000
       wine1old.value = 0
       wine1two.value = 0
       break;
     case 'wine2':
-      cost.value -= wine2old.value * 2200
-      cost.value -= wine2two.value * 8500
-      money.value += (wine2old.value + wine2two.value) * 33000
+      cost.value = Number(cost.value) - wine2old.value * 2200
+      cost.value = Number(cost.value) - wine2two.value * 8500
+      money.value = Number(money.value) + (wine2old.value + wine2two.value) * 33000
       wine2old.value = 0
       wine2two.value = 0
       break;
     case 'wine3':
-      cost.value -= wine3old.value * 4000
-      cost.value -= wine3two.value * 5500
-      money.value += (wine3old.value+wine3two.value) * 13500
+      cost.value = Number(cost.value) - wine3old.value * 4000
+      cost.value = Number(cost.value) - wine3two.value * 5500
+      money.value = Number(money.value) + (wine3old.value+wine3two.value) * 13500
       wine3old.value = 0
       wine3two.value = 0
       break;

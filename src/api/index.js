@@ -38,9 +38,7 @@ export const player = reactive({
   })
 
 export function findID(userID){
-    loading.value = true
     $http.get(`/getOne/${userID}`).then((res)=>{
-        if(res.data && res.data.userID === userID){
             localStorage.setItem('userID', res.data.userID)
             localStorage.setItem('name', res.data.name)
             localStorage.setItem('id', res.data._id)
@@ -51,13 +49,10 @@ export function findID(userID){
             player.id = res.data._id
             player.score = res.data.score
             step.value = res.data.step
-        }else if(!res.data){
-            signUpID(userID)
-        }
+        
     }).catch((err)=>{
         console.error(err)
     })
-    loading.value = false
 }
 export function getNameByID(userID){
     $http.get(`/getOne/${userID}`).then((res)=>{
@@ -252,7 +247,7 @@ export function setStep(step,player){
         name: player.name,
         userID: player.userID,
         step: step,
-        score: player.score 
+        score: localStorage.getItem('score')
     })
     localStorage.setItem('step', step)
 }

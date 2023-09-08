@@ -30,6 +30,7 @@
     <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
     <p class="tips">不會計分</p>
     <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble01';goGamble()}">試玩一局</a-button>
+    
   </div>
   <div class="pk" v-if="game == 'gamble01'">
     <p class="tips">試玩一局</p>
@@ -40,7 +41,7 @@
     <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button> -->
     <p class="tips"><b>{{ wait }}</b></p>
   </div>
-  <div v-if="game == 'result01'">
+  <div v-if="game == 'result01'" class="end">
     <div v-if="end=='0'" class="los">
       <p class="res">啊,賠了 80,000</p>
     </div>
@@ -232,7 +233,7 @@ function goNext() {
 }
 .question.s02 .btn.next{
   background-color: #552917;
-  margin-top: 30rem;
+  margin-top: 10rem;
 }
 .question.s02 .rule{
   margin: 0 auto;
@@ -263,6 +264,7 @@ function goNext() {
 }
 .question.s02  .end{
   height: 82vh;
+  width: 100vw;
 }
 .question.s02 .res{
   color: #f5f1ea;
