@@ -108,13 +108,13 @@ function whoWin(me, yo) {
 function goNext() {
   let score = Number(player.score)
   switch (end.value) {
-    case 1:
+    case '1':
       score += 120000
       break
-    case 2:
+    case '2':
       score += 150000
       break
-    case 0:
+    case '0':
       score -= 80000
       break
     default:
