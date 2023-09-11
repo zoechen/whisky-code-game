@@ -15,10 +15,19 @@
         <a-row :gutter="[4, 16]">
             <a-col :span="12">pk01,剩{{ n }}局</a-col>
             <a-col :span="12">pk02,剩{{ m }}局</a-col>
-            <a-col :span="6"><a-button @click="resultPass('gamble')">正試開始</a-button></a-col>
-            <a-col :span="6"><a-button @click="resultPass('result')">給結果</a-button></a-col>
-            <a-col :span="6"><a-button @click="resultPass('NextRound')">下一局</a-button></a-col>
-            <a-col :span="6"><a-button @click="resultPass('changeMatch')">換配對</a-button></a-col>
+            <a-col :span="8"><a-button @click="resultPass('gamble')">開始</a-button></a-col>
+            <a-col :span="8"><a-button @click="resultPass('result')">給結果</a-button></a-col>
+            <a-col :span="8"><a-button @click="resultPass('NextRound')">下一局</a-button></a-col>
+        </a-row>
+        <a-row>
+            <a-col :span="6"><a-button @click="resultPass('changeMatch')" disabled>換配對</a-button></a-col>
+            <a-col :span="6"><a-button @click="resultPass('gambleWait')" disabled>等開始</a-button></a-col>
+            <a-col :span="6"><a-button @click="resultPass('resultWait')" disabled>等結果</a-button></a-col>
+        </a-row>
+        <a-row>
+            <a-col :span="6"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
+            <a-col :span="6"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
+            <a-col :span="6"><a-button @click="resultPass('investment03')">投資三</a-button></a-col>
         </a-row>
         <a-row>{{ state.onlineList }}</a-row>
     </div>
