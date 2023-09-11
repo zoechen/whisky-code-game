@@ -75,7 +75,7 @@
             持有數量{{ wine3num }}
           </div>
         </div>
-        <a-button class="btn" @click="setScore()">看看放兩年後的變化</a-button>
+        <a-button class="btn" @click="goNext('Question3_2_2')">看看放兩年後的變化</a-button>
       </div>
       
     </div>
@@ -161,20 +161,6 @@ function tobuyWine() {
     setupMoneyCost( player, cost.value, money.value )
     game.value = 'chart'
   }
-}
-function setScore() {
-  setWineNumber(player, {
-    wine1_1: wine1num.value,
-    wine2_1: wine2num.value,
-    wine3_1: wine3num.value
-  })
-  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
-  setupScore(total.value, player)
-  setupMoneyCost(player, cost.value, money.value)
-  localStorage.setItem('wine1_1', wine1num.value)
-  localStorage.setItem('wine2_1', wine2num.value)
-  localStorage.setItem('wine3_1', wine3num.value)
-  goNext('Question3_1_2')
 }
 
 
