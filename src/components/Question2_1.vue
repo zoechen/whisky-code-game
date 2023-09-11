@@ -132,7 +132,7 @@ function getResults() {
       let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
       whoWin(result.value, rnd)
     }
-  },2000)
+  },500)
   
 }
 

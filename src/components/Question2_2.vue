@@ -8,7 +8,6 @@
       <div class="rule">
         <p class="title">{{ player.name }}</p>
         <p class="tips">
-         
         <br/>
         您目前有
         <br/>

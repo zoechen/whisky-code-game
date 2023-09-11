@@ -10,11 +10,14 @@
     <Question2_2 v-if="step == 'Question2_2'"/>
     <Question2_3 v-if="step == 'Question2_3'"/>
     <Question3_0 v-if="step == 'Question3_0'"/>
-    <Question3_1 v-if="step == 'Question3_1'"/>
-    <Question3_2 v-if="step == 'Question3_2'"/>
+    <Question3_1_1 v-if="step == 'Question3_1_1'"/>
+    <Question3_1_2 v-if="step == 'Question3_1_2'"/>
+    <Question3_2_1 v-if="step == 'Question3_2_1'"/>
+    <Question3_2_2 v-if="step == 'Question3_2_2'"/>
     <Question3_3 v-if="step == 'Question3_3'"/>
     <Question3_4 v-if="step == 'Question3_4'"/>
     <MyScore v-if="step == 'MyScore'" />
+    <WineAns v-if="step == 'WineAns'" />
   </template>
   
   <script setup>
@@ -31,11 +34,14 @@
   import Question2_2 from "../components/Question2_2.vue"
   import Question2_3 from "../components/Question2_3.vue"
   import Question3_0 from "../components/Question3_0.vue"
-  import Question3_1 from "../components/Question3_1.vue"
-  import Question3_2 from "../components/Question3_2.vue"
+  import Question3_1_1 from "../components/Question3_1_1.vue"
+  import Question3_1_2 from "../components/Question3_1_2.vue"
+  import Question3_2_1 from "../components/Question3_2_1.vue"
+  import Question3_2_2 from "../components/Question3_2_2.vue"
   import Question3_3 from "../components/Question3_3.vue"
   import Question3_4 from "../components/Question3_4.vue"
   import MyScore from "../components/MyScore.vue"
+  import WineAns from "../components/WineAns.vue"
   onMounted(() => {
       localStorage.clear()
       step.value = "Start"

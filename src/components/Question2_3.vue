@@ -56,7 +56,6 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
-import dayjs from 'dayjs'
 import { socket } from "@/socket"
 
 const game = ref('gambleWait')
@@ -74,19 +73,23 @@ socket.on("adminStep", (v) => {
 
 watch(pass, (newX) => {
   if (newX == 'result') {
-    game.value = 'result'
-  }else if (newX == 'gambleWait') {
+    getResults()
+    setTimeout(()=>{
+      game.value = 'result'
+    },500)
+  } else if (newX == 'gambleWait') {
     game.value = 'gambleWait'
-  }else if (newX == 'NextRound'){
+  } else if (newX == 'NextRound') {
     goNext()
-    wait.value = 9
-  }else if (newX == 'gamble'){
+  } else if (newX == 'gamble') {
     game.value = 'gamble'
+    wait.value = 9
     goGamble()
-  }else{
+  } else {
     console.error(newX)
   }
 })
+
 
 onMounted(() => {
   getPlayerScore(player.userID)
@@ -96,49 +99,49 @@ onMounted(() => {
 
 
 function goGamble() {
-    setTimer = setInterval(()=>{countdownTimer()},1000)
-    setTimeout(()=>{clearTimeout(setTimer)},10000)
+  setTimer = setInterval(() => { countdownTimer() }, 1000)
+  setTimeout(() => { clearTimeout(setTimer) }, 10000)
 }
 
-function countdownTimer(){
- 
-    wait.value -= 1
-    
-    if (wait.value == 1) {
-    disabled.value = false
 
-      if (result.value == '0') {
-        if (Math.random() > 0.5) {
-          result.value = 'solo'
-        } else {
-          result.value = 'team'
-        }
-      }
-      updateResult({
-        userID: player.userID,
-        result: result.value
-      })
-      socket.emit('who', {
-         [player.userID] : result.value
-      })
+function countdownTimer() {
 
-    } else if (wait.value == 0) {
+wait.value -= 1
 
-      getCompetitorResult(pkData.value.pk)
-      game.value = "resultWait"
-    
-    } else if (wait.value == -1) {
-      whoWin(result.value, competitorResult.value)
-      if (competitorResult.value) {
-        whoWin(result.value, competitorResult.value)
-      } else {
-        let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
-        whoWin(result.value, rnd)
-      }
+if (wait.value == 1) {
+  if (result.value == '0') {
+    if (Math.random() > 0.5) {
+      result.value = 'solo'
+    } else {
+      result.value = 'team'
     }
- 
+  }
+  updateResult({
+    userID: player.userID,
+    result: result.value
+  })
+  socket.emit('who', {
+    [player.userID]: result.value
+  })
+} else if (wait.value == 0) {
+  game.value = "resultWait"
+  end.value = '3'
+}
 }
 
+function getResults() {
+getCompetitorResult(pkData.value.pk)
+console.log(competitorResult.value)
+setTimeout(()=>{
+  if (competitorResult.value) {
+    whoWin(result.value, competitorResult.value)
+  } else {
+    let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
+    whoWin(result.value, rnd)
+  }
+},500)
+
+}
 
 function whoWin(me, yo) {
   if (me == 'team' && yo == 'solo') {
