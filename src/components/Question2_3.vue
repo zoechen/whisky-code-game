@@ -77,8 +77,6 @@ watch(pass, (newX) => {
     game.value = 'result'
   }else if (newX == 'gambleWait') {
     game.value = 'gambleWait'
-    result.value = '0'
-    setTimer = null
   }else if (newX == 'NextRound'){
     goNext()
     wait.value = 9
@@ -157,6 +155,7 @@ function whoWin(me, yo) {
 
 
 function goNext() {
+  result.value = '0'
   let score = Number(player.score)
   switch (end.value) {
     case '1':

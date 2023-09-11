@@ -6,14 +6,14 @@
     <div class="question s02">
       <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName|| "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" size="large" disabled >合作</a-button>
         <a-button class="btn w50" size="large" disabled >獨享</a-button>
         <div class="tips">準備一下，馬上要開始了</div>
       </div>
       <div class="pk" v-if="game == 'gamble'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName|| "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
           @click="result = 'team'">合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large"
@@ -22,7 +22,7 @@
       </div>
       <div class="pk" v-if="game == 'resultWait'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName|| "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
       </div>
@@ -69,8 +69,6 @@ watch(pass, (newX) => {
     game.value = 'result'
   }else if (newX == 'gambleWait') {
     game.value = 'gambleWait'
-    result.value = '0'
-    setTimer = null
   }else if (newX == 'NextRound'){
     goNext()
   }else if (newX == 'gamble'){
@@ -117,8 +115,10 @@ function countdownTimer(){
          [player.userID] : result.value
       })
     } else if (wait.value == 0) {
+
       getCompetitorResult(pkData.value.pk)
-      game.value = "resultWait"
+      setTimeout(()=>{game.value = "resultWait"},500)
+      
     } else if (wait.value == -1) {
       whoWin(result.value, competitorResult.value)
       if (competitorResult.value) {
@@ -146,6 +146,7 @@ function whoWin(me, yo) {
 }
 
 function goNext() {
+  result.value = '0'
   let score = Number(player.score)
   switch (end.value) {
     case '1':
