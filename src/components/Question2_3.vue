@@ -100,7 +100,7 @@ onMounted(() => {
 
 function goGamble() {
   setTimer = setInterval(() => { countdownTimer() }, 1000)
-  setTimeout(() => { clearTimeout(setTimer) }, 10000)
+  setTimeout(() => { clearTimeout(setTimer); wait.value = 0 }, 10000)
 }
 
 

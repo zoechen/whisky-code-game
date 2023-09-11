@@ -20,9 +20,14 @@
 <script setup>
 import { ref, onMounted, } from 'vue'
 import { player, getPlayerScore } from '../api/index'
+import { socket } from "@/socket"
 
+socket.on("adminStep", (v) => {
+  if(v == 'WineAns'){
+    goNext('WineAns')
+  }
+})
 const game = ref('rank')
-
 
 onMounted(() => {
   getPlayerScore(player.userID)

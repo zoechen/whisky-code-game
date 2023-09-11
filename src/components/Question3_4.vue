@@ -59,7 +59,6 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
-import dayjs from 'dayjs'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -76,8 +75,6 @@ const wine3two = ref(0)
 const cost = ref(0)
 const score = ref(0)
 const money = ref(0)
-const isVisible = ref(false)
-const redeemItem =ref('')
 
 
 

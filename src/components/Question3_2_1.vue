@@ -102,7 +102,8 @@ const money = ref(0)
 const isVisible = ref(false)
 const redeemItem = ref('')
 const total = ref(0)
-const score = computed(() => Number(player.score).toLocaleString() )
+const score = ref(0)
+const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
 
@@ -114,7 +115,7 @@ watch(wine1new, (newValue, oldValue) => {
     wine1new.value = 0
   }
 
-  if (money.value < 140000 && newValue > oldValue) {
+  if (money.value < 140000 && newValue >= oldValue) {
     wine1new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -131,7 +132,7 @@ watch(wine2new, (newValue, oldValue) => {
   if (newValue < 0) {
     wine2new.value = 0
   }
-  if (money.value < 85000 && newValue > oldValue) {
+  if (money.value < 85000 && newValue >= oldValue) {
     wine2new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -148,7 +149,7 @@ watch(wine3new, (newValue, oldValue) => {
   if (newValue < 0) {
     wine3new.value = 0
   }
-  if (money.value < (5500 * 5) && newValue > oldValue) {
+  if (money.value < (5500 * 5) && newValue >= oldValue) {
     wine3new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -162,12 +163,15 @@ watch(wine3new, (newValue, oldValue) => {
 onMounted(() => {
   getWine(player.userID)
   getPlayerMoneyCost(player.userID)
+  setTimeout(()=>{
   wine1old.value = Number(localStorage.getItem('wine1_1'))
   wine2old.value = Number(localStorage.getItem('wine2_1'))
   wine3old.value = Number(localStorage.getItem('wine3_1'))
   // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
+  score.value = localStorage.getItem('score') || player.score
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
+  },500)
 })
 
 

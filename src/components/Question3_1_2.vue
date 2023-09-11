@@ -32,7 +32,7 @@
           <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
             :disabled="wine3num == 0">贖回</a-button>
         </div>
-        <a-button class="btn" @click="game = 'myScore'; setScore()">目前的籌碼有</a-button>
+        <a-button class="btn" @click="game = 'myScore';">目前的籌碼有</a-button>
       </div>
         <div v-if="game == 'myScore'">
         <div class="rule">
@@ -53,7 +53,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,setupScore } from '../api/index'
+import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,setupScore,getWine } from '../api/index'
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {
@@ -77,11 +77,15 @@ const redeemItem = ref('')
 
 
 onMounted(() => {
+  getWine(player.userID)
   getPlayerScore(player.userID)
-  money.value = localStorage.getItem('score') || player.score
-  wine1num.value = Number(localStorage.getItem('wine1_1'))
-  wine2num.value = Number(localStorage.getItem('wine2_1'))
-  wine3num.value = Number(localStorage.getItem('wine3_1'))
+  setTimeout(()=>{
+    money.value = localStorage.getItem('score') || player.score
+    wine1num.value = Number(localStorage.getItem('wine1_1'))
+    wine2num.value = Number(localStorage.getItem('wine2_1'))
+    wine3num.value = Number(localStorage.getItem('wine3_1'))
+  },500)
+
 })
 
 function redeemMoney() {
@@ -106,6 +110,7 @@ switch (redeemItem.value) {
     break;
 }
 isVisible.value = false
+setScore()
 }
 
 
@@ -115,12 +120,13 @@ function setScore() {
     wine2_1: wine2num.value,
     wine3_1: wine3num.value
   })
-  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
-  setupScore(total.value, player)
-  setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
+
+  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
+  setupScore(total.value, player)
+  setupMoneyCost(player, cost.value, money.value)
 }
 
 

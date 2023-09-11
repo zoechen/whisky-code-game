@@ -122,7 +122,7 @@ watch(wine1new, (newValue, oldValue) => {
     wine1new.value = 0
   }
   
-  if(money.value < 190000 && newValue > oldValue) {  
+  if(money.value < 190000 && newValue >= oldValue) {  
     wine1new.value = oldValue
       message.error("超出可動用籌碼")
   }
@@ -139,7 +139,7 @@ watch(wine2new, (newValue, oldValue) => {
   if(newValue < 0) {
     wine2new.value = 0
   }
-  if(money.value < 330000 && newValue > oldValue){
+  if(money.value < 330000 && newValue >= oldValue){
     wine2new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -156,7 +156,7 @@ watch(wine3new, (newValue, oldValue) => {
   if(newValue < 0) {
     wine3new.value = 0
   }
-  if(money.value < (13500*5) && newValue > oldValue) {
+  if(money.value < (13500*5) && newValue >= oldValue) {
     wine3new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -169,6 +169,7 @@ watch(wine3new, (newValue, oldValue) => {
 onMounted(() => {
   getWine(player.userID)
   getPlayerMoneyCost(player.userID)
+  setTimeout(()=>{
   wine1old.value = Number(localStorage.getItem('wine1_1'))
   wine2old.value = Number(localStorage.getItem('wine2_1'))
   wine3old.value = Number(localStorage.getItem('wine3_1'))
@@ -178,6 +179,7 @@ onMounted(() => {
   score.value = Number(localStorage.getItem('score'))
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
+  },500)
 })
 
 function tobuyWine(){

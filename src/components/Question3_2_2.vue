@@ -83,6 +83,7 @@ const totalLocal = computed(() => Number(total.value).toLocaleString() )
 onMounted(() => {
   getWine(player.userID)
   getPlayerMoneyCost(player.userID)
+  setTimeout(()=>{
   wine1old.value = Number(localStorage.getItem('wine1_1'))
   wine2old.value = Number(localStorage.getItem('wine2_1'))
   wine3old.value = Number(localStorage.getItem('wine3_1'))
@@ -92,6 +93,7 @@ onMounted(() => {
   // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
+  },500)
 })
 
 function redeemMoney(){
