@@ -2,100 +2,8 @@
   <div>
     <div class="logo"></div>
     <div class="question s03">
-      <div v-if="notYet" class="info">
-        <div class="rule">
-        <p class="title">恭喜您現在的籌碼有<br/>{{  player.score  }}</p>
-        <p class="tip">請耐心等待，我們將於</p>
-        <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
-        <p class="tip">後進行下一個有趣的遊戲!</p>
-      </div>
-      </div>
-      <div v-else>
-        <div v-if="game == 'rule'">
-          
-          <div class="rule">
-            <p class="title">{{ player.name }}探員,<br /></p>
-          <p class="tips">
-            推薦給您三款值得珍藏的威士忌,不僅好喝,更是能夠隨著時間提高價值喔!
-          </p>
-          <p class="title">先聽聽<br/> whisky code 的分享</p>
-        </div>
-            
-          <a-button
-            class="btn"
-            @click="
-              () => {
-                game = 'wineinfo'
-              }
-            "
-            >好</a-button>
-        
-        </div>
-        <div v-if="game == 'wineinfo'">
-          <a-carousel :after-change="onChange" arrows>
-            <template #prevArrow>
-              <div style="left: 10px; z-index: 999;color: #fff; font-size: 1.2rem;">
-              </div>
-            </template>
-            <template #nextArrow>
-              <div style="right: 10px;color: #fff;font-size: 1.2rem;">
-              </div>
-            </template>
-          <div class="bloc">
-            <h2>Dr. No</h2>
-            <p>獨家採用西班牙赫雷斯省精選出來的雪莉桶釀製熟成。
-              30年的純天然深紅木酒色是該系列中最濃豔的一款，擁有深遂酒色，
-              這渾然天成的色澤可不是一般酒廠添加人工香料或焦糖可調配成的，此酒款約1970年蒸餾，2000年發售的單一麥芽威士忌。
-            </p>
-              <!-- <ul>
-            <li>色澤：深紅木色。</li>
-            <li>香氣：濃郁甘醇的雪莉酒桶的氣味，帶有柳橙丁香、肉荳蔻和煙燻木氣息。</li>
-            <li>口感：果乾、雪莉酒、柳橙與煙燻木形成醇美柔順的風味。</li>
-            <li>餘韻：綿長馥郁的柳橙與香料氣息。</li>
-            <li>ABV：43%</li>
-            </ul> -->
-          </div>
-          <div class="bloc">
-            <h2>Goldfinger</h2>
-          <p>使用首次西班牙Oloroso雪莉桶來熟成，稀少珍貴，每一滴都令人屏息以待。
-            2007年上市時針對日本與台灣市場發售，當時僅發行90,000瓶。是口感濃郁、豐富的威士忌的超高級品質。
-            色澤深沈誘人，以首次裝桶的小型雪莉桶熟成，未經冷卻過濾，淬煉出的十二年單一純麥威士忌。不僅要滿足您對高級氣味的追求，更要豐富您的味蕾感官。
-        </p>  
-          <!-- <ul>
-            <li>色澤：黑檀木色。</li>
-            <li>香氣：濃郁甘醇，與雪莉酒桶的氣味緊密相合。</li>
-            <li>口感：豐富的果香、蜂蜜甜味與辛香料味，舌尖富含絲綢的圓潤感。</li>
-            <li>餘韻：每一口深藏辛香料、雪茄、柑橘、黑巧克力的氣味。</li>
-            <li>ABV：45.6%</li>
-            </ul> -->
-          </div>
-          <div class="bloc">
-            <h2>Thunderball</h2>
-          <p>單一麥芽威士忌，精選八款來自歐洲與美國的優質雪莉橡木桶勾兌，是完美詮釋極致桶藝的年度限量酒款。
-            橡木桶大師從最源頭的產地挑選、採購木材、手工製桶與潤桶等龐大又複雜的過程中，每一個細節都無可挑剔。
-            這款經雪莉酒潤桶並陳釀至完美熟成後所勾兌融合的威士忌，口感豐富且層次多變，可充分品嘗到每種橡木桶的特色風味。
-          </p>
-          <!-- <ul>
-            <li>色澤：天然蜂蜜。</li>
-            <li>香氣：柳橙、蘋果和果乾交融，散發鮮明豐郁的香氣。 橡木香氣中隱約透出香草、太妃糖和巧克力香。</li>
-            <li>口感：初嚐即現的木質辛香讓人心中浮現暖意，隨之出現豆蔻、肉桂味，還有些許乾薑與太妃糖香。 最後顯現的果香清新，和新鮮橡木香和諧交織。</li>
-            <li>餘韻：柔順悠長。</li>
-            <li>ABV：48.1%</li>
-            </ul> -->
-          </div>
-          </a-carousel>
-          <small>酒可以選擇哦!請左右滑滑看。</small><br/>
-          <a-button
-            class="btn"
-            @click="
-              () => {
-                game = 'buyit'
-              }
-            "
-            >我要買酒</a-button>
-        </div>
         <div v-if="game == 'buyit'">
-          <div class="rule"><p class="tip">目前的籌碼有 {{ player.score }} | 投入的籌碼共 {{ cost }}</p></div>
+          <div class="rule"><p class="tip">目前的籌碼有 {{ score }} | 投入的籌碼共 {{ costLocal }}</p></div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
@@ -138,35 +46,88 @@
           </div>
           <a-button class="btn" @click="tobuyWine">買下去</a-button>
         </div>
-       
+        <div v-if="game == 'chart'">
+        <div class="itemCard">
+          <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Dr. No</h2>
+            金額{{ wine1old * 100000 }}<br />
+            數量{{ wine1old }}
+          </div>
+          
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Goldfinger</h2>
+            金額{{ wine2old * 2200 }}<br />
+            數量{{ wine2old }}
+          </div>
+          
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Thunderbal</h2>
+            金額{{ wine3old * 4000 }}<br />
+            數量{{ wine3old }}
+          </div>
+          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
+            :disabled="wine3old == 0">贖回</a-button>
+        </div>
+        <a-button class="btn" @click="game = 'result'; seeProfit()">查看獲利</a-button>
+      </div>
+      <div v-if="game == 'result'">
+        <div class="itemCard">
+          <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Dr. No</h2>
+            漲幅 <b>140%</b><br />總價值提昇為<br />
+            金額{{ wine1old * 140000 }}<br />
+            數量{{ wine1old }}
+          </div>
+          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1'"
+            :disabled="wine1old == 0">贖回</a-button>
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Goldfinger</h2>
+            漲幅<b>386.36%</b><br />總價值提昇為<br />金額{{ wine2old * 8500 }}<br />數量{{ wine2old }}
+          </div>
+          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2'"
+            :disabled="wine2old == 0">贖回</a-button>
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Thunderbal</h2>
+            漲幅<b>137.5%</b><br />總價值提昇為<br />金額{{ wine3old * 5500 }}<br />數量{{ wine3old }}
+          </div>
+          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
+            :disabled="wine3old == 0">贖回</a-button>
+        </div>
+        <a-button class="btn" @click="game = 'myScore'; setScore()">目前的籌碼有</a-button>
+      </div>
+        <div v-if="game == 'myScore'">
+        <div class="rule">
+          <div class="title">總籌碼有{{ nowscore }}</div>
+          <div class="tip"> 可動用籌碼有 {{ money }}</div>
+        </div>
+          <a-button class="btn" @click="game = 'buyit';">加碼收藏</a-button>
       </div>
     </div>
     <div class="footer">
       <div class="shadow"></div>
     </div>
   </div>
-
- 
 </template>
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber } from '../api/index'
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js'
-import dayjs from 'dayjs'
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
-
-const game = ref('rule')
+const game = ref('buyit')
 const wine1num = ref(0)
 const wine2num = ref(0)
 const wine3num = ref(0)
@@ -176,7 +137,8 @@ const notYet =ref(true)
 const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
-
+const score = computed(() => Number(player.score).toLocaleString() )
+const costLocal = computed(() => Number(cost).toLocaleString() )
 
 watch(wine1num, (newX) => {
   console.log(newX)

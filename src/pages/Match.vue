@@ -41,6 +41,8 @@
 
 
   function splitArray() {
+
+    
   const copyArr = [...playerListID.value];
 
   while (copyArr.length > 0) {

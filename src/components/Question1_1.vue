@@ -77,7 +77,7 @@
     </div>
     <div v-if="game=='wineDrinkA'">
       <p class="title">{{ player.name }},猜對了嗎??</p>
-      <p class="result">恭喜獲得 ${{ player.score }}</p>
+      <p class="result">恭喜獲得 ${{ scoreLocal }}</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
@@ -200,7 +200,7 @@
     </div>
     <div v-if="game=='softDrinkA'">
       <p class="title">{{ player.name }},猜對了嗎??</p>
-      <p class="result">恭喜獲得 ${{ player.score }}</p>
+      <p class="result">恭喜獲得 ${{ scoreLocal}}</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
@@ -266,13 +266,14 @@
 </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { player, step, setupScore, setStep } from '../api/index'
 
 const selected = ref([])
 const nowScore = ref(0)
 const game = ref('isQuest')
+const scoreLocal = computed(() => Number(nowScore.value).toLocaleString() )
 
 watch(selected, (newX) => {
   console.log(newX)

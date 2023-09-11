@@ -25,7 +25,9 @@
             <a-col :span="8"><a-button @click="resultPass('resultWait')" disabled>等結果</a-button></a-col>
         </a-row>
         <a-row>
-            <a-col :span="6"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
+            <a-col :span="24">第三段控制</a-col>
+            <a-col :span="6"><a-button @click="resultPass('investment00')">投資說明</a-button></a-col>
+            <a-col :span="6"><a-button @click="resultPass('investment01')">投資二</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('investment03')">投資三</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('wine')">看解答</a-button></a-col>

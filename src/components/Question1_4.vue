@@ -41,7 +41,7 @@
     <div v-else>
     <a-row :gutter="[4, 16]">
       <a-col :span="24"><p class="title">{{ player.name }},猜對了嗎??</p></a-col>
-      <a-col :span="24"><p class="result"> <span v-if="counter > 0">恭喜獲得{{ counter }},<br/></span>目前累積金額{{ nowscore }}</p></a-col>
+      <a-col :span="24"><p class="result"> <span v-if="counter > 0">恭喜獲得{{ counterLocal }},<br/></span>目前累積金額{{ scoreLocal }}</p></a-col>
     </a-row>
         <a-row :gutter="[4, 16]">
             <a-col :span="12">
@@ -80,7 +80,7 @@
 </div>
 </template>
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { message } from 'ant-design-vue'
 import { setupScore, setStep, player, step, getPlayerScore } from '../api/index'
 
@@ -88,6 +88,8 @@ const selected = ref([])
 const nowscore = ref(0)
 const counter = ref(0)
 const isQuest = ref(true)
+const scoreLocal = computed(() => Number(nowscore.value).toLocaleString() )
+const counterLocal = computed(() => Number(counter.value).toLocaleString() )
 
 watch(selected, (newX) => {
   console.log(newX)
