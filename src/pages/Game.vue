@@ -1,5 +1,4 @@
 <template>
-    <a-spin v-if="loading" />
     <Start v-if="step == 'Start'"/>
     <NewOne v-if="step == 'NewOne'"/>
     <Question1_1 v-if="step == 'Question1_1'"/>

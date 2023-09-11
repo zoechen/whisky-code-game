@@ -9,7 +9,7 @@
   </div>
   <div v-else>
   <div v-if="game == 'rule'" class="info">
-    <p class="title">{{ player.name }},來增加您的資產吧！</p>
+    <p class="title">{{ player.name }},來增加您的籌碼吧！</p>
     <div class="rule">
     <p class="tips">
       隨機配對二人一組<br />
@@ -35,8 +35,8 @@
   <div class="pk" v-if="game == 'gamble01'">
     <p class="tips">試玩一局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
-    <a-button class="btn w50" :class="{ team: isActiveTeam || result.value == 'team' }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false; result='team'}">合作</a-button>
-    <a-button class="btn w50" :class="{ solo: isActiveSolo || result.value == 'sole' }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true; result='solo'}">獨享</a-button>
+    <a-button class="btn w50" :class="{ active: isActiveTeam || result == 'team' }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false; result='team'}">合作</a-button>
+    <a-button class="btn w50" :class="{ active: isActiveSolo || result == 'solo' }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true; result='solo'}">獨享</a-button>
     <!-- <a-button class="btn w50" size="large" @click="()=>{result = 'team'}">合作</a-button>
     <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button> -->
     <p class="tips"><b>{{ wait }}</b></p>
@@ -53,9 +53,17 @@
         恭喜獨享 150,000
       </p>
     </div>
-    <a-button class="btn next" size="large" type="primary" @click="()=>{goNext()}">接下來要正式開始</a-button>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{ game = 'offcial'}">接下來要正式開始</a-button>
   </div>
-
+      <div v-if="game == 'offcial'" class="info">
+        <p class="title">{{ player.name }},<br/>我們要正式開始了</p>
+        <div class="rule">
+          <p class="tips">
+            接下來五局，你的對手是{{ competitorName }}
+          </p>
+        </div>
+       
+      </div>
 </div>
 </div>
 <div class="footer">
@@ -66,7 +74,13 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
-import dayjs from 'dayjs'
+import { socket } from "@/socket"
+
+socket.on("adminStep", (v) => {
+  if(v == 'Ready Go'){
+    goNext()
+  }
+});
 
 const game = ref('rule')
 const end = ref('0')
@@ -78,6 +92,8 @@ const secs = ref(0)
 const nowscore = ref(0)
 const wait = ref(8)
 
+watch()
+
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
@@ -87,7 +103,7 @@ onMounted(() => {
 function countdown(){
   let timesUp = 3
   let time = setInterval(() => {
-  let future  = Date.parse("2023-09-15T18:00:00");
+  let future  = Date.parse("2023-09-11T12:00:00");
   let now     = new Date();
   let diff    = future - now;
   let days  = Math.floor( diff / (1000*60*60*24) );
@@ -217,11 +233,9 @@ function goNext() {
   background-color: #cda674;
 }
 .question.s02 .btn:hover {
-  color: #d5cdc4;
   border-color: #d5cdc4;
-  background-color: #552917;
 }
-.question.s02 .btn.w50.team .question.s02 .btn.w50.solo{
+.question.s02 .btn.w50.active{
   background-color: #552917;
   color: #d5cdc4;
 }

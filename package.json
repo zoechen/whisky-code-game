@@ -21,6 +21,7 @@
     "gaxios": "^6.0.4",
     "google-auth-library": "^8.9.0",
     "google-spreadsheet": "^4.0.2",
+    "socket.io-client": "^4.7.2",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.4",

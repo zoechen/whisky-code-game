@@ -3,17 +3,33 @@
     <div class="logo">
       <div class="score">您目前有 {{ player.score }}</div>
     </div>
-    <div class="question s02">
-      <div class="pk" v-if="game == 'gamble01'">
-        <p class="tips">第三局</p>
+    <div class="myscore">
+      <div v-if="game == 'rule'" class="info">
+        <p class="title">{{ player.name }},準備好要開始了嗎？</p>
+        <div class="rule">
+          <p class="tips">
+            接下來十局，你的對手是{{ competitorName }}
+          </p>
+        </div>
+        <!-- <div class="action"><a-button size="large" class="btn" style="width: 80%;"
+            @click="game = 'gamble'; goGamble()">正式開始!</a-button></div> -->
+      </div>
+      <div class="pk" v-if="game == 'gamble'">
+        <p class="tips">第{{ n }}局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
-        <a-button class="btn w50" :class="{ team: isActiveTeam || result.value == 'team' }" size="large"
-          @click="() => { isActiveTeam = true; isActiveSolo = false; result = 'team' }">合作</a-button>
-        <a-button class="btn w50" :class="{ solo: isActiveSolo || result.value == 'sole' }" size="large"
-          @click="() => { isActiveTeam = false; isActiveSolo = true; result = 'solo' }">獨享</a-button>
+        <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
+          @click="result = 'team'">合作</a-button>
+        <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large"
+          @click="() => result = 'solo'">獨享</a-button>
         <p class="tips"><b>{{ wait }}</b></p>
       </div>
-      <div v-if="game == 'result01'" class="end">
+      <div class="pk" v-if="game == 'resultWait'">
+        <p class="tips">第一局</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+        <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
+        <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
+      </div>
+      <div v-if="game == 'result'" class="end">
         <div v-if="end == '0'" class="los">
           <p class="res">啊,賠了 80,000</p>
         </div>
@@ -25,7 +41,7 @@
             恭喜獨享 150,000
           </p>
         </div>
-        <a-button class="btn next" size="large" type="primary" @click="()=>{goNext()}">第四局</a-button>
+        <!-- <a-button class="btn next" size="large" type="primary" @click="() => { goNext() }">第二局</a-button> -->
       </div>
     </div>
     <div class="footer">
@@ -33,21 +49,38 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
 import dayjs from 'dayjs'
+import { state, socket } from "@/socket"
 
-const game = ref('gamble01')
+const game = ref('rule')
 const end = ref('0')
 const result = ref('0')
 const wait = ref(8)
 const setTimer = null
 const timer = ref(5)
+const pass = ref(false)
+const n = ref(1)
+
+socket.on("adminStep", (v) => {
+  pass.value = v
+});
+
+watch(pass, (newX) => {
+  if (newX == 'result') {
+    game.value = 'result'
+  }else if (newX == 'NextRound'){
+    goNext()
+  }else if (newX == 'changeMatch'){
+    
+  }
+})
 
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
-  goGamble()
+  socket.emit('who', player.userID)
 })
 
 
@@ -59,12 +92,8 @@ function goGamble() {
       if (result.value == '0') {
         if (Math.random() > 0.5) {
           result.value = 'sole'
-          isActiveSolo.value = true
-          isActiveTeam.value = false
         } else {
           result.value = 'team'
-          isActiveSolo.value = false
-          isActiveTeam.value = true
         }
       }
       updateResult({
@@ -73,7 +102,7 @@ function goGamble() {
       })
 
     } else if (wait.value < 0) {
-      game.value = "result01"
+      game.value = "resultWait"
 
       getCompetitorResult(pkData.value.pk)
 
@@ -122,8 +151,15 @@ function goNext() {
   }
   console.log(score)
   setupScore(score, player)
-  let next = 'Question2_4'
-  setStep(next, player)
-  step.value = next
+
+  if(n.value == 5){
+    let next = 'Question2_2'
+    setStep(next, player)
+    step.value = next
+  }else{
+    n.value +=1
+    game.value = 'gamble'
+    goGamble()
+  }
 }
 </script>

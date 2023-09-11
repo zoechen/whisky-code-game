@@ -1,7 +1,8 @@
 <template>
     <div class="logo"></div>
     <div class="match">
-        <a-button class="btn" @click="createMatchData()">看看比賽結果</a-button>
+        <a-button class="btn" @click="createMatchData12()">第一次 生成配對</a-button>
+        <a-button class="btn" @click="createMatchData50()">第二次 生成配對</a-button>
       <a-row :gutter="[4, 16]">
         <a-col :span="12">teamA</a-col>
         <a-col :span="12">teamB</a-col>
@@ -23,7 +24,7 @@
     getPlayerIDList()
   })
 
-  function createMatchData() {
+  function createMatchData12() {
     console.log(playerListID.value.length)
         for (let i = 0; i < playerListID.value.length; i++){
            if(i%2){
@@ -37,6 +38,17 @@
         updateMatchData()
        }, 500);
   }
+
+  function createMatchData50() {
+    console.log(playerListID.value.length%2)
+    teamA.value = playerListID.value.splice(0,playerListID.value.length%2-1)
+    teamB.value = playerListID.value.splice(playerListID.value.length%2,playerListID.value.length)
+    console.log(teamA.value, teamB.value)
+       setTimeout(() => {
+        updateMatchData()
+       }, 500);
+  }
+
 function updateMatchData(){
   for (let i = 0; i < teamA.value.length; i++){
             let matchData = {

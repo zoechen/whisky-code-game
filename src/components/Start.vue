@@ -40,6 +40,7 @@ const formState = reactive({
 })
 const onFinish = () => {
   findID(formState.userID)
+  
 }
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo)

@@ -9,9 +9,7 @@
           <p class="title"> 投入成本
             </p>
             <p>{{ player.cost }}</p>
-          <p class="title"> 利潤
-          </p>
-            <p>{{ player.score - player.cost }}</p>
+          
         </div>
       </div>
     </div>

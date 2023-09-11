@@ -157,7 +157,9 @@ export function createPK(userID,matchID,team,pk){
 }
 
 export function updateResult(data){
-    $http.put(`/updateResult/${data.userID}`,data).catch((err)=>{
+    $http.put(`/updateResult/${data.userID}`,{
+        result: data.result
+    }).catch((err)=>{
         console.error(err)
     })
 }
@@ -193,6 +195,7 @@ export function getCompetitorName(userID){
 
 export function getCompetitorResult(userID){
     $http.get(`/getPK/${userID}`).then((res)=>{
+        console.log(res)
         competitorResult.value = res.data.result
     })
 }
