@@ -75,7 +75,7 @@
             持有數量{{ wine3num }}
           </div>
         </div>
-        <a-button class="btn" @click="goNext('Question3_2_2')">看看放兩年後的變化</a-button>
+        <a-button class="btn" @click="goNext('Question3_1_2')">看看放兩年後的變化</a-button>
       </div>
       
     </div>
