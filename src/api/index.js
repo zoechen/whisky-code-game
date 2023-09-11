@@ -163,6 +163,7 @@ export function updateResult(data){
     }).catch((err)=>{
         console.error(err)
     })
+    console.log("updateResult:",data)
 }
 export function getPK(userID){
     $http.get(`/getPK/${userID}`).then((res)=>{
