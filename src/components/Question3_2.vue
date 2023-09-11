@@ -3,10 +3,33 @@
     <div class="logo"></div>
     <div class="question s03">
       <div v-if="game == 'chart'">
-        <div class="flexChart">
-          <div class="title">2年後</div>
-          <div class="tips">哇!漲伏不小呢!</div>
-          <Line :data="lineData" :options="lineOptions" />
+        <div class="itemCard">
+          <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Dr. No</h2>
+            金額{{ wine1old * 100000 }}<br />
+            數量{{ wine1old }}
+          </div>
+          
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Goldfinger</h2>
+            金額{{ wine2old * 2200 }}<br />
+            數量{{ wine2old }}
+          </div>
+          
+        </div>
+        <div class="itemCard">
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+          <div class="itemContent">
+            <h2>Thunderbal</h2>
+            金額{{ wine3old * 4000 }}<br />
+            數量{{ wine3old }}
+          </div>
+          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
+            :disabled="wine3old == 0">贖回</a-button>
         </div>
         <a-button class="btn" @click="game = 'result'; seeProfit()">查看獲利</a-button>
       </div>

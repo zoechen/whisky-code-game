@@ -3,35 +3,37 @@
     <div class="logo">
     </div>
     <div class="question s02">
-      <p class="title">{{ player.name }}</p>
+      <div class="pk">
+      <div class="header">中場休息</div>
       <div class="rule">
+        <p class="title">{{ player.name }}</p>
         <p class="tips">
-         中場休息
+         
         <br/>
         您目前有
         <br/>
-        <b>{{ player.score }}</b>
+        <div class="amount">{{ player.score }}</div>
         </p>
       </div>
     </div>
+  </div>
     <div class="footer">
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
-import { step, setStep, setupScore, player } from '../api/index'
+import { step, setStep,  player } from '../api/index'
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {
   if(v == 'changeMatch'){
-    goNext()
+    goNext('Question2_3')
+  }else if(v == 'investment'){
+    goNext('Question3_0')
   }
 });
 
-function goNext() {
-  setupScore(score, player)
-  let next = 'Question2_3'
+function goNext(next) {
   setStep(next, player)
   step.value = next
 }

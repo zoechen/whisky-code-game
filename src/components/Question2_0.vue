@@ -316,6 +316,19 @@ function goNext() {
   background-position: bottom center;
   background-size: auto 105%;
 }
+
+.question.s02 .pk .amount{
+  font-size: 2.4rem;
+  color: #cda674;
+}
+
+.question.s02 .pk .header{
+  color: #f5f1ea;
+  font-size: 2.4rem;
+  margin-top:2rem;
+  text-shadow: #000 0.01rem 0.01rem;
+}
+
 .action{
   text-align: center;
   padding-top: 1.6rem;

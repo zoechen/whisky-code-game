@@ -4,8 +4,15 @@
       <div class="score">您目前有 {{ player.score }}</div>
     </div>
     <div class="question s02">
+      <div class="pk" v-if="game == 'gambleWait'">
+        <p class="tips">第{{n}}局</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+        <a-button class="btn w50" size="large" disabled >合作</a-button>
+        <a-button class="btn w50" size="large" disabled >獨享</a-button>
+        <div class="tips">準備一下，馬上要開始了</div>
+      </div>
       <div class="pk" v-if="game == 'gamble'">
-        <p class="tips">第{{ n }}局</p>
+        <p class="tips">第{{n}}局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
           @click="result = 'team'">合作</a-button>
@@ -14,7 +21,7 @@
         <p class="tips"><b>{{ wait }}</b></p>
       </div>
       <div class="pk" v-if="game == 'resultWait'">
-        <p class="tips">第{{ n }}局</p>
+        <p class="tips">第{{n}}局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
@@ -44,11 +51,11 @@ import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updat
 import dayjs from 'dayjs'
 import { state, socket } from "@/socket"
 
-const game = ref('gamble')
+const game = ref('gambleWait')
 const end = ref('0')
 const result = ref('0')
 const wait = ref(8)
-const setTimer = null
+var setTimer = null
 const timer = ref(5)
 const pass = ref(false)
 const n = ref(1)
@@ -60,12 +67,15 @@ socket.on("adminStep", (v) => {
 watch(pass, (newX) => {
   if (newX == 'result') {
     game.value = 'result'
+  }else if (newX == 'gambleWait') {
+    game.value = 'gambleWait'
+    result.value = '0'
+    setTimer = null
   }else if (newX == 'NextRound'){
     goNext()
   }else if (newX == 'gamble'){
     game.value = 'gamble'
     wait.value = 8
-    result.value = '0'
     goGamble()
   }else{
     console.error(newX)
@@ -78,11 +88,17 @@ onMounted(() => {
 })
 
 
-function goGamble() {
 
-  let waitTime = setInterval(() => {
+function goGamble() {
+    setTimer = setInterval(()=>{countdownTimer()},1000)
+    setTimeout(()=>{clearTimeout(setTimer)},9000)
+}
+
+function countdownTimer(){
+ 
     wait.value -= 1
-    if (wait.value == 2) {
+    
+    if (wait.value == 1) {
       if (result.value == '0') {
         if (Math.random() > 0.5) {
           result.value = 'solo'
@@ -100,26 +116,21 @@ function goGamble() {
         result: result.value
       })
 
-    } else if (wait.value == 1) {
+    } else if (wait.value == 0) {
 
       getCompetitorResult(pkData.value.pk)
     
-    } else if (wait.value == 0) {
-
+    } else if (wait.value == -1) {
       game.value = "resultWait"
-
       whoWin(result.value, competitorResult.value)
-      
-      // if (competitorResult.value) {
-      //   whoWin(result.value, competitorResult.value)
-      // } else {
-      //   let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
-      //   whoWin(result.value, rnd)
-      // }
-      clearInterval(waitTime)
+      if (competitorResult.value) {
+        whoWin(result.value, competitorResult.value)
+      } else {
+        let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
+        whoWin(result.value, rnd)
+      }
     }
-  }, 1000)
-
+ 
 }
 
 
@@ -135,8 +146,6 @@ function whoWin(me, yo) {
   }
   console.log(me, yo)
 }
-
-
 
 function goNext() {
   let score = Number(player.score)
@@ -162,8 +171,7 @@ function goNext() {
     step.value = next
   }else{
     n.value +=1
-    game.value = 'gamble'
-    goGamble()
+    game.value = 'gambleWait'
   }
 }
 </script>

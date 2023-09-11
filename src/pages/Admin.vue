@@ -14,8 +14,8 @@
 
         <a-row :gutter="[4, 16]">
             <a-col :span="12">pk01,剩{{ n }}局</a-col>
-            <a-col :span="12">pk02,剩{{ n }}局</a-col>
-            <a-col :span="6"><a-button @click="resultPass('Ready Go')">正試開始</a-button></a-col>
+            <a-col :span="12">pk02,剩{{ m }}局</a-col>
+            <a-col :span="6"><a-button @click="resultPass('gamble')">正試開始</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('result')">給結果</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('NextRound')">下一局</a-button></a-col>
             <a-col :span="6"><a-button @click="resultPass('changeMatch')">換配對</a-button></a-col>
@@ -42,15 +42,12 @@ function resultPass(v) {
     if(v == 'NextRound' || v == 'Ready Go'){
         n.value -= 1
         if(n.value == 0){
-            m.value -= 0
+            m.value -= 1
             n.value = 0
         }
-        timer = setInterval(() => {
-            socket.emit('adminStep', 'gamble')
-            clearInterval(timer)
-        },1000)
+    }else if(v == 'changeMatch'){
+        setTimeout(()=>{ socket.emit('gambleWait', v)},3000)
     }
-    // else if(v =='result'){ }
 }
 
 

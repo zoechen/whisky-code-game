@@ -2,7 +2,7 @@
     <div class="logo"></div>
     <div class="match">
         <a-button class="btn" @click="createMatchData12()">第一次 生成配對</a-button>
-        <a-button class="btn" @click="createMatchData50()">第二次 生成配對</a-button>
+        <a-button class="btn" @click="splitArray()">第二次 生成配對</a-button>
       <a-row :gutter="[4, 16]">
         <a-col :span="12">teamA</a-col>
         <a-col :span="12">teamB</a-col>
@@ -39,15 +39,23 @@
        }, 500);
   }
 
-  function createMatchData50() {
-    console.log(playerListID.value.length%2)
-    teamA.value = playerListID.value.splice(0,playerListID.value.length%2-1)
-    teamB.value = playerListID.value.splice(playerListID.value.length%2,playerListID.value.length)
-    console.log(teamA.value, teamB.value)
-       setTimeout(() => {
-        updateMatchData()
-       }, 500);
+
+  function splitArray() {
+  const copyArr = [...playerListID.value];
+
+  while (copyArr.length > 0) {
+    const randomIndex = Math.floor(Math.random() * copyArr.length);
+    const randomElement = copyArr.splice(randomIndex, 1)[0];
+
+    if (teamA.value.length <= teamB.value.length) {
+      teamA.value.push(randomElement);
+    } else {
+      teamB.value.push(randomElement);
+    }
   }
+  updateMatchData()
+
+}
 
 function updateMatchData(){
   for (let i = 0; i < teamA.value.length; i++){
