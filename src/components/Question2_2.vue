@@ -22,7 +22,7 @@
   </div>
 </template>
 <script setup>
-import { step, setStep,  player } from '../api/index'
+import { step, setStep, player } from '../api/index'
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {

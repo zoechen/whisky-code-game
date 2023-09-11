@@ -57,7 +57,7 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
 import dayjs from 'dayjs'
-import { state, socket } from "@/socket"
+import { socket } from "@/socket"
 
 const game = ref('gambleWait')
 const end = ref('0')
@@ -121,9 +121,7 @@ function countdownTimer(){
         result: result.value
       })
       socket.emit('who', {
-        team: pkData.value.pk,
-        userID: player.name,
-        result: result.value
+         [player.userID] : result.value
       })
 
     } else if (wait.value == 0) {

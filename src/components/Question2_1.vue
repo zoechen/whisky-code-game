@@ -116,9 +116,7 @@ function countdownTimer(){
         result: result.value
       })
       socket.emit('who', {
-        team: pkData.value.pk,
-        userID: player.name,
-        result: result.value
+         [player.userID] : result.value
       })
 
     } else if (wait.value == 0) {

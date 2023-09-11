@@ -27,16 +27,16 @@
     <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer();game = 'match';">開始配對!</a-button></div>
   </div>
   <div class="pk" v-if="game == 'match'">
-    <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+    <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
     <p class="tips">不會計分</p>
     <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble01';goGamble()}">試玩一局</a-button>
     
   </div>
   <div class="pk" v-if="game == 'gamble01'">
     <p class="tips">試玩一局</p>
-    <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
-    <a-button class="btn w50" :class="{ active: isActiveTeam || result == 'team' }" size="large" @click="()=>{isActiveTeam = true; isActiveSolo = false; result='team'}">合作</a-button>
-    <a-button class="btn w50" :class="{ active: isActiveSolo || result == 'solo' }" size="large" @click="()=>{isActiveTeam = false; isActiveSolo = true; result='solo'}">獨享</a-button>
+    <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+    <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" @click="()=>{result='team'}">合作</a-button>
+    <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" @click="()=>{result='solo'}">獨享</a-button>
     <!-- <a-button class="btn w50" size="large" @click="()=>{result = 'team'}">合作</a-button>
     <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button> -->
     <p class="tips"><b>{{ wait }}</b></p>
@@ -46,20 +46,20 @@
       <p class="res">啊,賠了 80,000</p>
     </div>
     <div v-if="end=='1'" class="pin" >
-      <p class="res">恭喜!<br/>您和{{ competitorName }}<br/>各得 120,000</p>
+      <p class="res">恭喜!<br/>您和{{ competitorName || "AI ROBOT" }}<br/>各得 120,000</p>
     </div>
     <div v-if="end=='2'" class="win">
       <p class="res">
         恭喜獨享 150,000
       </p>
     </div>
-    <a-button class="btn next" size="large" type="primary" @click="()=>{ game = 'offcial'}">接下來要正式開始</a-button>
+    <a-button class="btn next" size="large" type="primary" @click="goNext">接下來要正式開始</a-button>
   </div>
       <div v-if="game == 'offcial'" class="info">
         <p class="title">{{ player.name }},<br/>我們要正式開始了</p>
         <div class="rule">
           <p class="tips">
-            接下來五局，你的對手是{{ competitorName }}
+            接下來五局，你的對手是{{ competitorName || "AI ROBOT" }}
           </p>
         </div>
        
@@ -74,13 +74,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
-import { socket } from "@/socket"
-
-socket.on("adminStep", (v) => {
-  if(v == 'Ready Go'){
-    goNext()
-  }
-});
 
 const game = ref('rule')
 const end = ref('0')
@@ -190,22 +183,6 @@ function whoWin( me ,yo){
 }
 
 function goNext() {
-  let score = Number(player.score)
-  // switch (result.value) {
-  //   case 1:
-  //     score += 120000
-  //     break
-  //   case 2:
-  //     score += 150000
-  //     break
-  //   case 0:
-  //     score -= 80000
-  //     break
-  //   default:
-  //     break
-  // }
-  console.log(score)
-  setupScore(score, player)
   let next = 'Question2_1'
   setStep(next, player)
   step.value = next
