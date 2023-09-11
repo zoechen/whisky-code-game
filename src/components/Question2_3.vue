@@ -23,9 +23,9 @@
         <p class="tips">第{{n}}局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
-          @click="result = 'team'">合作</a-button>
+          @click="result = 'team'" :disabled="disabled">合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large"
-          @click="() => result = 'solo'">獨享</a-button>
+          @click="() => result = 'solo'" :disabled="disabled">獨享</a-button>
         <p class="tips"><b>{{ wait }}</b></p>
       </div>
       <div class="pk" v-if="game == 'resultWait'">
@@ -62,7 +62,7 @@ import { state, socket } from "@/socket"
 const game = ref('gambleWait')
 const end = ref('0')
 const result = ref('0')
-const wait = ref(8)
+const wait = ref(9)
 var setTimer = null
 const timer = ref(5)
 const pass = ref(false)
@@ -81,7 +81,7 @@ watch(pass, (newX) => {
     setTimer = null
   }else if (newX == 'NextRound'){
     goNext()
-    wait.value = 8
+    wait.value = 9
   }else if (newX == 'gamble'){
     game.value = 'gamble'
     goGamble()
