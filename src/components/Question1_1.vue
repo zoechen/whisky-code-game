@@ -22,8 +22,8 @@
         <a-checkbox-group v-model:value="selected" >
           <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="200001">
-                <a-card :class="selected.includes('200001') ? 'active' : 'normal'">檸檬</a-card>
+              <a-checkbox value="500001">
+                <a-card :class="selected.includes('500001') ? 'active' : 'normal'">檸檬</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -32,8 +32,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200002">
-                <a-card :class="selected.includes('200002') ? 'active' : 'normal'">伯爵茶</a-card>
+              <a-checkbox value="500002">
+                <a-card :class="selected.includes('500002') ? 'active' : 'normal'">伯爵茶</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -47,13 +47,13 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200003">
-                <a-card :class="selected.includes('200003') ? 'active' : 'normal'">佛手柑</a-card>
+              <a-checkbox value="500003">
+                <a-card :class="selected.includes('500003') ? 'active' : 'normal'">佛手柑</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200004">
-                <a-card :class="selected.includes('200004') ? 'active' : 'normal'">金桔</a-card>
+              <a-checkbox value="500004">
+                <a-card :class="selected.includes('500004') ? 'active' : 'normal'">金桔</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -82,8 +82,8 @@
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="200001">
-                <a-card :class="selected.includes('200001') ? 'active' : 'normal'">檸檬<br/>200000</a-card>
+              <a-checkbox value="500001">
+                <a-card :class="selected.includes('500001') ? 'active' : 'normal'">檸檬<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -93,7 +93,7 @@
             </a-col>
             <a-col :span="8">
               <a-checkbox value="100002">
-                <a-card :class="selected.includes('200002') ? 'active' : 'normal'">伯爵茶<br/>200000</a-card>
+                <a-card :class="selected.includes('500002') ? 'active' : 'normal'">伯爵茶<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -107,13 +107,13 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200003">
-                <a-card :class="selected.includes('200003') ? 'active' : 'normal'">佛手柑<br/>200000</a-card>
+              <a-checkbox value="500003">
+                <a-card :class="selected.includes('500003') ? 'active' : 'normal'">佛手柑<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200004">
-                <a-card :class="selected.includes('200004') ? 'active' : 'normal'">金桔<br/>200000</a-card>
+              <a-checkbox value="500004">
+                <a-card :class="selected.includes('500004') ? 'active' : 'normal'">金桔<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -142,13 +142,13 @@
         <a-checkbox-group v-model:value="selected" >
           <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="200001">
-                <a-card :class="selected.includes('200001') ? 'active' : 'normal'">阿薩姆紅茶</a-card>
+              <a-checkbox value="500001">
+                <a-card :class="selected.includes('500001') ? 'active' : 'normal'">阿薩姆紅茶</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200002">
-                <a-card :class="selected.includes('200002') ? 'active' : 'normal'">伯爵茶</a-card>
+              <a-checkbox value="500002">
+                <a-card :class="selected.includes('500002') ? 'active' : 'normal'">伯爵茶</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -162,8 +162,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200004">
-                <a-card :class="selected.includes('200004') ? 'active' : 'normal'">蘋果</a-card>
+              <a-checkbox value="500004">
+                <a-card :class="selected.includes('500004') ? 'active' : 'normal'">蘋果</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -177,8 +177,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200003">
-                <a-card :class="selected.includes('200003') ? 'active' : 'normal'">葡萄柚</a-card>
+              <a-checkbox value="500003">
+                <a-card :class="selected.includes('500003') ? 'active' : 'normal'">葡萄柚</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -205,13 +205,13 @@
         <a-checkbox-group disabled>
           <a-row :gutter="[4, 16]">
             <a-col :span="8">
-              <a-checkbox value="200001">
-                <a-card :class="selected.includes('200001') ? 'active' : 'normal'">阿薩姆紅茶<br/>200000</a-card>
+              <a-checkbox value="500001">
+                <a-card :class="selected.includes('500001') ? 'active' : 'normal'">阿薩姆紅茶<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200002">
-                <a-card :class="selected.includes('200002') ? 'active' : 'normal'">伯爵茶<br/>200000</a-card>
+              <a-checkbox value="500002">
+                <a-card :class="selected.includes('500002') ? 'active' : 'normal'">伯爵茶<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -225,8 +225,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200004">
-                <a-card :class="selected.includes('200004') ? 'active' : 'normal'">蘋果<br/>200000</a-card>
+              <a-checkbox value="500004">
+                <a-card :class="selected.includes('500004') ? 'active' : 'normal'">蘋果<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">
@@ -240,8 +240,8 @@
               </a-checkbox>
             </a-col>
             <a-col :span="8">
-              <a-checkbox value="200003">
-                <a-card :class="selected.includes('200003') ? 'active' : 'normal'">葡萄柚<br/>200000</a-card>
+              <a-checkbox value="500003">
+                <a-card :class="selected.includes('500003') ? 'active' : 'normal'">葡萄柚<br/>500,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="8">

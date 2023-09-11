@@ -10,8 +10,8 @@
         <a-checkbox-group v-model:value="selected">
           <a-row :gutter="[4, 16]">
             <a-col :span="12">
-              <a-checkbox value="250000">
-                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果肉</a-card>
+              <a-checkbox value="800000">
+                <a-card :class="selected.includes('800000') ? 'active' : 'normal'" style="width: 40vw;">可可果肉</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="12">
@@ -45,8 +45,8 @@
     </a-row>
         <a-row :gutter="[4, 16]">
           <a-col :span="12">
-              <a-checkbox value="250000">
-                <a-card :class="selected.includes('250000') ? 'active' : 'normal'" style="width: 40vw;">可可果肉<br/>250000</a-card>
+              <a-checkbox value="800000">
+                <a-card :class="selected.includes('800000') ? 'active' : 'normal'" style="width: 40vw;">可可果肉<br/>800,000</a-card>
               </a-checkbox>
             </a-col>
             <a-col :span="12">
