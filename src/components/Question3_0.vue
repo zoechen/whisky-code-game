@@ -86,7 +86,6 @@
           <small>酒可以選擇哦!請左右滑滑看。</small><br/>
           
         </div>
-       
       </div>
     </div>
     <div class="footer">
@@ -98,20 +97,19 @@
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { setStep, getPlayerScore, player, step, setWineNumber } from '../api/index'
+import { setStep, getPlayerScore, player, step } from '../api/index'
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {
   if(v == 'investment01'){
     goNext('Question3_1')
   }
-});
+})
 
 function goNext(next) {
   setStep(next, player)
   step.value = next
 }
-
 
 const game = ref('rule')
 const cost = ref(0)
@@ -120,7 +118,6 @@ const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
 const score = computed(() => Number(player.score).toLocaleString() )
-const costLocal = computed(() => Number(cost).toLocaleString() )
 
 
 onMounted(() => {
@@ -159,19 +156,6 @@ function addZero(num){
     return num
   }
 }
-
-
-
-
-
-function goNext() {
-  let next = 'Question3_2'
-  setStep(next, player)
-  step.value = next
-}
-
-
-
 
 </script>
 <style>

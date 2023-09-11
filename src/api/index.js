@@ -3,8 +3,8 @@ import { ref ,reactive} from 'vue'
 import { message } from 'ant-design-vue'
 
 //depoly 
-//const api_path = 'https://whisky-code-server.onrender.com/api/'
-const api_path = 'http://localhost:3000/api/'    //localhost
+const api_path = 'https://whisky-code-server.onrender.com/api/'
+//const api_path = 'http://localhost:3000/api/'    //localhost
 
 
 const $http = axios.create(
