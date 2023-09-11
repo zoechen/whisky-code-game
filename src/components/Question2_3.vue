@@ -8,20 +8,20 @@
         <p class="title">{{ player.name }}<br/>準備好要開始了嗎？</p>
         <div class="rule">
           <p class="tips">
-            接下來十局，你的對手是<br/>{{ competitorName }}
+            接下來十局，你的對手是<br/>{{ competitorName || "AI ROBOT"}}
           </p>
         </div>
       </div>
       <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT"}}</p>
         <a-button class="btn w50" size="large" disabled >合作</a-button>
         <a-button class="btn w50" size="large" disabled >獨享</a-button>
         <div class="tips">準備一下，馬上要開始了</div>
       </div>
       <div class="pk" v-if="game == 'gamble'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT"}}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
           @click="result = 'team'" :disabled="disabled">合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large"
@@ -30,7 +30,7 @@
       </div>
       <div class="pk" v-if="game == 'resultWait'">
         <p class="tips">第{{n}}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName }}</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT"}}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
       </div>
@@ -39,7 +39,7 @@
           <p class="res">啊,賠了 80,000</p>
         </div>
         <div v-if="end == '1'" class="pin">
-          <p class="res">恭喜!<br />您和{{ competitorName }}<br />各得 120,000</p>
+          <p class="res">恭喜!<br />您和{{ competitorName || "AI ROBOT" }}<br />各得 120,000</p>
         </div>
         <div v-if="end == '2'" class="win">
           <p class="res">
@@ -99,7 +99,7 @@ onMounted(() => {
 
 function goGamble() {
     setTimer = setInterval(()=>{countdownTimer()},1000)
-    setTimeout(()=>{clearTimeout(setTimer)},9000)
+    setTimeout(()=>{clearTimeout(setTimer)},10000)
 }
 
 function countdownTimer(){
@@ -107,6 +107,8 @@ function countdownTimer(){
     wait.value -= 1
     
     if (wait.value == 1) {
+    disabled.value = false
+
       if (result.value == '0') {
         if (Math.random() > 0.5) {
           result.value = 'solo'
