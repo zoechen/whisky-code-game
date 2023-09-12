@@ -10,31 +10,30 @@
           <a-button class="btn" @click="game = 'result'; seeProfit()">查看獲利</a-button>
         </div>
         <div v-if="game == 'result'">
-          <div class="rule"><div class="tip">投入成本 {{ cost }} | 可動用籌碼有 {{ money }}</div></div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Dr. No</h2>
               漲幅 <b>230%</b><br/>總價值提昇為<br />
-              金額{{ (wine1old + wine1two + wine1new) * 230000 }}<br/>
+              金額{{ wine1Totle }}<br />持有數量{{ (wine1old + wine1two + wine1new) }}
             </div>
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Goldfinger</h2>
-              漲幅<b>4295.45%</b><br/>總價值提昇為<br />金額{{ (wine2old + wine2two + wine2new)  * 95400 }}<br/>
+              漲幅<b>4295.45%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}<br />持有數量{{ (wine2old + wine2two + wine2new) }}
             </div>
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Thunderbal</h2>
-              漲幅<b>912.5%</b><br/>總價值提昇為<br />金額{{ (wine3old + wine3two + wine3new) * 36500 }}<br/>
+              漲幅<b>912.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle}}<br />持有數量{{ (wine3old + wine3two + wine3new) }}
             </div>
           </div>
          
-          <a-button class="btn" @click="game = 'buyit';setScore()">看看比賽結果</a-button>
+          <a-button class="btn" @click="setScore()">看看比賽結果</a-button>
         </div>
       </div>
   
@@ -75,8 +74,12 @@ const wine3two = ref(0)
 const cost = ref(0)
 const score = ref(0)
 const money = ref(0)
-
-
+const total = ref(0)
+const moneyLocal = computed(() => Number(money.value).toLocaleString() )
+const totalLocal = computed(() => Number(total.value).toLocaleString() )
+const wine1Totle = computed(()=> ((wine1old.value + wine1two.value + wine1new.value) * 230000).toLocaleString() ) 
+const wine2Totle = computed(()=> ((wine2old.value + wine2two.value + wine2new.value) * 95400).toLocaleString() )
+const wine3Totle = computed(()=> ((wine3old.value + wine3two.value + wine3new.value) * 36500).toLocaleString() )
 
 const lineData = {
   labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
@@ -151,13 +154,15 @@ function seeProfit(){
 
 
 function setScore(){
-  money.value += (wine1old.value + wine1two.value + wine1new.value) * 230000
-  money.value += (wine2old.value + wine2two.value + wine2new.value) * 94500
-  money.value += (wine3old.value + wine3two.value + wine3new.value) * 36500
+  total.value = (wine1old.value + wine1two.value + wine1new.value) * 230000
+                + (wine2old.value + wine2two.value + wine2new.value) * 94500
+                + (wine3old.value + wine3two.value + wine3new.value) * 36500
+                + money.value
 
-  setupScore(money.value, player)
-
-  goNext()
+  setupScore(total.value, player)
+  setTimeout(()=>{
+    goNext()
+  },500)
 }
 
 

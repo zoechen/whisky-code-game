@@ -97,7 +97,7 @@
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { setStep, getPlayerScore, player, step } from '../api/index'
+import { setStep, getPlayerScore, player, step,setWineNumber } from '../api/index'
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {
@@ -123,7 +123,7 @@ const score = computed(() => Number(player.score).toLocaleString() )
 onMounted(() => {
   countdown()
   getPlayerScore(player.userID)
-  //setupScore(8800000, player) //for test
+  initWine()
 })
 
 function countdown(){
@@ -156,6 +156,20 @@ function addZero(num){
     return num
   }
 }
+function initWine(){
+  setWineNumber(player, {
+    wine1_1: 0,
+    wine2_1: 0,
+    wine3_1: 0,
+    wine1_2: 0,
+    wine2_2: 0,
+    wine3_2: 0,
+    wine1_3: 0,
+    wine2_3: 0,
+    wine3_3: 0
+    })
+}
+
 
 </script>
 <style>

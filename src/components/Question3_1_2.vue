@@ -32,11 +32,11 @@
           <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
             :disabled="wine3num == 0">贖回</a-button>
         </div>
-        <a-button class="btn" @click="game = 'myScore';">目前的籌碼有</a-button>
+        <a-button class="btn" @click="game = 'myScore';setScore()">目前的籌碼有</a-button>
       </div>
         <div v-if="game == 'myScore'">
         <div class="rule">
-          <div class="title">總籌碼有{{ totalLocal }}</div>
+          <div class="title">總籌碼有{{ scoreLocal }}</div>
           <div class="tip"> 可動用籌碼有 {{ moneyLocal }}</div>
         </div>
       </div>
@@ -68,7 +68,8 @@ const wine3num = ref(0)
 const cost = ref(0)
 const money = ref(0)
 const total = ref(0)
-const score = computed(() => Number(player.score).toLocaleString() )
+const score = ref(0)
+const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
 const isVisible = ref(false)
@@ -80,7 +81,10 @@ onMounted(() => {
   getWine(player.userID)
   getPlayerScore(player.userID)
   setTimeout(()=>{
-    money.value = localStorage.getItem('score') || player.score
+    money.value = localStorage.getItem('money') || player.money
+    score.value = localStorage.getItem('score') || player.score
+    cost.value = localStorage.getItem('cost') || player.cost
+    total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
     wine1num.value = Number(localStorage.getItem('wine1_1'))
     wine2num.value = Number(localStorage.getItem('wine2_1'))
     wine3num.value = Number(localStorage.getItem('wine3_1'))
@@ -123,10 +127,16 @@ function setScore() {
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
+  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 + Number(money.value)
 
-  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
   setupScore(total.value, player)
   setupMoneyCost(player, cost.value, money.value)
+
+  setTimeout(()=>{
+    money.value = localStorage.getItem('money') || player.money
+    score.value = localStorage.getItem('score') || player.score
+    cost.value = localStorage.getItem('cost') || player.cost
+  },500)
 }
 
 

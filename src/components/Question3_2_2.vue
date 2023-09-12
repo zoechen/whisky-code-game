@@ -11,7 +11,8 @@
             <div class="itemContent">
               <h2>Dr. No</h2>
               漲幅 <b>190%</b><br/>總價值提昇為<br />
-              金額{{ (wine1old + wine1new) * 19000 }}<br/>
+              金額{{ wine1Totle }}
+              <br />持有數量{{ (wine1old + wine1new)  }}
             </div>
             <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1' " :disabled="wine1old==0">贖回</a-button>
           </div>
@@ -19,7 +20,8 @@
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Goldfinger</h2>
-              漲幅<b>909.09%</b><br/>總價值提昇為<br />金額{{ (wine2old + wine2new)  * 33000 }}<br/>
+              漲幅<b>909.09%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}
+              <br />持有數量{{ (wine2old + wine2new)  }}
             </div>
             <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2' " :disabled="wine2old==0">贖回</a-button>
           </div>
@@ -27,7 +29,8 @@
             <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Thunderbal</h2>
-              漲幅<b>337.5%</b><br/>總價值提昇為<br />金額{{ (wine3old + wine3new) * 13500 }}<br/>
+              漲幅<b>337.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle }}
+              <br />持有數量{{ (wine3old + wine3new)  }}
             </div>
             <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3' " :disabled="wine3old==0">贖回</a-button>
           </div>
@@ -76,9 +79,13 @@ const money = ref(0)
 const isVisible = ref(false)
 const redeemItem = ref('')
 const total = ref(0)
-const score = computed(() => Number(player.score).toLocaleString() )
+const score = ref(0)
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
+const wine1Totle = computed(()=> Number((wine1old.value + wine1new.value) * 190000).toLocaleString() )
+const wine2Totle = computed(()=> Number((wine2old.value + wine2new.value)  * 33000).toLocaleString() )
+const wine3Totle = computed(()=> Number((wine3old.value + wine3new.value) * 13500).toLocaleString() )
+
 
 onMounted(() => {
   getWine(player.userID)
@@ -91,6 +98,7 @@ onMounted(() => {
   wine2new.value = Number(localStorage.getItem('wine2_2'))
   wine3new.value = Number(localStorage.getItem('wine3_2'))
   // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
+  score.value = localStorage.getItem('score') || player.score
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
   },500)
@@ -135,6 +143,10 @@ function setScore(){
     wine2_2:wine2new.value,
     wine3_2:wine3new.value
   })
+
+  total.value = (wine3old.value + wine3new.value) * 13500 + (wine2old.value + wine2new.value) * 33000  + (wine1old.value + wine1new.value) * 190000 
+  console.log( total.value )
+  setupScore(total.value, player)
   setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_1', wine1old.value)
   localStorage.setItem('wine2_1', wine2old.value)
@@ -142,6 +154,12 @@ function setScore(){
   localStorage.setItem('wine1_2', wine1new.value)
   localStorage.setItem('wine2_2', wine2new.value)
   localStorage.setItem('wine3_2', wine3new.value)
+
+  setTimeout(()=>{
+    money.value = localStorage.getItem('money') || player.money
+    score.value = localStorage.getItem('score') || player.score
+    cost.value = localStorage.getItem('cost') || player.cost
+  },500)
 }
 
 function goNext(next) {

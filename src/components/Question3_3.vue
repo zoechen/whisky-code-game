@@ -4,7 +4,8 @@
     <div class="question s03">
         <div v-if="game == 'buyit'">
           <div class="title">最後加碼收藏</div>
-          <div class="rule"><p class="tip">可動用籌碼有 {{ money }} | 投入的籌碼共 {{ cost }}</p></div>
+          <div class="rule"><p class="tip">可動用籌碼有 {{ money }} <br/>
+            投入的籌碼共 {{ cost }}</p></div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
@@ -47,8 +48,9 @@
               </div>
           </div>
 
-          <a-button class="btn" @click="tobuyWine()">看看到現在的變化</a-button>
+          <a-button class="btn" @click="tobuyWine()">買下去</a-button>
         </div>
+       
         <div v-if="game == 'chart'">
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
@@ -56,7 +58,6 @@
             <h2>Dr. No</h2>
             金額{{ wine1Totle }}<br />
             持有數量{{ (wine1old + wine1two + wine1new) }}
-              
             </div>
            </div>
           <div class="itemCard">
@@ -109,9 +110,9 @@ const mins = ref(0)
 const secs = ref(0)
 const isVisible = ref(false)
 const redeemItem =ref('')
-const wine1Totle = computed(()=> ((wine1old + wine1two + wine1new) * 190000).toLocaleString )
-const wine2Totle = computed(()=> ((wine2old + wine2two + wine2new) * 33000).toLocaleString )
-const wine3Totle = computed(()=> ((wine3old + wine3two + wine3new) * 13500).toLocaleString )
+const wine1Totle = computed(()=> ((wine1old.value + wine1two.value + wine1new.value) * 190000).toLocaleString() ) 
+const wine2Totle = computed(()=> ((wine2old.value + wine2two.value + wine2new.value) * 33000).toLocaleString() )
+const wine3Totle = computed(()=> ((wine3old.value + wine3two.value + wine3new.value) * 13500).toLocaleString() )
 
 
 watch(wine1new, (newValue, oldValue) => {

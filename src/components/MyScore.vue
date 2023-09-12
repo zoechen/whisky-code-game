@@ -5,10 +5,8 @@
         <p class="title">最後結果</p>
         <div class="rule">
           <p class="title"> 你目前總籌碼有</p>
+          
             <p>{{ player.score }}</p>
-          <p class="title"> 投入成本
-            </p>
-            <p>{{ player.cost }}</p>
           
         </div>
       </div>
@@ -32,6 +30,11 @@ const game = ref('rank')
 onMounted(() => {
   getPlayerScore(player.userID)
 })
+
+function goNext(next) {
+  setStep(next, player)
+  step.value = next
+}
 
 </script>
 <style>
