@@ -4,9 +4,9 @@
     </div>
     <div class="question s02">
       <div class="pk">
-      <div class="header">中場休息</div>
       <div class="rule">
         <p class="title">{{ player.name }}</p>
+        <div class="header">中場休息</div>
         <p class="tips">
         <br/>
         您目前有

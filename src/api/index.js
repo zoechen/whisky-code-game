@@ -26,6 +26,7 @@ export const loading = ref(false)
 export const playerListNAME = ref([])
 export const playerListID = ref([])
 export const matchList = ref([])
+export const rankList =ref([])
 export const matchRecord = ref(null)
 export const pkData = ref(null)
 export const player = reactive({
@@ -36,20 +37,15 @@ export const player = reactive({
     cost: 0,
     money: 0
   })
+export const allPlayer = ref(null)  
 
 export function findID(userID){
     $http.get(`/getOne/${userID}`).then((res)=>{
-            localStorage.setItem('userID', res.data.userID)
-            localStorage.setItem('name', res.data.name)
-            localStorage.setItem('id', res.data._id)
-            localStorage.setItem('step', res.data.step)
-            localStorage.setItem('score', res.data.score)
-            player.name = res.data.name
-            player.userID = res.data.userID
-            player.id = res.data._id
-            player.score = res.data.score
-            step.value = res.data.step
-        
+        player.name = res.data.name
+        player.userID = res.data.userID
+        player.id = res.data._id
+        player.score = res.data.score
+        step.value = res.data.step
     }).catch((err)=>{
         console.error(err)
     })
@@ -59,7 +55,6 @@ export function getNameByID(userID){
         return res.data.name
     })
 }
-
 export function signUpID(userID){
     loading.value = true
     $http.post('/new',{
@@ -117,6 +112,14 @@ export function getPlayerIDList(){
     $http.get('/getAll').then((res)=>{
         playerListID.value = Object.values(res.data).map(item => item.userID)
         console.log(playerListID)
+    }).catch((err)=>{
+        console.error(err)
+    })
+}
+
+export function getAllPlayer(){
+    $http.get('/getAll').then((res)=>{
+        allPlayer.value = Object.values(res.data)
     }).catch((err)=>{
         console.error(err)
     })
@@ -258,12 +261,12 @@ export function setStep(step,player){
 }
  
 
-export function rankScore(){
-    let data 
-    $http.get(`${api_path+'/score/'}`).then((res)=>{
-        data = res.data
+export function getRank(){
+    $http.get('/getRank').then((res)=>{
+        rankList.value = res.data
+    }).catch((err)=>{
+        console.error(err)
     })
-    return data
 }
 
 

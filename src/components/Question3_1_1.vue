@@ -45,7 +45,7 @@
               </a-input-group>
               </div>
           </div>
-          <a-button class="btn" @click="tobuyWine">買下去</a-button>
+          <a-button class="btn" @click="game = 'chart'">買下去</a-button>
         </div>
         <div v-if="game == 'chart'">
           <div class="rule">
@@ -55,7 +55,7 @@
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Dr. No</h2>
-            金額{{ wine1num * 100000 }}<br />
+            金額{{ wine1Local }}<br />
             持有數量{{ wine1num }}
           </div>
         </div>
@@ -63,7 +63,7 @@
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Goldfinger</h2>
-            金額{{ wine2num * 2200 }}<br />
+            金額{{ wine2Local }}<br />
             持有數量{{ wine2num }}
           </div>
         </div>
@@ -71,11 +71,11 @@
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Thunderbal</h2>
-            金額{{ wine3num * 4000 }}<br />
+            金額{{ wine3Local }}<br />
             持有數量{{ wine3num }}
           </div>
         </div>
-        <a-button class="btn" @click="goNext('Question3_1_2')">看看放兩年後的變化</a-button>
+        <a-button class="btn" @click="tobuyWine">看看放兩年後的變化</a-button>
       </div>
       
     </div>
@@ -100,6 +100,9 @@ const total = ref(0)
 const score = computed(() => Number(player.score).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
+const wine1Local = computed(() => Number(wine1num.value * 100000 ).toLocaleString() )
+const wine2Local = computed(() => Number(wine2num.value * 2200 ).toLocaleString() )
+const wine3Local = computed(() => Number(wine3num.value * 4000 ).toLocaleString() )
 const isVisible = ref(false)
 const redeemItem = ref('')
 
@@ -162,6 +165,15 @@ function tobuyWine() {
     setupMoneyCost( player, cost.value, money.value )
     game.value = 'chart'
   }
+
+  localStorage.setItem('cost', cost.value)
+  localStorage.setItem('score', player.score)
+  localStorage.setItem('money', player.money)
+  localStorage.setItem('wine1_1', wine1num.value)
+  localStorage.setItem('wine2_1', wine2num.value)
+  localStorage.setItem('wine3_1', wine3num.value)
+
+  goNext('Question3_1_2')
 }
 
 
@@ -169,7 +181,6 @@ function goNext(next) {
   setStep(next, player)
   step.value = next
 }
-
 
 
 

@@ -39,7 +39,7 @@
             恭喜獨享 150,000
           </p>
         </div>
-        <!-- <a-button class="btn next" size="large" type="primary" @click="() => { goNext() }">第二局</a-button> -->
+        <a-button class="btn next" size="large" type="primary" @click="() => { goNext() }">下一局</a-button>
       </div>
     </div>
     <div class="footer">
@@ -59,37 +59,40 @@ const wait = ref(9)
 var setTimer = null
 const timer = ref(5)
 const pass = ref(false)
+const ready = ref(false)
 const n = ref(1)
 
-socket.on("adminStep", (v) => {
-  pass.value = v
-});
+// socket.on("adminStep", (v) => {
+//   pass.value = v
+// });
 
-watch(pass, (newX) => {
-  if (newX == 'result') {
-    getResults()
-    setTimeout(()=>{
-      game.value = 'result'
-    },500)
-  } else if (newX == 'gambleWait') {
-    game.value = 'gambleWait'
-  } else if (newX == 'NextRound') {
-    goNext()
-  } else if (newX == 'gamble') {
-    game.value = 'gamble'
-    wait.value = 9
-    goGamble()
-  } else {
-    console.error(newX)
-  }
-})
+// watch(pass, (newX) => {
+//   if (newX == 'result') {
+//     getResults()
+//     setTimeout(()=>{
+//       game.value = 'result'
+//     },500)
+//   } else if (newX == 'gambleWait') {
+//     game.value = 'gambleWait'
+//   } else if (newX == 'NextRound') {
+//     goNext()
+//   } else if (newX == 'gamble') {
+//     game.value = 'gamble'
+//     wait.value = 9
+//     goGamble()
+//   } else {
+//     console.error(newX)
+//   }
+// })
 
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
+  setTimeout(() => {
+    game.value = 'gamble'
+    wait.value = 9
+    goGamble()}, 3000)
 })
-
-
 
 function goGamble() {
   setTimer = setInterval(() => { countdownTimer() }, 1000)
@@ -119,6 +122,11 @@ function countdownTimer() {
   } else if (wait.value == 0) {
     game.value = "resultWait"
     end.value = '3'
+
+    setTimeout(()=>{
+      getResults()
+      game.value = 'result'
+    },2000)
   }
 }
 
@@ -126,12 +134,12 @@ function getResults() {
   getCompetitorResult(pkData.value.pk)
   console.log(competitorResult.value)
   setTimeout(()=>{
-    if (competitorResult.value) {
-      whoWin(result.value, competitorResult.value)
-    } else {
+    // if (competitorResult.value) {
+    //   whoWin(result.value, competitorResult.value)
+    // } else {
       let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
       whoWin(result.value, rnd)
-    }
+   // }
   },500)
   
 }
@@ -175,6 +183,10 @@ function goNext() {
   } else {
     n.value += 1
     game.value = 'gambleWait'
+    setTimeout(() => {
+    game.value = 'gamble'
+    wait.value = 9
+    goGamble()}, 3000)
   }
 }
 </script>

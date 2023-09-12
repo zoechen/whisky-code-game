@@ -4,43 +4,58 @@
     <div class="question s03">
       <div v-if="game == 'result'">
           <div class="rule">
-            <p class="tip">目前的總籌碼有 {{ score }} <br />可動用籌碼有 {{ moneyLocal }}</p>
+            <p class="tip">目前的總籌碼有 {{ scoreLocal }} <br />可動用籌碼有 {{ moneyLocal }}</p>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Dr. No</h2>
+              <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
+            </div>
+            <div class="itemContent">
               漲幅 <b>190%</b><br/>總價值提昇為<br />
               金額{{ wine1Totle }}
               <br />持有數量{{ (wine1old + wine1new)  }}
             </div>
-            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1' " :disabled="wine1old==0">贖回</a-button>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1' " :disabled="(wine1old + wine1new)==0">贖回</a-button>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Goldfinger</h2>
+              <img src="../assets/images/macallan12.png" alt="" class="pic"/>
+            </div>
+            <div class="itemContent">
               漲幅<b>909.09%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}
               <br />持有數量{{ (wine2old + wine2new)  }}
             </div>
-            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2' " :disabled="wine2old==0">贖回</a-button>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2' " :disabled="(wine2old + wine2new)==0">贖回</a-button>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             <div class="itemContent">
               <h2>Thunderbal</h2>
+              <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+            </div>
+            <div class="itemContent">
               漲幅<b>337.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle }}
               <br />持有數量{{ (wine3old + wine3new)  }}
             </div>
-            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3' " :disabled="wine3old==0">贖回</a-button>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3' " :disabled="(wine3old + wine3new)==0">贖回</a-button>
           </div>
          
           <a-button class="btn" @click="game = 'myScore';setScore()">目前的籌碼有</a-button>
         </div>
         <div v-if="game == 'myScore'">
-        <div class="rule">
-          <div class="title">總籌碼有{{ totalLocal }}</div>
-          <div class="tip"> 可動用籌碼有 {{ moneyLocal }}</div>
+          <div class="rule">
+          <div class="title">總籌碼有</div>
+          <div class="tips">{{ scoreLocal }}</div>
+          <div class="title"> 可動用籌碼有</div>
+          <div class="tips">{{ moneyLocal }}</div>
+
+          <h2>Dr. No</h2>
+          <div class="tips"> 持有數量{{ wine1old + wine1new }}</div>
+          <h2>Goldfinger</h2>
+          <div class="tips"> 持有數量{{ wine2old + wine2new }}</div>
+          <h2>Thunderbal</h2>
+          <div class="tips"> 持有數量{{ wine3old + wine3new }}</div>
         </div>
       </div>
     </div>
@@ -80,6 +95,7 @@ const isVisible = ref(false)
 const redeemItem = ref('')
 const total = ref(0)
 const score = ref(0)
+const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
 const wine1Totle = computed(()=> Number((wine1old.value + wine1new.value) * 190000).toLocaleString() )
@@ -113,6 +129,9 @@ function redeemMoney(){
       money.value = Number(money.value) + (wine1old.value + wine1new.value) * 190000
       wine1old.value = 0
       wine1new.value = 0
+      setWineNumber(player,{wine1_1:0,wine1_2:0})
+      setupMoneyCost(player, cost.value, money.value)
+
       break;
     case 'wine2':
       cost.value = Number(cost.value) - wine2old.value * 2200
@@ -120,6 +139,9 @@ function redeemMoney(){
       money.value = Number(money.value) + (wine2old.value + wine2new.value) * 33000
       wine2old.value = 0
       wine2new.value = 0
+      setWineNumber(player,{wine2_1:0,wine2_2:0})
+      setupMoneyCost(player, cost.value, money.value)
+
       break;
     case 'wine3':
       cost.value = Number(cost.value) - wine3old.value * 4000
@@ -127,6 +149,9 @@ function redeemMoney(){
       money.value = Number(money.value) + (wine3old.value+wine3new.value) * 13500
       wine3old.value = 0
       wine3new.value = 0
+      setWineNumber(player,{wine3_1:0,wine3_2:0})
+      setupMoneyCost(player, cost.value, money.value)
+
       break;
     default:
       break;

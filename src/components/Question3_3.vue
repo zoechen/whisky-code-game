@@ -4,8 +4,9 @@
     <div class="question s03">
         <div v-if="game == 'buyit'">
           <div class="title">最後加碼收藏</div>
-          <div class="rule"><p class="tip">可動用籌碼有 {{ money }} <br/>
-            投入的籌碼共 {{ cost }}</p></div>
+          <div class="rule">
+            <p class="tip">目前的總籌碼有 {{ scoreLocal }} <br />可動用籌碼有 {{ moneyLocal }}</p>  
+          </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
             <div class="itemContent">
@@ -48,7 +49,7 @@
               </div>
           </div>
 
-          <a-button class="btn" @click="tobuyWine()">買下去</a-button>
+          <a-button class="btn" @click="game = 'chart'">買下去</a-button>
         </div>
        
         <div v-if="game == 'chart'">
@@ -78,7 +79,7 @@
             持有數量{{ (wine3old + wine3two + wine3new) }}
           </div>
           </div>
-          <a-button class="btn" @click="goNext()">看看到現在的變化</a-button>
+          <a-button class="btn" @click="tobuyWine()">看看到現在的變化</a-button>
         </div>
       </div>
     <div class="footer">
@@ -104,12 +105,8 @@ const wine3two = ref(0)
 const cost = ref(0)
 const score = ref(0)
 const money = ref(0)
-const notYet =ref(true)
-const hours = ref(0)
-const mins = ref(0)
-const secs = ref(0)
-const isVisible = ref(false)
-const redeemItem =ref('')
+const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
+const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const wine1Totle = computed(()=> ((wine1old.value + wine1two.value + wine1new.value) * 190000).toLocaleString() ) 
 const wine2Totle = computed(()=> ((wine2old.value + wine2two.value + wine2new.value) * 33000).toLocaleString() )
 const wine3Totle = computed(()=> ((wine3old.value + wine3two.value + wine3new.value) * 13500).toLocaleString() )
@@ -177,7 +174,7 @@ onMounted(() => {
   wine1two.value = Number(localStorage.getItem('wine1_2'))
   wine2two.value = Number(localStorage.getItem('wine2_2'))
   wine3two.value = Number(localStorage.getItem('wine3_2'))
-  score.value = Number(localStorage.getItem('score'))
+  score.value = localStorage.getItem('score') || player.score
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
   },500)
@@ -193,7 +190,7 @@ function tobuyWine(){
   localStorage.setItem('wine1_3', wine1new.value)
   localStorage.setItem('wine2_3', wine2new.value)
   localStorage.setItem('wine3_3', wine3new.value)
-  game.value = 'chart'
+  goNext()
 }
 
 function goNext() {

@@ -62,7 +62,7 @@
             </a-col>
             <a-col :span="12">
               <a-checkbox value="800000">
-                <a-card :class="selected.includes('800000') ? 'active' : 'normal'" style="width: 40vw;">可可果肉<br/>800,000</a-card>
+                <a-card :class="selected.includes('800000') ? 'active' : 'normal'" style="width: 40vw;">可可果汁<br/>800,000</a-card>
               </a-checkbox>
             </a-col>
           </a-row>
@@ -119,7 +119,7 @@ function sentAns() {
 }
 
 function goNext() {
-  let next = 'Question2_0'
+  let next = 'Question1_5'
   setStep(next, player)
   step.value = next
 }

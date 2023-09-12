@@ -33,11 +33,11 @@
         <div v-if="game == 'wineinfo'">
           <a-carousel :after-change="onChange" arrows>
             <template #prevArrow>
-              <div style="left: 10px; z-index: 999;color: #fff; font-size: 1.2rem;">
+              <div style="left: 10px; z-index: 999;color: #fff; font-size: 1.8rem;">
               </div>
             </template>
             <template #nextArrow>
-              <div style="right: 10px;color: #fff;font-size: 1.2rem;">
+              <div style="right: 10px;color: #fff;font-size: 1.8rem;">
               </div>
             </template>
           <div class="bloc">
@@ -202,10 +202,10 @@ function initWine(){
 }
 .question.s03 .rule{
   margin: 0.4rem auto;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   width: 100%;
   padding: 10px;
-  border-radius: 2rem;
+  border-radius: 1.2rem;
   font-size: 1rem;
 }
 .question.s03 .rule .tips{
@@ -225,8 +225,8 @@ function initWine(){
 .flexChart {
   height: 54vh;
   width: calc(100vw-8rem);
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 2rem 0.8rem 4rem 0.8rem;
   margin-bottom: 2rem;
 }
@@ -234,8 +234,8 @@ function initWine(){
 .itemCard {
   height: 18vh;
   width: calc(100vw-8rem);
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.7);
   margin-bottom: 1rem;
   display: flex;
 }
@@ -279,9 +279,9 @@ function initWine(){
   width: 100%;
   text-align: center;
   color: #d5cdc4;
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
+  border-radius: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 2.4rem;
   height: 65vh;
   
 }
@@ -292,7 +292,7 @@ function initWine(){
 }
 .bloc p{
   text-align: left;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .bloc h2{
@@ -305,6 +305,12 @@ function initWine(){
   width: auto;
   height: 4rem;
   filter:grayscale(100%)
+}
+
+.bloc .real{
+  margin: 0 auto;
+  width: auto;
+  height: 5rem;
 }
 </style>
 

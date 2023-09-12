@@ -5,6 +5,7 @@
     <Question1_2 v-if="step == 'Question1_2'"/>
     <Question1_3 v-if="step == 'Question1_3'"/>
     <Question1_4 v-if="step == 'Question1_4'"/>
+    <Question1_5 v-if="step == 'Question1_5'"/>
     <Question2_0 v-if="step == 'Question2_0'"/>
     <Question2_1 v-if="step == 'Question2_1'"/>
     <Question2_2 v-if="step == 'Question2_2'"/>
@@ -29,6 +30,7 @@
   import Question1_2 from "../components/Question1_2.vue"
   import Question1_3 from "../components/Question1_3.vue"
   import Question1_4 from "../components/Question1_4.vue"
+  import Question1_5 from "../components/Question1_5.vue"
   import Question2_0 from "../components/Question2_0.vue"
   import Question2_1 from "../components/Question2_1.vue"
   import Question2_2 from "../components/Question2_2.vue"

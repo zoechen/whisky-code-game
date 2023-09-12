@@ -5,7 +5,7 @@
       <div v-if="game == 'buyit'">
         <div class="title">加碼收藏</div>
         <div class="rule">
-          <p class="tip">目前的總籌碼有 {{ score }} <br />可動用籌碼有 {{ moneyLocal }}</p>
+          <p class="tip">目前的總籌碼有 {{ scoreLocal }} <br />可動用籌碼有 {{ moneyLocal }}</p>
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
@@ -46,17 +46,17 @@
             </a-input-group>
           </div>
         </div>
-        <a-button class="btn" @click="tobuyWine()">買下去</a-button>
+        <a-button class="btn" @click="game = 'chart'">買下去</a-button>
       </div>
       <div v-if="game == 'chart'">
           <div class="rule">
-            <p class="tip">目前的總籌碼有 {{ score }} <br />可動用籌碼有 {{ moneyLocal }}</p>
+            <p class="tip">目前的總籌碼有 {{ scoreLocal }} <br />可動用籌碼有 {{ moneyLocal }}</p>
           </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Dr. No</h2>
-            金額{{ (wine1old + wine1new) * 140000 }}<br />
+            金額{{ wine1Local }}<br />
             持有數量{{ (wine1old + wine1new) }}
           </div>
         </div>
@@ -64,7 +64,7 @@
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Goldfinger</h2>
-            金額{{ (wine2old + wine2new) * 8500 }}<br />
+            金額{{ wine2Local }}<br />
             持有數量{{ (wine2old + wine2new) }}
           </div>
         </div>
@@ -72,11 +72,11 @@
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Thunderbal</h2>
-            金額{{ (wine3old + wine3new) * 5500 }}<br />
+            金額{{ wine3Local}}<br />
             持有數量{{ (wine3old + wine3new) }}
           </div>
         </div>
-        <a-button class="btn" @click="goNext('Question3_2_2')">看看放兩年後的變化</a-button>
+        <a-button class="btn" @click="tobuyWine()">看看放兩年後的變化</a-button>
       </div>
     </div>
     <div class="footer">
@@ -97,15 +97,15 @@ const wine1old = ref(0)
 const wine2old = ref(0)
 const wine3old = ref(0)
 const cost = ref(0)
-const nowscore = ref(0)
 const money = ref(0)
-const isVisible = ref(false)
-const redeemItem = ref('')
 const total = ref(0)
 const score = ref(0)
 const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
+const wine1Local = computed(() => Number((wine1old.value + wine1new.value) * 140000  ).toLocaleString() )
+const wine2Local = computed(() => Number((wine2old.value + wine2new.value) * 8500 ).toLocaleString() )
+const wine3Local = computed(() => Number((wine3old.value + wine3new.value) * 5500 ).toLocaleString() )
 
 watch(wine1new, (newValue, oldValue) => {
   // if(newX <1) {
@@ -185,7 +185,8 @@ function tobuyWine() {
   localStorage.setItem('wine1_2', wine1new.value)
   localStorage.setItem('wine2_2', wine2new.value)
   localStorage.setItem('wine3_2', wine3new.value)
-  game.value = 'chart'
+  
+  goNext('Question3_2_2')
 }
 
 function goNext(next) {

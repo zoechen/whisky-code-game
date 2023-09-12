@@ -1,15 +1,8 @@
 <template><div>
-  <div class="logo"> <div v-if="!notYet" class="score">您目前有 {{ player.score }}</div> </div>
+  <div class="logo"> <div class="score">您目前有 {{ player.score }}</div> </div>
   <div class="question s02">
-  <div v-if="notYet" class="info">
-    <p class="title">恭喜您現在的籌碼有<br/>{{  player.score  }}</p>
-    <p class="tip">請耐心等待，我們將於</p>
-    <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
-    <p class="tip">後進行下一個有趣的遊戲!</p>
-  </div>
-  <div v-else>
   <div v-if="game == 'rule'" class="info">
-    <p class="title">{{ player.name }},來增加您的籌碼吧！</p>
+    <p class="title">{{ player.name }}<br/>來增加您的籌碼吧！</p>
     <div class="rule">
     <p class="tips">
       隨機配對二人一組<br />
@@ -24,17 +17,17 @@
       <b>合作者賠8萬</b>
     </p>
   </div>
-    <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer();game = 'match';">開始配對!</a-button></div>
+    <!-- <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer();game = 'match';">開始配對!</a-button></div> -->
   </div>
-  <div class="pk" v-if="game == 'match'">
+  <!-- <div class="pk" v-if="game == 'match'">
     <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
     <p class="tips">不會計分</p>
     <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gambleWait';}">試玩一局</a-button>
     
-  </div>
+  </div> -->
   <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">試玩一局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }}<br/>你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" size="large" disabled>合作</a-button>
         <a-button class="btn w50" size="large" disabled>獨享</a-button>
         <div class="tips">準備一下，馬上要開始了</div>
@@ -65,13 +58,12 @@
         恭喜獨享 150,000
       </p>
     </div>
-    <a-button class="btn next" size="large" type="primary" @click="goNext">接下來要正式開始</a-button>
+    <!-- <a-button class="btn next" size="large" type="primary" @click="goNext">接下來要正式開始</a-button> -->
   </div>
 
 </div>
-</div>
 <div class="footer">
-  
+  {{ player.userID }}
 </div>
 </div>
 </template>
@@ -107,6 +99,8 @@ watch(pass, (newX) => {
     game.value = 'gamble'
     wait.value = 9
     goGamble()
+  } else if (newX == 'NextRound') {
+    goNext()
   } else {
     console.error(newX)
   }
@@ -119,7 +113,7 @@ onMounted(() => {
 })
 
 function countdown(){
-  let timesUp = 3
+  //let timesUp = 3
   let time = setInterval(() => {
   let future  = Date.parse("2023-09-11T12:00:00");
   let now     = new Date();
@@ -130,15 +124,10 @@ function countdown(){
   let s  = Math.floor( diff / 1000 );
     timesUp -=1
     nowscore.value = localStorage.getItem('score')
-
-    if(timesUp < 0){
-      notYet.value = false
-      clearInterval(time)
-    }else{
-      hours.value = addZero(h - days  * 24);
-      mins.value = addZero(m  - h * 60);
-      secs.value = addZero(s  - m * 60);
-    }
+    hours.value = addZero(h - days  * 24);
+    mins.value = addZero(m  - h * 60);
+    secs.value = addZero(s  - m * 60);
+    
   }, 1000);
 }
 
@@ -267,7 +256,7 @@ function goNext() {
 }
 .question.s02 .tips{
   color: #d5cdc4;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .question.s02 .tips b{
   border-radius: 16px;
@@ -275,14 +264,14 @@ function goNext() {
   margin: 4px;
   background-color: #d5cdc4;
   color: #552917;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .question.s02 .pk{
   height: 82vh;
   background: url('../assets/images/battle-bg.png') no-repeat center;
   background-position: bottom center;
   background-size: auto 105%;
-  padding-top:10rem;
+  padding-top:6rem;
   color: #cda674;
 }
 .question.s02  .end{
@@ -334,6 +323,7 @@ function goNext() {
 .question.s02 .pk .header{
   color: #f5f1ea;
   font-size: 2.4rem;
+  font-weight: 600;
   margin-top:2rem;
   text-shadow: #000 0.01rem 0.01rem;
 }

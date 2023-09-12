@@ -24,6 +24,7 @@
     "socket.io-client": "^4.7.2",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
+    "vue-request": "^2.0.3",
     "vue-router": "^4.2.4",
     "vuex": "^4.0.2"
   },

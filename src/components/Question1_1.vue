@@ -3,7 +3,7 @@
   <div class="logo"></div>
   <div class="question s01">
     <div v-if="game=='isQuest'">
-      <p class="title">{{ player.name }},請享用迎賓酒</p>
+      <p class="title">{{ player.name }},<br/>請享用迎賓酒</p>
       <p class="tip">您覺得裡面有什麼味道呢？<br/>猜中可以得到豐厚token哦！</p>
       <p class="title">請問你喝的是？</p>
       <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
