@@ -68,7 +68,6 @@ function updateMatchData(){
             }
             createMatchList(matchData)
         }
-    getMatchList()
 }
   </script>
  <style>

@@ -307,3 +307,9 @@ export function setWineNumber(player,data){
         }
     })
 }
+
+export function deleteMatchData(userID){
+    $http.delete(`/deleteMatchData`).then((res)=>{
+       console.log(res)
+    })
+}
