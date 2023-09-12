@@ -29,19 +29,31 @@
   <div class="pk" v-if="game == 'match'">
     <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
     <p class="tips">不會計分</p>
-    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gamble01';goGamble()}">試玩一局</a-button>
+    <a-button class="btn next" size="large" type="primary" @click="()=>{game = 'gambleWait';}">試玩一局</a-button>
     
   </div>
-  <div class="pk" v-if="game == 'gamble01'">
+  <div class="pk" v-if="game == 'gambleWait'">
+        <p class="tips">試玩一局</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <a-button class="btn w50" size="large" disabled>合作</a-button>
+        <a-button class="btn w50" size="large" disabled>獨享</a-button>
+        <div class="tips">準備一下，馬上要開始了</div>
+      </div>
+  <div class="pk" v-if="game == 'gamble'">
     <p class="tips">試玩一局</p>
     <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
     <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" @click="()=>{result='team'}">合作</a-button>
     <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" @click="()=>{result='solo'}">獨享</a-button>
-    <!-- <a-button class="btn w50" size="large" @click="()=>{result = 'team'}">合作</a-button>
-    <a-button class="btn w50" size="large" @click="()=>{result = 'solo'}">獨享</a-button> -->
     <p class="tips"><b>{{ wait }}</b></p>
   </div>
-  <div v-if="game == 'result01'" class="end">
+  <div class="pk" v-if="game == 'resultWait'">
+        <p class="tips">試玩一局</p>
+        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
+        <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
+      </div>
+  <div v-if="game == 'result'" class="end">
+    <div v-if="end == '3'" class="pk"></div>
     <div v-if="end=='0'" class="los">
       <p class="res">啊,賠了 80,000</p>
     </div>
@@ -55,15 +67,7 @@
     </div>
     <a-button class="btn next" size="large" type="primary" @click="goNext">接下來要正式開始</a-button>
   </div>
-      <div v-if="game == 'offcial'" class="info">
-        <p class="title">{{ player.name }},<br/>我們要正式開始了</p>
-        <div class="rule">
-          <p class="tips">
-            接下來五局，你的對手是{{ competitorName || "AI ROBOT" }}
-          </p>
-        </div>
-       
-      </div>
+
 </div>
 </div>
 <div class="footer">
@@ -74,6 +78,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorName, getCompetitorResult, competitorName, competitorResult } from '../api/index'
+import { state, socket } from "@/socket"
 
 const game = ref('rule')
 const end = ref('0')
@@ -83,9 +88,29 @@ const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
 const nowscore = ref(0)
-const wait = ref(8)
+const wait = ref(9)
+const pass = ref(false)
+var setTimer = null
+socket.on("adminStep", (v) => {
+  pass.value = v
+});
 
-watch()
+watch(pass, (newX) => {
+  if (newX == 'result') {
+    getResults()
+    setTimeout(()=>{
+      game.value = 'result'
+    },500)
+  } else if (newX == 'gambleWait') {
+    game.value = 'gambleWait'
+  } else if (newX == 'gamble') {
+    game.value = 'gamble'
+    wait.value = 9
+    goGamble()
+  } else {
+    console.error(newX)
+  }
+})
 
 onMounted(() => {
   getPlayerScore(player.userID)
@@ -129,45 +154,52 @@ function matchPlayer() {
   getCompetitorName(pkData.value.pk)
 }
 
-
 function goGamble() {
- let waitTime = setInterval(() => { 
-      wait.value -= 1
-      if(wait.value == 1 ){
-        if(result.value == '0'){ 
-          if(Math.random()>0.5){
-            result.value = 'sole'
-            isActiveSolo.value = true
-            isActiveTeam.value = false
-          }else{
-            result.value = 'team'
-            isActiveSolo.value = false
-            isActiveTeam.value = true
-          }
-        }
-        updateResult({
-            userID: player.userID,
-            result: result.value 
-          })
-
-      }else if(wait.value < 0){
-        game.value = "result01"
-        
-        getCompetitorResult(pkData.value.pk)
-
-        if(competitorResult.value){
-          whoWin( result.value , competitorResult.value)
-        }else{
-          let rnd = (Math.random()>0.5) ? 'team':'solo' 
-          whoWin( result.value , rnd )
-        }
-        clearInterval(waitTime)
-      }
-  },1000)
-      
+  setTimer = setInterval(() => { countdownTimer() }, 1000)
+  setTimeout(() => { clearTimeout(setTimer);wait.value = 0 }, 10000)
 }
 
+function countdownTimer() {
 
+  wait.value -= 1
+
+  if (wait.value == 1) {
+
+    if (result.value == '0') {
+      if (Math.random() > 0.5) {
+        result.value = 'solo'
+      } else {
+        result.value = 'team'
+      }
+    }
+    updateResult({
+      userID: player.userID,
+      result: result.value
+    })
+    socket.emit('who', {
+      [player.userID]: result.value
+    })
+  } else if (wait.value == 0) {
+    game.value = "resultWait"
+    end.value = '3'
+    setTimeout(() =>{
+      getResults()
+    },500)
+  }
+}
+function getResults() {
+  getCompetitorResult(pkData.value.pk)
+  console.log(competitorResult.value)
+  setTimeout(()=>{
+    if (competitorResult.value) {
+      whoWin(result.value, competitorResult.value)
+    } else {
+      let rnd = (Math.random() > 0.5) ? 'team' : 'solo'
+      whoWin(result.value, rnd)
+    }
+  },500)
+  
+}
 
 function whoWin( me ,yo){
     if( me == 'team' && yo == 'solo'){
