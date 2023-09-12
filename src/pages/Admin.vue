@@ -78,14 +78,18 @@ function resultPass(v) {
     }
 }
 function createMatchData12() {
-    console.log(playerListID.value.length)
-    for (let i = 0; i < playerListID.value.length; i++) {
-        if (i % 2) {
-            teamA.value.push(playerListID.value[i])
-        } else {
-            teamB.value.push(playerListID.value[i])
-        }
+    const copyArr = [...playerListID.value];
+
+  while (copyArr.length > 0) {
+    const randomIndex = Math.floor(Math.random() * copyArr.length);
+    const randomElement = copyArr.splice(randomIndex, 1)[0];
+
+    if (teamA.value.length <= teamB.value.length) {
+      teamA.value.push(randomElement);
+    } else {
+      teamB.value.push(randomElement);
     }
+  }
     console.log(teamA.value, teamB.value)
     setTimeout(() => {
          updateMatchData()
