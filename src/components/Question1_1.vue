@@ -266,7 +266,7 @@
 </div>
 </template>
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { player, step, setupScore, setStep } from '../api/index'
 
@@ -281,10 +281,6 @@ watch(selected, (newX) => {
     message.error("最多選四個")
     selected.value.splice(4,4)
   }
-})
-
-onMounted(() => {
-  console.log('1-1:',player)
 })
 
 function sentAns() {
