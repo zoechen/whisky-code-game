@@ -17,11 +17,13 @@
         :rules="[{ required: true, message: '輸入您的暱稱!' }]"
         placeholder="輸入您的暱稱"
       >
-        <a-input class="input" v-model:value="formState.name" maxlength="10" />
+        <a-input class="input" v-model:value="formState.name" maxlength="4" />
+      </a-form-item>
+
+      <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+        <a-button class="btn" type="primary" html-type="submit">送出</a-button>
       </a-form-item>
     </a-form>
-    <a-button class="btn" type="primary" html-type="submit">送出</a-button>
-
     </div>
     <div class="footer">
       <div class="shadow"></div>
@@ -29,21 +31,20 @@
   </div>
 </template>
 <script setup>
-import { message } from 'ant-design-vue'
-import { reactive,onMounted } from 'vue'
-import { setupName, step, player, getPlayerNameList, playerListNAME } from '../api/index'
+import { reactive } from 'vue'
+import { setupName, step, player } from '../api/index'
 const formState = reactive({
   name: ''
 })
-onMounted(() => {
-  getPlayerNameList()
-})
+
 const onFinish = () => {
-  let isTaken = playerListNAME.value.includes(formState.name) 
-    if(isTaken){
-      message.error("這個名字有人用了")
+  let playerID = player.userID
+  console.log("playerID:", playerID)
+    let isNew = (playerID == "") ? true : false
+    if(isNew){
+        step.value = 'Start'
     }else{
-        setupName(formState.name,player.userID)
+        setupName(formState.name,player.id)
     }
 }
 const onFinishFailed = (errorInfo) => {
