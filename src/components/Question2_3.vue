@@ -59,17 +59,6 @@ var setTimer = null
 const pass = ref(false)
 const n = ref(1)
 
-socket.on("adminStep", (v) => {
-  pass.value = v
-});
-
-watch(pass, (newX) => {
-  if(newX){
-    setTimeout(() => {
-    game.value = 'gamble'
-    wait.value = 6
-    goGamble()}, 3000)
-  }
   // if (newX == 'result') {
   //   getResults()
   //   setTimeout(()=>{

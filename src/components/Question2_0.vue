@@ -217,7 +217,7 @@ function goNext() {
   background: url('../assets/images/wine-bottle.jpg') no-repeat center;
   background-position: bottom center;
   background-size: auto 130%;
-  padding-top: 6vh;
+  padding-top: 8vh;
 }
 .question.s02 .title {
   color: #cda674;
