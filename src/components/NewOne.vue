@@ -21,9 +21,10 @@
       </a-form-item>
 
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-        <a-button class="btn" type="primary" html-type="submit">送出</a-button>
       </a-form-item>
     </a-form>
+    <a-button class="btn" type="primary" html-type="submit">送出</a-button>
+
     </div>
     <div class="footer">
       <div class="shadow"></div>
@@ -45,6 +46,11 @@ const onFinish = () => {
         step.value = 'Start'
     }else{
         setupName(formState.name,player.id)
+        setTimeout(() =>{
+          if(player.name == ""){
+            setupName(formState.name,player.id)
+          }
+        },3000)
     }
 }
 const onFinishFailed = (errorInfo) => {
