@@ -23,7 +23,7 @@
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
       </a-form-item>
     </a-form>
-    <a-button class="btn" type="primary" html-type="submit">送出</a-button>
+    <a-button class="btn" type="primary" @click="onSubmit">送出</a-button>
 
     </div>
     <div class="footer">
@@ -34,13 +34,10 @@
 <script setup>
 import { reactive } from 'vue'
 import { setupName, step, player } from '../api/index'
-const formState = reactive({
-  name: ''
-})
+const name = ref('')
 
-const onFinish = () => {
-  let playerID = player.userID
-  setupName(formState.name,playerID)
+const onSubmit = () => {
+  setupName(name.value,player.userID)
 }
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo)
