@@ -45,12 +45,12 @@ const onFinish = () => {
     if(isNew){
         step.value = 'Start'
     }else{
-        setupName(formState.name,player.id)
-        setTimeout(() =>{
-          if(player.name == ""){
-            setupName(formState.name,player.id)
-          }
-        },3000)
+        setupName(formState.name,playerID)
+        // setTimeout(() =>{
+        //   if(player.name == ""){
+        //     setupName(formState.name,playerID)
+        //   }
+        // },3000)
     }
 }
 const onFinishFailed = (errorInfo) => {

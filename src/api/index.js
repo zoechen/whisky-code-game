@@ -81,7 +81,7 @@ export function setupName(name,id){
     if(taken) {
         message.error('這個名字已經有人用了，再想想吧！')
     }else{
-        $http.put(`/updateName/${player.userID}`,{
+        $http.put(`/update/${id}`,{
             name: name,
             step: 'Question1_1',
             score: 0
