@@ -26,6 +26,9 @@
       </div>
       <div v-if="game == 'result'" class="end">
         <div v-if="end == '3'" class="pk"></div>
+        <div v-if="end == '-1'" class="los">
+          <p class="res">啊,賠了 30,000</p>
+        </div>
         <div v-if="end == '0'" class="los">
           <p class="res">啊,賠了 80,000</p>
         </div>
@@ -49,8 +52,7 @@ import { ref, onMounted, computed, watch} from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, 
         getPK, pkData, updateResult, getCompetitorResult,
         getCompetitorName, competitorName, competitorResult } from '../api/index'
-import dayjs from 'dayjs'
-import { state, socket } from "@/socket"
+import { socket } from "@/socket"
 
 const game = ref('gambleWait')
 const end = ref('0')
@@ -59,9 +61,11 @@ const wait = ref(5)
 var setTimer = null
 const n = ref(1)
 
-// socket.on("adminStep", (v) => {
-//   pass.value = v
-// });
+socket.on("adminStep", (v) => {
+  if(v == 'forceStop'){
+    goNext('Question2_2')
+  }
+});
 
 // watch(pass, (newX) => {
 //   if (newX == 'result') {
@@ -144,7 +148,7 @@ function getResults() {
 
 function whoWin(me, yo) {
   if (me == 'team' && yo == 'solo') {
-    end.value = '0'
+    end.value = '-1'
   } else if (me == 'team' && yo == 'team') {
     end.value = '1'
   } else if (me == 'solo' && yo == 'team') {
@@ -159,6 +163,9 @@ function goNext() {
   result.value = '0'
   let score = Number(player.score)
   switch (end.value) {
+    case '-1':
+      score -= 10000
+      break
     case '1':
       score += 120000
       break
@@ -174,7 +181,7 @@ function goNext() {
   console.log(score)
   setupScore(score, player)
 
-  if (n.value == 5) {
+  if (n.value == 10) {
     let next = 'Question2_2'
     setStep(next, player)
     step.value = next

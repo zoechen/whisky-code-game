@@ -26,9 +26,7 @@ import { socket } from "@/socket"
 const score = computed(() => Number(player.score).toLocaleString() )
 
 socket.on("adminStep", (v) => {
-  if(v == 'changeMatch'){
-    goNext('Question2_3')
-  }else if(v == 'investment00'){
+  if(v == 'investment00'){
     goNext('Question3_0')
   }
 });

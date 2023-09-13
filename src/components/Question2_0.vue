@@ -14,7 +14,7 @@
       <b>各賠8萬</b><br />
       一人選獨享一人選合作<br />
       <b>獨享者得15萬</b>
-      <b>合作者賠8萬</b>
+      <b>合作者賠1萬</b>
     </p>
   </div>
     <!-- <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="matchPlayer();game = 'match';">開始配對!</a-button></div> -->
