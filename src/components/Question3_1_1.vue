@@ -163,7 +163,6 @@ function tobuyWine() {
     wine3_1: wine3num.value
     })
     setupMoneyCost( player, cost.value, money.value )
-    game.value = 'chart'
   }
 
   localStorage.setItem('cost', cost.value)
