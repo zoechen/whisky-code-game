@@ -59,23 +59,6 @@ var setTimer = null
 const pass = ref(false)
 const n = ref(1)
 
-  // if (newX == 'result') {
-  //   getResults()
-  //   setTimeout(()=>{
-  //     game.value = 'result'
-  //   },500)
-  // } else if (newX == 'gambleWait') {
-  //   game.value = 'gambleWait'
-  // } else if (newX == 'NextRound') {
-  //   goNext()
-  // } else if (newX == 'gamble') {
-  //   game.value = 'gamble'
-  //   wait.value = 9
-  //   goGamble()
-  // } else {
-  //   console.error(newX)
-  // }
-})
 
 onMounted(() => {
   getPlayerScore(player.userID)
