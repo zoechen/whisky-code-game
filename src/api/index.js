@@ -76,7 +76,7 @@ export function signUpID(userID){
 }
 
 export function setupName(name,id){
-    loading.value = true
+    
     let taken = playerListNAME.value.includes(name)
     if(taken) {
         message.error('這個名字已經有人用了，再想想吧！')
@@ -85,19 +85,14 @@ export function setupName(name,id){
             name: name,
             userID: player.userID,
             step: 'Question1_1',
-            score: '0'
+            score: 0
         }).then((res)=>{
             player.name = res.data.name
             player.userID = res.data.userID
             player.id = res.data.id
-            localStorage.setItem('userID', res.data.userID)
-            localStorage.setItem('name', res.data.name)
-            localStorage.setItem('id', res.data.id)
         })
         step.value = 'Question1_1'
     }
-
-    loading.value = false
 }
 
 export function getPlayerNameList(){
