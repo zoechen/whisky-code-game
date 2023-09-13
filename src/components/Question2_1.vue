@@ -45,7 +45,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, computed, watch, destroyed} from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, 
         getPK, pkData, updateResult, getCompetitorResult,
         getCompetitorName, competitorName, competitorResult } from '../api/index'
@@ -94,7 +94,7 @@ onMounted(() => {
 
 function goGamble() {
   setTimer = setInterval(() => { countdownTimer() }, 1000)
-  setTimeout(() => { clearTimeout(setTimer);wait.value = 0 }, 10000)
+  setTimeout(() => { clearTimeout(setTimer);wait.value = 0 }, 6000)
 }
 
 function countdownTimer() {
