@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo"></div>
+    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
     <div class="question s03">
         <div v-if="game == 'buyit'">
           <div class="rule">

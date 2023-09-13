@@ -1,8 +1,8 @@
 <template><div>
-  <div class="logo"> <div class="score">您目前有 {{ player.score }}</div> </div>
+  <div class="logo">{{ player.userID }} : {{ player.score }}</div>
   <div class="question conutdown">
     <div class="info">
-    <p class="title">恭喜您現在的籌碼有<br/>{{  player.score  }}</p>
+    <p class="title">恭喜您現在的籌碼有<br/>{{  score  }}</p>
     <div v-if="timesUp>0">
     <p class="tip">請耐心等待，我們將於</p>
     <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
@@ -19,7 +19,7 @@
 </div>
 </template>
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { step, setStep, getPlayerScore, player, getPK, } from '../api/index'
 import { socket } from "@/socket"
 
@@ -27,6 +27,7 @@ const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
 const timesUp = ref(0)
+const score = computed(() => Number(player.score).toLocaleString() )
 const pass = ref(false)
 socket.on("adminStep", (v) => {
   pass.value = v

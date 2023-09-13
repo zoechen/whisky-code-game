@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="logo">
-    </div>
+    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
     <div class="question s02">
       <div class="pk">
       <div class="rule">

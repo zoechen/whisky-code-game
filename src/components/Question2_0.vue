@@ -1,5 +1,5 @@
 <template><div>
-  <div class="logo"> <div class="score">您目前有 {{ player.score }}</div> </div>
+  <div class="logo">{{ player.userID }} : {{ player.score }}</div>
   <div class="question s02">
   <div v-if="game == 'rule'" class="info">
     <p class="title">{{ player.name }}<br/>來增加您的籌碼吧！</p>
@@ -79,7 +79,7 @@ const notYet =ref(true)
 const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
-const nowscore = ref(0)
+const score = computed(() => Number(player.score).toLocaleString() )
 const wait = ref(5)
 const pass = ref(false)
 var setTimer = null
@@ -123,8 +123,6 @@ function countdown(){
   let h = Math.floor( diff / (1000*60*60) );
   let m  = Math.floor( diff / (1000*60) );
   let s  = Math.floor( diff / 1000 );
-    timesUp -=1
-    nowscore.value = localStorage.getItem('score')
     hours.value = addZero(h - days  * 24);
     mins.value = addZero(m  - h * 60);
     secs.value = addZero(s  - m * 60);

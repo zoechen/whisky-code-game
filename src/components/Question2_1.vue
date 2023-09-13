@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="logo">
-      <div class="score">您目前有 {{ player.score }}</div>
-    </div>
+    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
     <div class="question s02">
       <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">第{{ n }}局</p>

@@ -98,6 +98,10 @@ watch(userID,(newValue, oldValue) => {
   background-position: center left;
   background-size: auto 60%;
   height: 6vh;
+  text-align: right;
+  line-height: 6vh;
+  font-size: 0.8rem;
+  padding-right: 8px;
 }
 
 .content {
