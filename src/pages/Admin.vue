@@ -35,11 +35,17 @@
         </a-table>
 
     </a-tab-pane>
-    <a-tab-pane key="3" tab="總名單"> <a-table
+    <a-tab-pane key="3" tab="總名單"> 
+      <a-table
         :columns="columns"
         row-key="_id"
         :data-source="allPlayer"
         >
+        <template #bodyCell="{ column }">
+          <template v-if="column.key === 'operation'">
+            <a>重置</a>
+          </template>
+        </template>
         </a-table></a-tab-pane>
   </a-tabs>
         
@@ -72,7 +78,13 @@ const columns = [
     title: '總分',
     dataIndex: 'score',
     width: '20%'
-  }
+  },
+  {
+    title: '重置',
+    key: 'operation',
+    fixed: 'right',
+    width: '10%'
+  },
 ]
 
 const queryData = params => {
