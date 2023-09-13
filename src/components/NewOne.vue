@@ -40,18 +40,7 @@ const formState = reactive({
 
 const onFinish = () => {
   let playerID = player.userID
-  console.log("playerID:", playerID)
-    let isNew = (playerID == "") ? true : false
-    if(isNew){
-        step.value = 'Start'
-    }else{
-        setupName(formState.name,playerID)
-        // setTimeout(() =>{
-        //   if(player.name == ""){
-        //     setupName(formState.name,playerID)
-        //   }
-        // },3000)
-    }
+  setupName(formState.name,playerID)
 }
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo)
