@@ -32,14 +32,15 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
-import { setupName, step, player } from '../api/index'
+import { ref,onMounted } from 'vue'
+import { setupName, step, player,getPlayerNameList } from '../api/index'
 const name = ref('')
+onMounted(() => {
+  getPlayerNameList()
+}),
 
-const onSubmit = () => {
+function onSubmit() {
   setupName(name.value,player.userID)
 }
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo)
-}
+
 </script>

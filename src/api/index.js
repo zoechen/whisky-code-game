@@ -90,10 +90,8 @@ export function setupName(name,id){
             player.name = res.data.name
             player.userID = res.data.userID
             player.id = res.data.id
+            step.value = 'Question1_1'
         })
-        step.value = 'Question1_1'
-        localStorage.setItem('userID', res.data.userID)
-        localStorage.setItem('name', res.data.name)
     }
 }
 
