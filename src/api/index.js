@@ -189,10 +189,85 @@ export function getRecordByMatchID(){
         console.error(err)
     })
 }
-export function getCompetitorName(userID){
-    $http.get(`/getOne/${userID}`).then((res)=>{
-        competitorName.value = res.data.name
-    })
+export function getCompetitorName(){
+    let nameList = [
+        'James',
+        'John',
+        'Robert',
+        'Michael',
+        'William',
+        'David',
+        'Richard',
+        'Joseph',
+        'Charles',
+        'Thomas',
+        'Christopher',
+        'Daniel',
+        'Matthew',
+        'Anthony',
+        'Mark',
+        'Donald',
+        'Steven',
+        'Paul',
+        'Andrew',
+        'Kenneth',
+        'Joshua',
+        'Brian',
+        'Kevin',
+        'Edward',
+        'Timothy',
+        'Ronald',
+        'Jason',
+        'Jeffrey',
+        'Gary',
+        'Larry',
+        'Emily',
+        'Olivia',
+        'Ava',
+        'Isabella',
+        'Sophia',
+        'Mia',
+        'Charlotte',
+        'Amelia',
+        'Harper',
+        'Evelyn',
+        'Abigail',
+        'Ella',
+        'Scarlett',
+        'Grace',
+        'Lily',
+        'Chloe',
+        'Zoey',
+        'Sophia',
+        'Mia',
+        'Aria',
+        'Brad Pitt',
+        'Angelina', 
+        'Jolie',
+        'Leonardo',
+        'Jennifer',
+        'Tom',
+        'Julia',
+        'Scarlett',
+        'George',
+        'Meryl',
+        'Charlize',
+        'Harrison',
+        'Ford',
+        'Sandra',
+        'Robert',
+        'Downey',
+        'Nicole',
+        'Denzel',
+        'Emma',
+        'Smith',
+        'Kate'
+    ]
+    let rnd = Math.floor(Math.random() * nameList.length)
+    competitorName.value = nameList[rnd]
+    // $http.get(`/getOne/${userID}`).then((res)=>{
+    //     competitorName.value = res.data.name
+    // })
 }
 
 export function getCompetitorResult(userID){

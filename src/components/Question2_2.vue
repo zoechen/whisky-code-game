@@ -11,7 +11,7 @@
         <br/>
         您目前有
         <br/>
-        <div class="amount">{{ player.score }}</div>
+        <div class="amount">{{ score }}</div>
         </p>
       </div>
     </div>
@@ -21,8 +21,10 @@
   </div>
 </template>
 <script setup>
+import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, player } from '../api/index'
 import { socket } from "@/socket"
+const score = computed(() => Number(player.score).toLocaleString() )
 
 socket.on("adminStep", (v) => {
   if(v == 'changeMatch'){

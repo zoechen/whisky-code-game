@@ -20,7 +20,7 @@
             </div>
            </div>
           <div class="itemCard">
-            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             <div class="itemContent">
             <h2>Goldfinger</h2>
               目前市場價格 2,200/支<br />
@@ -33,7 +33,7 @@
               </div>
           </div>
           <div class="itemCard">
-            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             <div class="itemContent">
             <h2>Thunderball</h2>
               目前市場價格 4,000/支<br />
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="itemCard">
-          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Goldfinger</h2>
             金額{{ wine2Local }}<br />
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="itemCard">
-          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+          <img src="../assets/images/macallan12.png" alt="" class="pic" />
           <div class="itemContent">
             <h2>Thunderbal</h2>
             金額{{ wine3Local }}<br />

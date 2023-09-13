@@ -12,9 +12,11 @@
               </div>
             </template>
           <div class="bloc">
-            <h2>麥卡倫雪莉30年</h2>
+            <h3>麥卡倫雪莉30年</h3>
             <span>Macallan Sherry Oak 30Y </span>
             <img src="../assets/images/macallan-30y.png" alt="" class="real" />
+          <small>(化名 Dr. No)</small>
+          <br/>
               <ul>
             <li>色澤：深紅木色。</li>
             <li>香氣：濃郁甘醇的雪莉酒桶的氣味，帶有柳橙丁香、肉荳蔻和煙燻木氣息。</li>
@@ -23,10 +25,11 @@
             <li>ABV：43%</li>
             </ul>
           </div>
-          <div class="bloc">
-            <h2>麥卡倫紫鑽12年</h2>
-            <span>Macallan 12 Years Old Gran Reserva</span>
-          <img src="../assets/images/macallan12.png" alt="" class="real"  />
+          <div class="bloc"> <h3>麥卡倫限定系列No.1 </h3>
+            <span>The Macallan Edition No.1</span>
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="real"  />
+          <small>(化名 Goldfinger)</small>
+          <br/>
           <ul>
             <li>色澤：黑檀木色。</li>
             <li>香氣：濃郁甘醇，與雪莉酒桶的氣味緊密相合。</li>
@@ -36,13 +39,15 @@
             </ul>
           </div>
           <div class="bloc">
-            <h2>麥卡倫限定系列No.1 </h2>
-            <span>The Macallan Edition No.1</span>
-          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="real"  />
+            <h3>麥卡倫紫鑽12年</h3>
+            <span>Macallan 12 Years Old Gran Reserva</span>
+          <img src="../assets/images/macallan12.png" alt="" class="real"  />
+          <small>(化名 Thunderball)</small>
+          <br/>
           <ul>
             <li>色澤：天然蜂蜜。</li>
-            <li>香氣：柳橙、蘋果和果乾交融，散發鮮明豐郁的香氣。 橡木香氣中隱約透出香草、太妃糖和巧克力香。</li>
-            <li>口感：初嚐即現的木質辛香讓人心中浮現暖意，隨之出現豆蔻、肉桂味，還有些許乾薑與太妃糖香。 最後顯現的果香清新，和新鮮橡木香和諧交織。</li>
+            <li>香氣：柳橙、蘋果和果乾，散發鮮明豐郁的香氣。 橡木香氣中透出香草、太妃糖和巧克力香。</li>
+            <li>口感：初嚐即現的木質辛香讓人心中浮現暖意，隨之出現豆蔻、肉桂味，還有些許乾薑與太妃糖香。最後顯現的果香清新，和新鮮橡木香和諧交織。</li>
             <li>餘韻：柔順悠長。</li>
             <li>ABV：48.1%</li>
             </ul>

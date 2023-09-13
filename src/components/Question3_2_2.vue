@@ -21,7 +21,7 @@
           <div class="itemCard">
             <div class="itemContent">
               <h2>Goldfinger</h2>
-              <img src="../assets/images/macallan12.png" alt="" class="pic"/>
+              <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
             </div>
             <div class="itemContent">
               漲幅<b>909.09%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}
@@ -32,7 +32,7 @@
           <div class="itemCard">
             <div class="itemContent">
               <h2>Thunderbal</h2>
-              <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+              <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             </div>
             <div class="itemContent">
               漲幅<b>337.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle }}

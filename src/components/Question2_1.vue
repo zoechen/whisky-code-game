@@ -48,18 +48,17 @@
 </template>
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
-import { step, setStep, setupScore, getPlayerScore, player, getPK, pkData, updateResult, getCompetitorResult, competitorName, competitorResult } from '../api/index'
+import { step, setStep, setupScore, getPlayerScore, player, 
+        getPK, pkData, updateResult, getCompetitorResult,
+        getCompetitorName, competitorName, competitorResult } from '../api/index'
 import dayjs from 'dayjs'
 import { state, socket } from "@/socket"
 
 const game = ref('gambleWait')
 const end = ref('0')
 const result = ref('0')
-const wait = ref(9)
+const wait = ref(5)
 var setTimer = null
-const timer = ref(5)
-const pass = ref(false)
-const ready = ref(false)
 const n = ref(1)
 
 // socket.on("adminStep", (v) => {
@@ -88,9 +87,10 @@ const n = ref(1)
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
+  getCompetitorName()
   setTimeout(() => {
     game.value = 'gamble'
-    wait.value = 9
+    wait.value = 5
     goGamble()}, 3000)
 })
 
@@ -185,7 +185,7 @@ function goNext() {
     game.value = 'gambleWait'
     setTimeout(() => {
     game.value = 'gamble'
-    wait.value = 9
+    wait.value = 5
     goGamble()}, 3000)
   }
 }

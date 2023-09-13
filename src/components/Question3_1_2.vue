@@ -20,7 +20,8 @@
         <div class="itemCard">
           <div class="itemContent">
             <h2>Goldfinger</h2>
-          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+
           </div>
           <div class="itemContent">
             
@@ -32,7 +33,8 @@
         <div class="itemCard">
           <div class="itemContent">
             <h2>Thunderbal</h2>
-          <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
+          <img src="../assets/images/macallan12.png" alt="" class="pic" />
+
           </div>
           
           <div class="itemContent">
@@ -76,7 +78,7 @@ import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,se
 import { socket } from "@/socket"
 
 socket.on("adminStep", (v) => {
-  if(v == 'investment02'){
+  if(v == 'investment02' && isDone){
     goNext('Question3_2_1')
   }
 })
@@ -92,6 +94,7 @@ const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
 const isVisible = ref(false)
+const isDone = ref(false)
 const redeemItem = ref('')
 
 
@@ -136,11 +139,8 @@ switch (redeemItem.value) {
     break;
   default:
     break;
-  
-
 }
 isVisible.value = false
-setScore()
 }
 
 
@@ -162,6 +162,7 @@ function setScore() {
     score.value = localStorage.getItem('score') || player.score
     cost.value = localStorage.getItem('cost') || player.cost
   },500)
+  isDone.value = true
   game.value = 'myScore';
 }
 

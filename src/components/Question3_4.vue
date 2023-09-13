@@ -22,7 +22,8 @@
           <div class="itemCard">
             <div class="itemContent">
               <h2>Goldfinger</h2>
-            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+
             </div>
             <div class="itemContent">
               漲幅<b>4295.45%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}<br />持有數量{{ (wine2old + wine2two + wine2new) }}
@@ -31,7 +32,8 @@
           <div class="itemCard">
             <div class="itemContent">
               <h2>Thunderbal</h2>
-            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
+            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
+
             </div>
             <div class="itemContent">
               漲幅<b>912.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle}}<br />持有數量{{ (wine3old + wine3two + wine3new) }}

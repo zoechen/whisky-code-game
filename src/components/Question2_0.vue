@@ -80,7 +80,7 @@ const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
 const nowscore = ref(0)
-const wait = ref(9)
+const wait = ref(5)
 const pass = ref(false)
 var setTimer = null
 socket.on("adminStep", (v) => {
@@ -97,7 +97,7 @@ watch(pass, (newX) => {
     game.value = 'gambleWait'
   } else if (newX == 'gamble') {
     game.value = 'gamble'
-    wait.value = 9
+    wait.value = 5
     goGamble()
   } else if (newX == 'NextRound') {
     goNext()
@@ -109,6 +109,7 @@ watch(pass, (newX) => {
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
+  getCompetitorName()
   countdown()
 })
 
@@ -139,9 +140,7 @@ function addZero(num){
   }
 }
 
-function matchPlayer() {
-  getCompetitorName(pkData.value.pk)
-}
+
 
 function goGamble() {
   setTimer = setInterval(() => { countdownTimer() }, 1000)
