@@ -61,7 +61,7 @@ export function signUpID(userID){
         name: "0",
         userID: userID,
         step: 'NewOne',
-        score: '0'
+        score: 0
     }).then((res)=>{
         player.name = res.data.name
         player.userID = res.data.userID
@@ -75,24 +75,26 @@ export function signUpID(userID){
     loading.value = false
 }
 
-export function setupName(name,id){
-    
+export function setupName(name,userID){
     let taken = playerListNAME.value.includes(name)
-    if(taken) {
-        message.error('這個名字已經有人用了，再想想吧！')
-    }else
-    {
-        $http.put(`/update/${id}`,{
+
+    if(!taken){
+        $http.put(`/updateName/${userID}`,{
             name: name,
+            userID: userID,
             step: 'Question1_1',
-            score: 0
+            score: 0  
         }).then((res)=>{
             player.name = res.data.name
             player.userID = res.data.userID
             player.id = res.data.id
             step.value = 'Question1_1'
         })
+    }else{
+        message.info('已經有人用這個名字')
     }
+   
+  
 }
 
 export function getPlayerNameList(){

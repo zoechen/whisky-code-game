@@ -7,7 +7,7 @@ export const state = reactive({
 });
 
 // "undefined" means the URL will be computed from the `window.location` object
-// const URL = "http://localhost:3310"
+//const URL = "http://localhost:3310"
 const URL = "https://whisky-code-socket.onrender.com"
 
 export const socket = io(URL);

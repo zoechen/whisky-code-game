@@ -71,7 +71,6 @@
 </template>
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
-import { message } from 'ant-design-vue'
 import { setupMoneyCost, setStep, getPlayerMoneyCost, player, step, getWine, setWineNumber,setupScore } from '../api/index'
 import { socket } from "@/socket"
 

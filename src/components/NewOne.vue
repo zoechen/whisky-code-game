@@ -3,27 +3,11 @@
     <div class="logo"></div>
     <div class="content">
     <p>幫自己設定一個暱稱吧!</p>
-    <a-form
-      :model="formState"
-      name="basic"
-      :label-col="{ span: 8 }"
-      :wrapper-col="{ span: 16 }"
-      autocomplete="off"
-      @finish="onFinish"
-      @finishFailed="onFinishFailed"
-    >
-      <a-form-item
-        name="name"
-        :rules="[{ required: true, message: '輸入您的暱稱!' }]"
-        placeholder="輸入您的暱稱"
-      >
-        <a-input class="input" v-model:value="name" maxlength="10" />
-      </a-form-item>
-
-      <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-      </a-form-item>
-    </a-form>
-    <a-button class="btn" type="primary" @click="onSubmit">送出</a-button>
+    
+    <a-input class="input" v-model:value="name" maxlength="10" />
+    <br/>
+    <br/>
+    <a-button class="btn" type="primary" @click="sentName()">送出</a-button>
 
     </div>
     <div class="footer">
@@ -37,9 +21,10 @@ import { setupName, step, player,getPlayerNameList } from '../api/index'
 const name = ref('')
 onMounted(() => {
   getPlayerNameList()
-}),
+  console.log(player)
+})
 
-function onSubmit() {
+function sentName() {
   setupName(name.value,player.userID)
 }
 
