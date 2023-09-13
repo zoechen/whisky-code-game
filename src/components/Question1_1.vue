@@ -285,7 +285,7 @@ watch(selected, (newX) => {
 
 onMounted(() => {
   console.log('1-1:',player)
-}),
+})
 
 function sentAns() {
   let counter = 0
