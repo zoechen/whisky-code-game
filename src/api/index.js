@@ -77,10 +77,11 @@ export function signUpID(userID){
 
 export function setupName(name,id){
     
-    let taken = playerListNAME.value.includes(name)
-    if(taken) {
-        message.error('這個名字已經有人用了，再想想吧！')
-    }else{
+    // let taken = playerListNAME.value.includes(name)
+    // if(taken) {
+    //     message.error('這個名字已經有人用了，再想想吧！')
+    // }else
+    // {
         $http.put(`/update/${id}`,{
             name: name,
             step: 'Question1_1',
@@ -91,7 +92,8 @@ export function setupName(name,id){
             player.id = res.data.id
         })
         step.value = 'Question1_1'
-    }
+        localStorage.setItem('userID', res.data.userID)
+        localStorage.setItem('name', res.data.name)
 }
 
 export function getPlayerNameList(){
