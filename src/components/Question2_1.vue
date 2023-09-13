@@ -63,7 +63,7 @@ const n = ref(1)
 
 socket.on("adminStep", (v) => {
   if(v == 'forceStop'){
-    goNext('Question2_2')
+    forceStop('Question2_2')
   }
 });
 
@@ -157,6 +157,11 @@ function whoWin(me, yo) {
     end.value = '0'
   }
   console.log(me, yo)
+}
+
+function forceStop(next){
+  setStep(next, player)
+    step.value = next
 }
 
 function goNext() {
