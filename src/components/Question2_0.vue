@@ -63,7 +63,6 @@
 
 </div>
 <div class="footer">
-  {{ player.userID }}
 </div>
 </div>
 </template>

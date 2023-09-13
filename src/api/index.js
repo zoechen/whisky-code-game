@@ -279,8 +279,8 @@ export function getCompetitorResult(userID){
 
 export function getPlayerScore(userID){
     $http.get(`/getOne/${userID}`).then((res)=>{
-        localStorage.setItem('score', res.data.score)
         player.score = res.data.score
+        localStorage.setItem('score', res.data.score)
     })
 }
 
@@ -306,6 +306,16 @@ export function setupScore(score,player){
     player.score = score
 }
 
+export function setupPlayer(player){
+    $http.put(`/update/${player.userID}`,{
+        userID: player.userID,
+        name: player.name,
+        step: player.step,
+        score: player.score   
+    }).then((res)=>{
+        console.log(res);
+    })
+}
 export function setupMoneyCost(player, cost, money){
     $http.put(`/update/${player.userID}`,{
         name: player.name,

@@ -2,15 +2,9 @@
   <div class="logo">{{ player.userID }} : {{ player.score }}</div>
   <div class="question conutdown">
     <div class="info">
-    <p class="title">恭喜您現在的籌碼有<br/>{{  score  }}</p>
-    <div v-if="timesUp>0">
-    <p class="tip">請耐心等待，我們將於</p>
-    <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
-    <p class="tip">後進行下一個有趣的遊戲!</p>
-    </div>
-    <div v-if="timesUp <= 0">
+    <p class="title">恭喜您現在的籌碼有<br/>{{  scoreLocal  }}</p>
+  
       <p class="tip">請耐心等待<br/>我們即將進行下一個有趣的遊戲!</p>
-    </div>
   </div>
   </div>
   <div class="footer">
@@ -20,14 +14,15 @@
 </template>
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
-import { step, setStep, getPlayerScore, player, getPK, } from '../api/index'
+import { step, setStep, getPlayerScore, player, getPK, setupScore, } from '../api/index'
 import { socket } from "@/socket"
 
 const hours = ref(0)
 const mins = ref(0)
 const secs = ref(0)
 const timesUp = ref(0)
-const score = computed(() => Number(player.score).toLocaleString() )
+const score = ref(0)
+const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const pass = ref(false)
 socket.on("adminStep", (v) => {
   pass.value = v
@@ -43,8 +38,18 @@ watch(pass, (newX) => {
 
 onMounted(() => {
   getPlayerScore(player.userID)
-  countdown()
+  score.value = Number(localStorage.getItem('score') )|| Number(player.score)
+  fixMoney()
+  //countdown()
 })
+
+function fixMoney(){
+  if(score.value < 800000){
+    setupScore(5000000, player)
+  }else{
+    setupScore(score.value, player)
+  }
+}
 
 function countdown(){
   //let timesUp = 3

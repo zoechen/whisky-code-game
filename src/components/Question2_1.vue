@@ -45,7 +45,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, watch, destroyed} from 'vue'
+import { ref, onMounted, computed, watch} from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, 
         getPK, pkData, updateResult, getCompetitorResult,
         getCompetitorName, competitorName, competitorResult } from '../api/index'

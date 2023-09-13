@@ -7,15 +7,15 @@
         {{ socketStatus }}
         <a-card>
         <a-row :gutter="[4, 16]">
-            <a-divider>第二段控制</a-divider>
-            <a-col :span="12"><a-button @click="resultPass('Question2_0')">結束倒數</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('gambleWait')">準備開始</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('gamble')">開始</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('result')">給結果</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('NextRound')">玩家自己玩</a-button></a-col>
-            <a-divider>配對</a-divider>
-            <a-col :span="12"><a-button class="btn" @click="createMatchData12()">生成配對</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('changeMatch')">更換配對後開始pk</a-button></a-col>
+            <a-divider>第二段試玩控制</a-divider>
+            <a-col :span="12"><a-button @click="resultPass('Question2_0')">1 結束倒數</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('gambleWait')">2 準備開始</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('gamble')">3 開始</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('result')">4 結果</a-button></a-col>
+            <a-divider>第二段正式</a-divider>
+            <!-- <a-col :span="12"><a-button class="btn" @click="createMatchData12()">生成配對</a-button></a-col> -->
+            <a-col :span="12"><a-button @click="resultPass('NextRound')">正式開炲</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('changeMatch')">強制結束</a-button></a-col>
             <a-divider>第三段控制</a-divider>
             <a-col :span="12"><a-button @click="resultPass('investment00')">投資說明</a-button></a-col>
             <a-col :span="12"><a-button @click="resultPass('investment01')">投資一</a-button></a-col>
@@ -28,7 +28,7 @@
     <a-tab-pane key="2" tab="排名前十">
       <a-button @click="getRank">刷新</a-button>
         <a-table
-        :columns="columns"
+        :columns="rankcolumns"
         row-key="_id"
         :data-source="rankList"
         >
@@ -41,20 +41,60 @@
         row-key="_id"
         :data-source="allPlayer"
         >
-        <template #bodyCell="{ column }">
+        <template #bodyCell="{ column, text, record }">
           <template v-if="column.key === 'operation'">
-            <a>重置</a>
+            <a @click="isPop=true;formState = record;">設定</a>
           </template>
         </template>
         </a-table></a-tab-pane>
   </a-tabs>
-        
+  <a-modal v-model:visible="isPop" title="" ok-text="送出" cancel-text="取消" id="redeemDialog"
+    :bodyStyle="{ color: '#d5cdc4' }" @ok="setPlayer(formState)">
+    <a-form
+    ref="formRef"
+    :model="formState"
+    :rules="rules"
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+  >
+    <a-form-item label="ID" name="userID">
+     {{ formState.userID }} 
+    </a-form-item>
+    <a-form-item label="步驟" name="step">
+      <a-select v-model:value="formState.step" placeholder="">
+        <a-select-option value="NewOne">NewOne</a-select-option>
+        <a-select-option value="Question1_1">Question1_1</a-select-option>
+        <a-select-option value="Question1_2">Question1_2</a-select-option>
+        <a-select-option value="Question1_3">Question1_3</a-select-option>
+        <a-select-option value="Question1_4">Question1_4</a-select-option>
+        <a-select-option value="Question1_5">Question1_5</a-select-option>
+        <a-select-option value="Question2_0">Question2_0</a-select-option>
+        <a-select-option value="Question2_1">Question2_1</a-select-option>
+        <a-select-option value="Question2_2">Question2_2</a-select-option>
+        <a-select-option value="Question2_3">Question2_3</a-select-option>
+        <a-select-option value="Question3_0">Question3_0</a-select-option>
+        <a-select-option value="Question3_1_1">Question3_1_1</a-select-option>
+        <a-select-option value="Question3_1_2">Question3_1_2</a-select-option>
+        <a-select-option value="Question3_2_1">Question3_2_1</a-select-option>
+        <a-select-option value="Question3_2_2">Question3_2_2</a-select-option>
+        <a-select-option value="Question3_1_1">Question3_3</a-select-option>
+        <a-select-option value="Question3_1_1">Question3_4</a-select-option>
+        <a-select-option value="MyScore">MyScore</a-select-option>
+        <a-select-option value="WineAns">WineAns</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item ref="score" label="籌碼" name="score">
+      <a-input v-model:value="formState.score" />
+    </a-form-item>
+  </a-form>
+  </a-modal>
     </div>
 </template>
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { socket, state } from "@/socket"
-import { getPlayerIDList, playerListID, createMatchList, getMatchList, matchList, deleteMatchData, allPlayer, getAllPlayer,getRank,rankList } from '../api/index'
+import { getPlayerIDList, playerListID, createMatchList, getMatchList, 
+        matchList, deleteMatchData, allPlayer, getAllPlayer, getRank, rankList, setupPlayer } from '../api/index'
 import { usePagination } from 'vue-request';
 import axios from 'axios';
 
@@ -62,18 +102,45 @@ const n = ref(5)
 const m = ref(10)
 const teamA = ref([])
 const teamB = ref([])
+const isPop =ref(false)
 const activeKey = ref("1")
 const socketStatus = ref('')
-
-const columns = [
+const formState = reactive({
+  name:'',
+  score:0,
+  step: '',
+  userID:''
+})
+const rankcolumns = [
   {
     title: 'ID',
     dataIndex: 'userID',
-    width: '20%'
+    width: '10%'
   },{
     title: '匿稱',
     dataIndex: 'name',
     width: '20%'
+  },{
+    title: '總分',
+    dataIndex: 'score',
+    width: '20%'
+  },
+  
+]
+const columns = [
+  {
+    title: 'ID',
+    dataIndex: 'userID',
+    width: '5%'
+  },{
+    title: '匿稱',
+    dataIndex: 'name',
+    width: '20%'
+  },
+  {
+    title: '步驟',
+    dataIndex: 'step',
+    width: '25%'
   },{
     title: '總分',
     dataIndex: 'score',
@@ -93,55 +160,17 @@ const queryData = params => {
   });
 }
 
-const {
-  data: dataSource,
-  run,
-  loading,
-  current,
-  pageSize,
-} = usePagination(queryData, {
-  formatResult: res => res.data.results,
-  pagination: {
-    currentKey: 'page',
-    pageSizeKey: 'results',
-  },
-});
-const pagination = computed(() => ({
-  total: 200,
-  current: current.value,
-  pageSize: pageSize.value,
-}));
-const handleTableChange = (pag, filters, sorter) => {
-  run({
-    results: pag.pageSize,
-    page: pag?.current,
-    sortField: sorter.field,
-    sortOrder: sorter.order,
-    ...filters,
-  });
-}
-// const resultCounter =computed(() => {
-//     if(state.onlineList.length > matchList.length*2){
-//         return matchList.length*2
-//     }else{
-//         return state.onlineList.length || 0
-//     }
-// })
-// const matchListCounter =computed(() => {
-//         return matchList.length*2
-// })
-
 onMounted(() => {
     getMatchList()
     getPlayerIDList()
     getAllPlayer()
     getRank()
-    setTimeout(()=>{
-        console.log(allPlayer.value)
-    },3000)
 })
 
-
+function setPlayer(player){
+  setupPlayer(player)
+  isPop.value = false
+}
 
 function resultPass(v) {
     socketStatus.value = v
