@@ -45,7 +45,7 @@
               </a-input-group>
               </div>
           </div>
-          <a-button class="btn" @click="game = 'chart'">買下去</a-button>
+          <a-button class="btn" @click="tobuyWine()">{{ 買下去 }}</a-button>
         </div>
         <div v-if="game == 'chart'">
           <div class="rule">
@@ -75,7 +75,7 @@
             持有數量{{ wine3num }}
           </div>
         </div>
-        <a-button class="btn" @click="tobuyWine">看看放兩年後的變化</a-button>
+        <a-button class="btn" @click="goNext('Question3_1_2')">看看放兩年後的變化</a-button>
       </div>
       
     </div>
@@ -107,22 +107,22 @@ const isVisible = ref(false)
 const redeemItem = ref('')
 
 watch(wine1num, (newValue, oldValue) => {
-  if (newValue < 0) {
+  if (newValue < 0 || oldValue < 0) {
     wine1num.value = 0
   }
-  if (money.value < 100000 && newValue >= oldValue) {
-    wine1num.value = oldValue
+  if (money.value < 100000 && newValue > oldValue) {
     message.error("超出可動用籌碼")
+    wine1num.value = oldValue
   }
   let tempMoney = localStorage.getItem('score') || player.score
   money.value = Number(tempMoney) - ( wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200 )
 })
 
 watch(wine2num, (newValue, oldValue) => {
-  if (newValue < 0) {
+  if (newValue < 0 || oldValue < 0) {
     wine2num.value = 0
   }
-  if (money.value < 22000 && newValue >= oldValue) {
+  if (money.value < 22000 && newValue > oldValue) {
     wine2num.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -131,10 +131,10 @@ watch(wine2num, (newValue, oldValue) => {
 })
 
 watch(wine3num, (newValue, oldValue) => {
-  if (newValue < 0) {
+  if (newValue < 0 || oldValue < 0) {
     wine3num.value = 0
   }
-  if (money.value < 20000 && newValue >= oldValue) {
+  if (money.value < 20000 && newValue > oldValue) {
     wine3num.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -171,10 +171,21 @@ function tobuyWine() {
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
-
-  goNext('Question3_1_2')
+  refresh()
+  game = 'chart'
 }
-
+function refresh(){
+  getWine(player.userID)
+  getPlayerMoneyCost(player.userID)
+  setTimeout(()=>{
+    wine1num.value = Number(localStorage.getItem('wine1_1'))
+    wine2num.value = Number(localStorage.getItem('wine2_1'))
+    wine3num.value = Number(localStorage.getItem('wine3_1'))
+  score.value = localStorage.getItem('score') || player.score
+  cost.value = localStorage.getItem('cost') || player.cost
+  money.value = localStorage.getItem('money') || player.money
+  },500)
+}
 
 function goNext(next) {
   setStep(next, player)

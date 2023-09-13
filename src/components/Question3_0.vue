@@ -284,7 +284,7 @@ function initWine(){
   border-radius: 1.2rem;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 2.4rem;
-  height: 65vh;
+  height: 72vh;
   
 }
 .bloc ul{

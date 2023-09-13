@@ -49,7 +49,7 @@
               </div>
           </div>
 
-          <a-button class="btn" @click="game = 'chart'">買下去</a-button>
+          <a-button class="btn" @click="game = 'chart';tobuyWine()">買下去</a-button>
         </div>
        
         <div v-if="game == 'chart'">
@@ -79,7 +79,7 @@
             持有數量{{ (wine3old + wine3two + wine3new) }}
           </div>
           </div>
-          <a-button class="btn" @click="tobuyWine()">看看到現在的變化</a-button>
+          <a-button class="btn" @click="goNext()">看看到現在的變化</a-button>
         </div>
       </div>
     <div class="footer">
@@ -116,11 +116,11 @@ watch(wine1new, (newValue, oldValue) => {
   // if(newX <1) {
   //   message.error("至少買一個")
   // }
-  if(newValue < 0) {
+  if(newValue < 0 || oldValue < 0) {
     wine1new.value = 0
   }
   
-  if(money.value < 190000 && newValue >= oldValue) {  
+  if(money.value < 190000 && newValue > oldValue) {  
     wine1new.value = oldValue
       message.error("超出可動用籌碼")
   }
@@ -134,10 +134,10 @@ watch(wine2new, (newValue, oldValue) => {
   // if(newX <10) {
   //   message.error("至少買十個")
   // }
-  if(newValue < 0) {
+  if(newValue < 0 || oldValue < 0) {
     wine2new.value = 0
   }
-  if(money.value < 330000 && newValue >= oldValue){
+  if(money.value < 330000 && newValue > oldValue){
     wine2new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -151,10 +151,10 @@ watch(wine3new, (newValue, oldValue) => {
   // if(newX <5) {
   //   message.error("至少買五個")
   // }
-  if(newValue < 0) {
+  if(newValue < 0 || oldValue < 0) {
     wine3new.value = 0
   }
-  if(money.value < (13500*5) && newValue >= oldValue) {
+  if(money.value < (13500*5) && newValue > oldValue) {
     wine3new.value = oldValue
     message.error("超出可動用籌碼")
   }
@@ -190,7 +190,24 @@ function tobuyWine(){
   localStorage.setItem('wine1_3', wine1new.value)
   localStorage.setItem('wine2_3', wine2new.value)
   localStorage.setItem('wine3_3', wine3new.value)
-  goNext()
+  refresh()
+  game = 'chart';
+}
+
+function refresh(){
+  getWine(player.userID)
+  getPlayerMoneyCost(player.userID)
+  setTimeout(()=>{
+  wine1old.value = Number(localStorage.getItem('wine1_1'))
+  wine2old.value = Number(localStorage.getItem('wine2_1'))
+  wine3old.value = Number(localStorage.getItem('wine3_1'))
+  wine1two.value = Number(localStorage.getItem('wine1_2'))
+  wine2two.value = Number(localStorage.getItem('wine2_2'))
+  wine3two.value = Number(localStorage.getItem('wine3_2'))
+  score.value = localStorage.getItem('score') || player.score
+  cost.value = localStorage.getItem('cost') || player.cost
+  money.value = localStorage.getItem('money') || player.money
+  },500)
 }
 
 function goNext() {
