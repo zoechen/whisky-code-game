@@ -17,7 +17,7 @@
         :rules="[{ required: true, message: '輸入您的暱稱!' }]"
         placeholder="輸入您的暱稱"
       >
-        <a-input class="input" v-model:value="formState.name" maxlength="4" />
+        <a-input class="input" v-model:value="formState.name" maxlength="10" />
       </a-form-item>
 
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
