@@ -32,7 +32,7 @@
   </div>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { setupName, step, player } from '../api/index'
 const name = ref('')
 
