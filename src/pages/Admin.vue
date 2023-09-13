@@ -26,6 +26,7 @@
         </a-card>
     </a-tab-pane>
     <a-tab-pane key="2" tab="排名前十">
+      <a-button @click="getRank">刷新</a-button>
         <a-table
         :columns="columns"
         row-key="_id"

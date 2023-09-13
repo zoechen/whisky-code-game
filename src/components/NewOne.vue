@@ -19,11 +19,9 @@
       >
         <a-input class="input" v-model:value="formState.name" maxlength="10" />
       </a-form-item>
-
-      <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-        <a-button class="btn" type="primary" html-type="submit">送出</a-button>
-      </a-form-item>
     </a-form>
+    <a-button class="btn" type="primary" html-type="submit">送出</a-button>
+
     </div>
     <div class="footer">
       <div class="shadow"></div>
@@ -31,20 +29,21 @@
   </div>
 </template>
 <script setup>
-import { reactive } from 'vue'
-import { setupName, step, player } from '../api/index'
+import { message } from 'ant-design-vue'
+import { reactive,onMounted } from 'vue'
+import { setupName, step, player, getPlayerNameList, playerListNAME } from '../api/index'
 const formState = reactive({
   name: ''
 })
-
+onMounted(() => {
+  getPlayerNameList()
+})
 const onFinish = () => {
-  let playerID = player.userID
-  console.log("playerID:", playerID)
-    let isNew = (playerID == "") ? true : false
-    if(isNew){
-        step.value = 'Start'
+  let isTaken = playerListNAME.value.includes(formState.name) 
+    if(isTaken){
+      message.error("這個名字有人用了")
     }else{
-        setupName(formState.name,player.id)
+        setupName(formState.name,player.userID)
     }
 }
 const onFinishFailed = (errorInfo) => {
