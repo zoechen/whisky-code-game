@@ -26,6 +26,7 @@ export const loading = ref(false)
 export const playerListNAME = ref([])
 export const playerListID = ref([])
 export const matchList = ref([])
+export const recordList =ref([])
 export const rankList =ref([])
 export const matchRecord = ref(null)
 export const pkData = ref(null)
@@ -304,6 +305,7 @@ export function setupScore(score,player){
     })
     localStorage.setItem('score', score)
     player.score = score
+    keepRecord()
 }
 
 export function setupPlayer(player){
@@ -321,7 +323,6 @@ export function setupMoneyCost(player, cost, money){
         name: player.name,
         userID: player.userID,
         step: player.step,
-        score: player.score,
         cost: cost,
         money: money   
     })
@@ -337,7 +338,7 @@ export function setStep(step,player){
         name: player.name,
         userID: player.userID,
         step: step,
-        score: localStorage.getItem('score')
+        score: player.score
     })
     localStorage.setItem('step', step)
 }
@@ -396,5 +397,25 @@ export function setWineNumber(player,data){
 export function deleteMatchData(userID){
     $http.delete(`/deleteMatchData`).then((res)=>{
        console.log(res)
+    })
+}
+
+
+export function keepRecord(){
+    loading.value = true
+    $http.post('/record',{
+        score: player.score,
+        userID: player.userID,
+        step: player.step,
+        created: new Date(),
+    })
+    loading.value = false
+}
+
+export function getRecord(){
+    $http.get('/getRecordList').then((res)=>{
+        recordList.value = res.data
+    }).catch((err)=>{
+        console.error(err)
     })
 }

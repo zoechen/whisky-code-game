@@ -14,9 +14,9 @@
             目前市場價格 140,000/支<br />
             最低購買量 <b>1</b> 支
             <a-input-group compact>
-              <a-button @click="wine1new -= 1" :disabled="noMoney">-</a-button>
+              <a-button @click="wine1new -= 1">-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine1new" style="width: 50px" disabled />
-              <a-button @click="wine1new += 1" :disabled="noMoney">+</a-button>
+              <a-button @click="wine1new += 1" :disabled="money<140000">+</a-button>
             </a-input-group>
           </div>
         </div>
@@ -27,9 +27,9 @@
             目前市場價格 8,500/支<br />
             最低購買量 <b>10</b> 支
             <a-input-group compact>
-              <a-button @click="wine2new -= 10" :disabled="noMoney">-</a-button>
+              <a-button @click="wine2new -= 10" >-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine2new" style="width: 50px" disabled />
-              <a-button @click="wine2new += 10" :disabled="noMoney">+</a-button>
+              <a-button @click="wine2new += 10" :disabled="money<85000">+</a-button>
             </a-input-group>
           </div>
         </div>
@@ -40,13 +40,14 @@
             目前市場價格 5,500/支<br />
             最低購買量 <b>5</b> 支
             <a-input-group compact>
-              <a-button @click="wine3new -= 5" :disabled="noMoney">-</a-button>
+              <a-button @click="wine3new -= 5" >-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine3new" style="width: 50px" disabled />
-              <a-button @click="wine3new += 5" :disabled="noMoney">+</a-button>
+              <a-button @click="wine3new += 5" :disabled="money<(5500 * 5)">+</a-button>
             </a-input-group>
           </div>
         </div>
-        <a-button class="btn" @click="tobuyWine()">買下去</a-button>
+
+        <a-button class="btn" @click="game = 'chart';tobuyWine()">買下去</a-button>
       </div>
       <div v-if="game == 'chart'">
           <div class="rule">
@@ -121,11 +122,7 @@ watch(wine1new, (newValue, oldValue) => {
   if (newValue < 0 || oldValue < 0) {
     wine1new.value = 0
   }
-
-  if (money.value < 140000 && newValue > oldValue) {
-    wine1new.value = oldValue
-    message.error("超出可動用籌碼")
-  }
+  
   let tempCost = localStorage.getItem("cost")
   let tempMoney = localStorage.getItem("money")
   cost.value = Number(tempCost) + wine1new.value * 140000 + wine2new.value * 8500 + wine3new.value * 5500
@@ -139,10 +136,7 @@ watch(wine2new, (newValue, oldValue) => {
   if (newValue < 0 || oldValue < 0) {
     wine2new.value = 0
   }
-  if (money.value < 85000 && newValue > oldValue) {
-    wine2new.value = oldValue
-    message.error("超出可動用籌碼")
-  }
+ 
   let tempCost = localStorage.getItem("cost")
   let tempMoney = localStorage.getItem("money")
   cost.value = Number(tempCost) + wine1new.value * 140000 + wine2new.value * 8500 + wine3new.value * 5500
@@ -156,10 +150,7 @@ watch(wine3new, (newValue, oldValue) => {
   if (newValue < 0  || oldValue < 0) {
     wine3new.value = 0
   }
-  if (money.value < (5500 * 5) && newValue > oldValue) {
-    wine3new.value = oldValue
-    message.error("超出可動用籌碼")
-  }
+
   let tempCost = localStorage.getItem("cost")
   let tempMoney = localStorage.getItem("money")
   cost.value = Number(tempCost) + wine1new.value * 140000 + wine2new.value * 8500 + wine3new.value * 5500
@@ -199,11 +190,11 @@ function tobuyWine() {
     wine2_2: wine2new.value,
     wine3_2: wine3new.value
   })
+  setupScore(player.score, player)
   setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_2', wine1new.value)
   localStorage.setItem('wine2_2', wine2new.value)
   localStorage.setItem('wine3_2', wine3new.value)
-  game = 'chart';
   refresh()
   
 }

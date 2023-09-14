@@ -46,7 +46,44 @@
             <a @click="isPop=true;formState = record;">設定</a>
           </template>
         </template>
-        </a-table></a-tab-pane>
+        </a-table>
+    </a-tab-pane>
+    <a-tab-pane key="4" tab="記錄">
+      <a-button @click="getRecord">刷新</a-button>
+        <a-table
+        :columns="recordcolumns"
+        row-key="_id"
+        :data-source="recordList"
+        >
+        <template
+      #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
+    >
+    <div style="padding: 8px">
+        <a-input
+          ref="searchInput"
+          :placeholder="`Search ${column.dataIndex}`"
+          :value="selectedKeys[0]"
+          style="width: 188px; margin-bottom: 8px; display: block"
+          @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+          @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)"
+        />
+        <a-button
+          type="primary"
+          size="small"
+          style="width: 90px; margin-right: 8px"
+          @click="handleSearch(selectedKeys, confirm, column.dataIndex)"
+        >
+          <template #icon><SearchOutlined /></template>
+          Search
+        </a-button>
+        <a-button size="small" style="width: 90px" @click="handleReset(clearFilters)">
+          Reset
+        </a-button>
+      </div>
+  </template>
+        </a-table>
+    </a-tab-pane>
+
   </a-tabs>
   <a-modal v-model:visible="isPop" title="" ok-text="送出" cancel-text="取消" id="redeemDialog"
     :bodyStyle="{ color: '#d5cdc4' }" @ok="setPlayer(formState)">
@@ -77,8 +114,8 @@
         <a-select-option value="Question3_1_2">Question3_1_2</a-select-option>
         <a-select-option value="Question3_2_1">Question3_2_1</a-select-option>
         <a-select-option value="Question3_2_2">Question3_2_2</a-select-option>
-        <a-select-option value="Question3_1_1">Question3_3</a-select-option>
-        <a-select-option value="Question3_1_1">Question3_4</a-select-option>
+        <a-select-option value="Question3_3">Question3_3</a-select-option>
+        <a-select-option value="Question3_4">Question3_4</a-select-option>
         <a-select-option value="MyScore">MyScore</a-select-option>
         <a-select-option value="WineAns">WineAns</a-select-option>
       </a-select>
@@ -94,7 +131,8 @@
 import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { socket, state } from "@/socket"
 import { getPlayerIDList, playerListID, createMatchList, getMatchList, 
-        matchList, deleteMatchData, allPlayer, getAllPlayer, getRank, rankList, setupPlayer } from '../api/index'
+        matchList, deleteMatchData, allPlayer, getAllPlayer, getRank,
+         rankList, setupPlayer, recordList, getRecord } from '../api/index'
 import { usePagination } from 'vue-request';
 import axios from 'axios';
 
@@ -111,6 +149,40 @@ const formState = reactive({
   step: '',
   userID:''
 })
+
+const recordcolumns = [
+  {
+    title: 'ID',
+    dataIndex: 'userID',
+    width: '10%',
+    customFilterDropdown: true,
+    onFilter: (value, record) => record.userID.indexOf(value) === 0,
+    onFilterDropdownOpenChange: visible => {
+      if (visible) {
+        setTimeout(() => {
+          searchInput.value.focus();
+        }, 100);
+      }
+    },
+  },{
+    title: '時間',
+    dataIndex: 'created',
+    width: '30%'
+  },{
+    title: '步驟',
+    dataIndex: 'step',
+    width: '20%'
+  },{
+    title: '總分',
+    dataIndex: 'score',
+    width: '20%'
+  }
+]
+const handleSearch = (selectedKeys, confirm, dataIndex) => {
+  confirm();
+  state.searchText = selectedKeys[0];
+  state.searchedColumn = dataIndex;
+};
 const rankcolumns = [
   {
     title: 'ID',
@@ -165,6 +237,7 @@ onMounted(() => {
     getPlayerIDList()
     getAllPlayer()
     getRank()
+    getRecord()
 })
 
 function setPlayer(player){
