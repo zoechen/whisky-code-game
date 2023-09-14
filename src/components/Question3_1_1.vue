@@ -13,7 +13,7 @@
               目前市場價格 100,000/支<br />
               最低購買量 <b>1</b> 支
                 <a-input-group compact>
-                <a-button @click="wine1num-=1" :disabled="disabled">-</a-button>
+                <a-button @click="wine1num-=1" :disabled="wine1num<=0">-</a-button>
                 <a-input-number min="0" type="number" v-model:value="wine1num" style="width: 50px" disabled />
                 <a-button @click="wine1num+=1" :disabled="money < 100000">+</a-button>
               </a-input-group>
@@ -26,7 +26,7 @@
               目前市場價格 2,200/支<br />
               最低購買量 <b>10</b> 支
               <a-input-group compact>
-                <a-button @click="wine2num-=10" :disabled="disabled">-</a-button>
+                <a-button @click="wine2num-=10" :disabled="wine2num<=0">-</a-button>
                 <a-input-number min="0" type="number" v-model:value="wine2num" style="width: 50px" disabled />
                 <a-button @click="wine2num+=10" :disabled="money < 22000">+</a-button>
               </a-input-group>
@@ -39,7 +39,7 @@
               目前市場價格 4,000/支<br />
               最低購買量 <b>5</b> 支
               <a-input-group compact>
-                <a-button @click="wine3num-=5" :disabled="disabled">-</a-button>
+                <a-button @click="wine3num-=5" :disabled="wine3num<=0">-</a-button>
                 <a-input-number min="0" type="number" v-model:value="wine3num" style="width: 50px" disabled />
                 <a-button @click="wine3num+=5" :disabled="money < 20000">+</a-button>
               </a-input-group>
