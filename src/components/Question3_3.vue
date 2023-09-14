@@ -168,7 +168,6 @@ function tobuyWine(){
     wine2_3:wine2new.value,
     wine3_3:wine3new.value
   })
-  setupScore(player.score, player)
   setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_3', wine1new.value)
   localStorage.setItem('wine2_3', wine2new.value)

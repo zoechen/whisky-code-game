@@ -168,7 +168,6 @@ function tobuyWine() {
     })
     setupMoneyCost( player, cost.value, money.value )
   }
-  setupScore(player.score, player)
   localStorage.setItem('cost', cost.value)
   localStorage.setItem('score', player.score)
   localStorage.setItem('money', player.money)
