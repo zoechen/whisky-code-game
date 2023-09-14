@@ -15,7 +15,7 @@
             <a-divider>第二段正式</a-divider>
             <!-- <a-col :span="12"><a-button class="btn" @click="createMatchData12()">生成配對</a-button></a-col> -->
             <a-col :span="12"><a-button @click="resultPass('NextRound')">正式開炲</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('changeMatch')">強制結束</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('forceStop')">強制結束</a-button></a-col>
             <a-divider>第三段控制</a-divider>
             <a-col :span="12"><a-button @click="resultPass('investment00')">投資說明</a-button></a-col>
             <a-col :span="12"><a-button @click="resultPass('investment01')">投資一</a-button></a-col>

@@ -45,7 +45,7 @@
               </a-input-group>
               </div>
           </div>
-          <a-button class="btn" @click="tobuyWine()">{{ 買下去 }}</a-button>
+          <a-button class="btn" @click="tobuyWine()"> 買下去 </a-button>
         </div>
         <div v-if="game == 'chart'">
           <div class="rule">

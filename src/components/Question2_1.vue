@@ -27,7 +27,7 @@
       <div v-if="game == 'result'" class="end">
         <div v-if="end == '3'" class="pk"></div>
         <div v-if="end == '-1'" class="los">
-          <p class="res">啊,賠了 30,000</p>
+          <p class="res">啊,賠了 10,000</p>
         </div>
         <div v-if="end == '0'" class="los">
           <p class="res">啊,賠了 80,000</p>
