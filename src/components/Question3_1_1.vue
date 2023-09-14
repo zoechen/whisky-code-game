@@ -88,7 +88,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,setupScore,getWine } from '../api/index'
+import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,setupScore,getWine,getPlayerMoneyCost } from '../api/index'
 
 const game = ref('buyit')
 const wine1num = ref(0)
@@ -111,11 +111,7 @@ watch(wine1num, (newValue, oldValue) => {
   if (newValue < 0 || oldValue < 0) {
     wine1num.value = 0
   }
-  // if (money.value < 100000 && newValue >= oldValue) {
-  //   disabled.value = true
-  //   wine1num.value = oldValue
-  //   message.error("超出可動用籌碼",1, ()=>{ disabled.value = false})
-  // }
+  
   let tempMoney = localStorage.getItem('score') || player.score
   money.value = Number(tempMoney) - ( wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200 )
 })
@@ -124,11 +120,7 @@ watch(wine2num, (newValue, oldValue) => {
   if (newValue < 0 || oldValue < 0) {
     wine2num.value = 0
   }
-  // if (money.value < 22000 && newValue >= oldValue) {
-  //   disabled.value = true
-  //   wine2num.value = oldValue
-  //   message.error("超出可動用籌碼",1, ()=>{ disabled.value = false})
-  // }
+ 
   let tempMoney = localStorage.getItem('score') || player.score
   money.value = Number(tempMoney) - ( wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200 )
 })
@@ -137,11 +129,7 @@ watch(wine3num, (newValue, oldValue) => {
   if (newValue < 0 || oldValue < 0) {
     wine3num.value = 0
   }
-  // if (money.value < 20000 && newValue >= oldValue) {
-  //   disabled.value = true
-  //   wine3num.value = oldValue
-  //   message.error("超出可動用籌碼",1, ()=>{ disabled.value = false})
-  // }
+ 
   let tempMoney = localStorage.getItem('score') || player.score
   money.value = Number(tempMoney) - ( wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200 )
 })
@@ -184,9 +172,8 @@ function refresh(){
     wine1num.value = Number(localStorage.getItem('wine1_1'))
     wine2num.value = Number(localStorage.getItem('wine2_1'))
     wine3num.value = Number(localStorage.getItem('wine3_1'))
-  score.value = localStorage.getItem('score') || player.score
-  cost.value = localStorage.getItem('cost') || player.cost
-  money.value = localStorage.getItem('money') || player.money
+    cost.value = localStorage.getItem('cost') 
+    money.value = localStorage.getItem('money') 
   },500)
 }
 

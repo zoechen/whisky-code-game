@@ -10,8 +10,8 @@
             <a-divider>第二段試玩控制</a-divider>
             <a-col :span="12"><a-button @click="resultPass('Question2_0')">1 結束倒數</a-button></a-col>
             <a-col :span="12"><a-button @click="resultPass('gambleWait')">2 準備開始</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('gamble')">3 開始</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('result')">4 結果</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('Question2_0')">3 開始</a-button></a-col>
+            <a-col :span="12"><a-button @click="resultPass('gameResult')">4 結果</a-button></a-col>
             <a-divider>第二段正式</a-divider>
             <!-- <a-col :span="12"><a-button class="btn" @click="createMatchData12()">生成配對</a-button></a-col> -->
             <a-col :span="12"><a-button @click="resultPass('NextRound')">正式開炲</a-button></a-col>
@@ -43,7 +43,7 @@
         >
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.key === 'operation'">
-            <a @click="isPop=true;formState = record;">設定</a>
+            <a @click="isPop = true; formState = record;">設定</a>
           </template>
         </template>
         </a-table>

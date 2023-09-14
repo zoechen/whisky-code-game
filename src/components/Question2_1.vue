@@ -2,6 +2,7 @@
   <div>
     <div class="logo">{{ player.userID }} : {{ player.score }}</div>
     <div class="question s02">
+    
       <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">第{{ n }}局</p>
         <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
@@ -52,7 +53,6 @@ import { ref, onMounted, computed, watch} from 'vue'
 import { step, setStep, setupScore, getPlayerScore, player, 
         getPK, pkData, updateResult, getCompetitorResult,
         getCompetitorName, competitorName, competitorResult } from '../api/index'
-import { socket } from "@/socket"
 
 const game = ref('gambleWait')
 const end = ref('0')
@@ -61,31 +61,6 @@ const wait = ref(5)
 var setTimer = null
 const n = ref(1)
 
-socket.on("adminStep", (v) => {
-  if(v == 'forceStop'){
-    forceStop('Question2_2')
-  }
-});
-
-// watch(pass, (newX) => {
-//   if (newX == 'result') {
-//     getResults()
-//     setTimeout(()=>{
-//       game.value = 'result'
-//     },500)
-//   } else if (newX == 'gambleWait') {
-//     game.value = 'gambleWait'
-//   } else if (newX == 'NextRound') {
-//     goNext()
-//   } else if (newX == 'gamble') {
-//     game.value = 'gamble'
-//     wait.value = 9
-//     goGamble()
-//   } else {
-//     console.error(newX)
-//   }
-// })
-
 onMounted(() => {
   getPlayerScore(player.userID)
   getPK(player.userID)
@@ -93,7 +68,7 @@ onMounted(() => {
   setTimeout(() => {
     game.value = 'gamble'
     wait.value = 5
-    goGamble()}, 3000)
+    goGamble()}, 2000)
 })
 
 function goGamble() {
@@ -124,17 +99,14 @@ function countdownTimer() {
   } else if (wait.value == 0) {
     game.value = "resultWait"
     end.value = '3'
-
+    getResults()
     setTimeout(()=>{
-      getResults()
       game.value = 'result'
-    },2000)
+    },1000)
   }
 }
 
 function getResults() {
-  getCompetitorResult(pkData.value.pk)
-  console.log(competitorResult.value)
   setTimeout(()=>{
     // if (competitorResult.value) {
     //   whoWin(result.value, competitorResult.value)
@@ -186,7 +158,7 @@ function goNext() {
   console.log(score)
   setupScore(score, player)
 
-  if (n.value == 10) {
+  if (n.value == 5) {
     let next = 'Question2_2'
     setStep(next, player)
     step.value = next
@@ -200,3 +172,150 @@ function goNext() {
   }
 }
 </script>
+<style>
+.question.s02{
+  position: relative;
+  text-align: center;
+}
+.question.s02 .info{
+  width: 100vw;
+  height: 82vh;
+  background: url('../assets/images/wine-bottle.jpg') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 130%;
+  padding-top: 8vh;
+}
+.question.s02 .title {
+  color: #cda674;
+  font-size: 2rem;
+  padding-bottom: 1.6rem;
+}
+.question.s02 .btn{
+  background-color: #cda674;
+}
+.question.s02 .btn:hover {
+  border-color: #d5cdc4;
+}
+.question.s02 .btn.w50.active{
+  background-color: #552917;
+  color: #d5cdc4;
+}
+.question.s02 .btn.w50{
+  width: 40vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+
+}
+.question.s02 .btn.next{
+  background-color: #552917;
+  margin-top: 10rem;
+}
+.question.s02 .rule{
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 80%;
+  padding: 10px;
+  border-radius: 2rem;
+}
+.question.s02 .tips{
+  color: #d5cdc4;
+  font-size: 1.2rem;
+}
+.question.s02 .tips b{
+  border-radius: 16px;
+  padding: 4px 12px;
+  margin: 4px;
+  background-color: #d5cdc4;
+  color: #552917;
+  font-size: 1rem;
+}
+.question.s02 .pk{
+  height: 82vh;
+  background: url('../assets/images/battle-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 105%;
+  padding-top:6rem;
+  color: #cda674;
+}
+.question.s02  .end{
+  height: 82vh;
+  width: 100vw;
+}
+.question.s02 .res{
+  color: #f5f1ea;
+  font-size: 2.4rem;
+  margin-top:18rem;
+  text-shadow: #000 0.01rem 0.01rem;
+}
+.question.s02 .pin{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/pin-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 105%;
+}
+.question.s02 .los{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/los-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 105%;
+}
+.question.s02 .win{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 82vh;
+  width: 100vw;
+  background: url('../assets/images/win-bg.png') no-repeat center;
+  background-position: bottom center;
+  background-size: auto 105%;
+}
+
+.question.s02 .pk .amount{
+  font-size: 2.4rem;
+  color: #cda674;
+}
+
+.question.s02 .pk .header{
+  color: #f5f1ea;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-top:2rem;
+  text-shadow: #000 0.01rem 0.01rem;
+}
+
+.action{
+  text-align: center;
+  padding-top: 1.6rem;
+}
+.score{ 
+  float: right;
+  line-height: 6vh;
+  margin-right: 2vw;
+}
+.result {
+  color: #aaa;
+  font-size: 1rem;
+}
+.active {
+  background: #552917;
+  color: #fff;
+}
+.normal {
+  background: #fff;
+  color: #552917;
+}
+.ant-checkbox {
+  display: none;
+}
+.ant-card {
+  min-width: 100%;
+}
+</style>

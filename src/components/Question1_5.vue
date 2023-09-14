@@ -1,11 +1,31 @@
-<template><div>
+<template>
+<div>
   <div class="logo">{{ player.userID }} : {{ player.score }}</div>
   <div class="question conutdown">
-    <div class="info">
+    <div v-if="game == '01'" class="info">
     <p class="title">恭喜您現在的籌碼有<br/>{{  scoreLocal  }}</p>
   
-      <p class="tip">請耐心等待<br/>我們即將進行下一個有趣的遊戲!</p>
-  </div>
+      <p class="tip">我們即將進行下一個有趣的遊戲!</p>
+      <a-button class="btn" size="large" type="primary" @click="game = 'rule'">前往</a-button>
+    </div>
+    <div v-if="game == 'rule'" class="info">
+      <p class="title">{{ player.name }}<br/>來增加您的籌碼吧！</p>
+      <div class="rule">
+      <p class="tips">
+        隨機配對二人一組<br />
+        你可以自由選擇<br />
+        <b>合作</b>或是<b>獨享</b><br />
+        配對的二人都選合作<br />
+        <b>各得12萬</b><br />
+        配對的二人都選獨享<br />
+        <b>各賠8萬</b><br />
+        一人選獨享一人選合作<br />
+        <b>獨享者得15萬</b>
+        <b>合作者賠1萬</b>
+      </p>
+    </div>
+      <div class="action"><a-button size="large" class="btn" style="width: 80%;" @click="goNext('Question2_1')">開始!</a-button></div>
+    </div> 
   </div>
   <div class="footer">
     {{ player.userID }}
@@ -15,26 +35,11 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { step, setStep, getPlayerScore, player, getPK, setupScore, } from '../api/index'
-import { socket } from "@/socket"
 
-const hours = ref(0)
-const mins = ref(0)
-const secs = ref(0)
-const timesUp = ref(0)
+ 
 const score = ref(0)
 const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
-const pass = ref(false)
-socket.on("adminStep", (v) => {
-  pass.value = v
-});
-
-watch(pass, (newX) => {
-  if (newX == 'Question2_0') {
-    goNext('Question2_0')
-  } else {
-    console.error(newX)
-  }
-})
+const game = ref('01')
 
 onMounted(() => {
   getPlayerScore(player.userID)
@@ -45,35 +50,9 @@ onMounted(() => {
 
 function fixMoney(){
   if(score.value < 800000){
-    setupScore(5000000, player)
+    setupScore(2000000, player)
   }else{
     setupScore(score.value, player)
-  }
-}
-
-function countdown(){
-  //let timesUp = 3
-  let time = setInterval(() => {
-  let future  = Date.parse("2023-09-15T20:00:00");
-  let now     = new Date();
-  let diff    = future - now;
-  let days  = Math.floor( diff / (1000*60*60*24) );
-  let h = Math.floor( diff / (1000*60*60) );
-  let m  = Math.floor( diff / (1000*60) );
-  let s  = Math.floor( diff / 1000 );
-    timesUp.value = diff
-    hours.value = addZero(h - days  * 24);
-    mins.value = addZero(m  - h * 60);
-    secs.value = addZero(s  - m * 60);
-    
-  }, 1000);
-}
-
-function addZero(num){
-  if(parseInt(num)<10){
-    return '0'+ num
-  }else{
-    return num
   }
 }
 
@@ -104,5 +83,30 @@ function goNext(next) {
 .question.conutdown .tip{
   color: #d5cdc4;
   font-size: 1.2rem;
+}
+.question.conutdown .btn{
+  background-color: #cda674;
+  width: 25vw;
+  margin: 8px;
+}
+
+.question.conutdown .rule{
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 80%;
+  padding: 10px;
+  border-radius: 2rem;
+}
+.question.conutdown .tips{
+  color: #d5cdc4;
+  font-size: 1.2rem;
+}
+.question.conutdown .tips b{
+  border-radius: 16px;
+  padding: 4px 12px;
+  margin: 4px;
+  background-color: #d5cdc4;
+  color: #552917;
+  font-size: 1rem;
 }
 </style>

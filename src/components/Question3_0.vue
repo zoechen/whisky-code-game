@@ -2,15 +2,6 @@
   <div>
     <div class="logo">{{ player.userID }} : {{ player.score }}</div>
     <div class="question s03">
-      <div v-if="notYet" class="info">
-        <div class="rule">
-        <p class="title">恭喜您現在的籌碼有<br/>{{  score  }}</p>
-        <p class="tip">請耐心等待，我們將於</p>
-        <p class="title"> {{ hours }} : {{ mins }} : {{ secs }}</p>
-        <p class="tip">後進行下一個有趣的遊戲!</p>
-      </div>
-      </div>
-      <div v-else>
         <div v-if="game == 'rule'">
           <div class="rule">
             <p class="title">{{ player.name }}探員,<br /></p>
@@ -88,7 +79,6 @@
           <small style="color: #fff;">酒可以選擇哦!請左右滑滑看。</small><br/>
           
         </div>
-      </div>
     </div>
     <div class="footer">
       <div class="shadow"></div>
