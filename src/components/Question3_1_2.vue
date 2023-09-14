@@ -123,21 +123,26 @@ switch (redeemItem.value) {
   case 'wine1':
     cost.value = Number(cost.value) - Number(wine1num.value * 100000)
     money.value = Number(money.value) + Number(wine1num.value * 140000)
-    wine1num.value = 0
+    score.value = Number(score.value) + Number(wine1num.value * 40000)
+    setupScore(score.value, player)
     setWineNumber(player, { wine1_1: 0 })
     setupMoneyCost(player, cost.value, money.value)
     break;
   case 'wine2':
     cost.value = Number(cost.value) - Number(wine2num.value * 2200)
     money.value = Number(money.value) + Number(wine2num.value * 8500)
+    score.value =  Number(score.value) + Number(wine2num.value * 5300)
     wine2num.value = 0
+    setupScore(score.value, player)
     setWineNumber(player, { wine2_1: 0 })
     setupMoneyCost(player, cost.value, money.value)
     break;
   case 'wine3':
     cost.value = Number(cost.value) - Number(wine3num.value * 4000)
     money.value = Number(money.value) + Number(wine3num.value * 5500)
+    score.value =  Number(score.value) + Number(wine2num.value * 1500)
     wine3num.value = 0
+    setupScore(score.value, player)
     setWineNumber(player, { wine3_1: 0 })
     setupMoneyCost(player, cost.value, money.value)
     break;
@@ -157,9 +162,6 @@ function setScore() {
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
-  total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 + Number(money.value)
-  setupScore(total.value, player)
-  setupMoneyCost(player, cost.value, money.value)
   isDone.value = true
   game.value = 'myScore';
 }

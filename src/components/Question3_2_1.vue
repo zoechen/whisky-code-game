@@ -101,13 +101,7 @@ const cost = ref(0)
 const money = ref(0)
 const total = ref(0)
 const score = ref(0)
-const noMoney = computed(() => {
-  if(wine1new + wine2new + wine3new) { return true }
-  else if(money.value < 5500*5 ) { return true } 
-  else if(money.value < 8500*10 ) { return true }
-  else if(money.value < 140000) { return true }
-  else{ return false }
-})
+
 const scoreLocal  = computed(() => Number(score.value).toLocaleString() )
 const moneyLocal = computed(() => Number(money.value).toLocaleString() )
 const totalLocal = computed(() => Number(total.value).toLocaleString() )
@@ -116,9 +110,7 @@ const wine2Local = computed(() => Number((wine2old.value + wine2new.value) * 850
 const wine3Local = computed(() => Number((wine3old.value + wine3new.value) * 5500 ).toLocaleString() )
 
 watch(wine1new, (newValue, oldValue) => {
-  // if(newX <1) {
-  //   message.error("至少買一個")
-  // }
+
   if (newValue < 0 || oldValue < 0) {
     wine1new.value = 0
   }
@@ -130,9 +122,7 @@ watch(wine1new, (newValue, oldValue) => {
 
 })
 watch(wine2new, (newValue, oldValue) => {
-  // if(newX <10) {
-  //   message.error("至少買十個")
-  // }
+
   if (newValue < 0 || oldValue < 0) {
     wine2new.value = 0
   }
@@ -144,9 +134,7 @@ watch(wine2new, (newValue, oldValue) => {
 
 })
 watch(wine3new, (newValue, oldValue) => {
-  // if(newX <5) {
-  //   message.error("至少買五個")
-  // }
+ 
   if (newValue < 0  || oldValue < 0) {
     wine3new.value = 0
   }
@@ -162,26 +150,18 @@ onMounted(() => {
   getWine(player.userID)
   getPlayerMoneyCost(player.userID)
   setTimeout(()=>{
-  wine1old.value = Number(localStorage.getItem('wine1_1'))
-  wine2old.value = Number(localStorage.getItem('wine2_1'))
-  wine3old.value = Number(localStorage.getItem('wine3_1'))
-  score.value = localStorage.getItem('score') || player.score
-  cost.value = localStorage.getItem('cost') || player.cost
-  money.value = localStorage.getItem('money') || player.money
+    refresh()
   },500)
 })
 
+
 function refresh(){
-  getWine(player.userID)
-  getPlayerMoneyCost(player.userID)
-  setTimeout(()=>{
   wine1old.value = Number(localStorage.getItem('wine1_1'))
   wine2old.value = Number(localStorage.getItem('wine2_1'))
   wine3old.value = Number(localStorage.getItem('wine3_1'))
-  score.value = localStorage.getItem('score') || player.score
-  cost.value = localStorage.getItem('cost') || player.cost
-  money.value = localStorage.getItem('money') || player.money
-  },500)
+  score.value = localStorage.getItem('score')  
+  cost.value = localStorage.getItem('cost')  
+  money.value = localStorage.getItem('money')  
 }
 
 function tobuyWine() {
@@ -190,13 +170,11 @@ function tobuyWine() {
     wine2_2: wine2new.value,
     wine3_2: wine3new.value
   })
-  setupScore(player.score, player)
   setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_2', wine1new.value)
   localStorage.setItem('wine2_2', wine2new.value)
   localStorage.setItem('wine3_2', wine3new.value)
   refresh()
-  
 }
 
 function goNext(next) {
