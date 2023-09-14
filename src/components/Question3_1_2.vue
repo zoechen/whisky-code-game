@@ -160,9 +160,10 @@ function setScore() {
     wine2_1: wine2num.value,
     wine3_1: wine3num.value
   })
-  score.value = player.score
   money.value = player.money
   cost.value = player.cost
+  score.value =  Number(wine1num.value * 14000) + Number(wine2num.value * 8500) + Number(wine3num.value * 5500) + Number(money.value)
+  setupScore(score.value, player)
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
