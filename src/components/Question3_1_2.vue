@@ -32,7 +32,7 @@
         </div>
         <div class="itemCard">
           <div class="itemContent">
-            <h2>Thunderbal</h2>
+            <h2>Thunderball</h2>
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
 
           </div>
@@ -57,7 +57,7 @@
           <div class="tips"> 持有數量{{ wine1num }}</div>
           <h2>Goldfinger</h2>
           <div class="tips"> 持有數量{{ wine2num }}</div>
-          <h2>Thunderbal</h2>
+          <h2>Thunderball</h2>
           <div class="tips"> 持有數量{{ wine3num }}</div>
         </div>
       </div>
@@ -124,6 +124,7 @@ switch (redeemItem.value) {
     cost.value = Number(cost.value) - Number(wine1num.value * 100000)
     money.value = Number(money.value) + Number(wine1num.value * 140000)
     score.value = Number(score.value) + Number(wine1num.value * 40000)
+    wine1num.value = 0
     setupScore(score.value, player)
     setWineNumber(player, { wine1_1: 0 })
     setupMoneyCost(player, cost.value, money.value)
@@ -159,6 +160,7 @@ function setScore() {
     wine2_1: wine2num.value,
     wine3_1: wine3num.value
   })
+  setupMoneyCost(player, cost.value, money.value)
   localStorage.setItem('wine1_1', wine1num.value)
   localStorage.setItem('wine2_1', wine2num.value)
   localStorage.setItem('wine3_1', wine3num.value)
