@@ -9,7 +9,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Dr. No</h2>
             目前市場價格 140,000/支<br />
             最低購買量 <b>1</b> 支
@@ -22,7 +22,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Goldfinger</h2>
             目前市場價格 8,500/支<br />
             最低購買量 <b>10</b> 支
@@ -32,10 +32,11 @@
               <a-button @click="wine2new += 10" :disabled="money<85000">+</a-button>
             </a-input-group>
           </div>
+
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Thunderball</h2>
             目前市場價格 5,500/支<br />
             最低購買量 <b>5</b> 支
@@ -45,6 +46,8 @@
               <a-button @click="wine3new += 5" :disabled="money<(5500 * 5)">+</a-button>
             </a-input-group>
           </div>
+          <div class="itemCard"></div>
+
         </div>
 
         <a-button class="btn" @click="game = 'chart';tobuyWine()">買下去</a-button>
@@ -55,7 +58,7 @@
           </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Dr. No</h2>
             金額{{ wine1Local }}<br />
             持有數量{{ (wine1old + wine1new) }}
@@ -63,7 +66,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Goldfinger</h2>
             金額{{ wine2Local }}<br />
             持有數量{{ (wine2old + wine2new) }}
@@ -71,7 +74,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Thunderball</h2>
             金額{{ wine3Local}}<br />
             持有數量{{ (wine3old + wine3new) }}

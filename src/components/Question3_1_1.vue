@@ -8,7 +8,7 @@
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
             <h2>Dr. No</h2>
               目前市場價格 100,000/支<br />
               最低購買量 <b>1</b> 支
@@ -21,7 +21,7 @@
            </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
             <h2>Goldfinger</h2>
               目前市場價格 2,200/支<br />
               最低購買量 <b>10</b> 支
@@ -34,7 +34,7 @@
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
             <h2>Thunderball</h2>
               目前市場價格 4,000/支<br />
               最低購買量 <b>5</b> 支
@@ -53,7 +53,7 @@
           </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Dr. No</h2>
             金額{{ wine1Local }}<br />
             持有數量{{ wine1num }}
@@ -61,7 +61,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Goldfinger</h2>
             金額{{ wine2Local }}<br />
             持有數量{{ wine2num }}
@@ -69,7 +69,7 @@
         </div>
         <div class="itemCard">
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
-          <div class="itemContent">
+          <div class="itemContent max">
             <h2>Thunderball</h2>
             金額{{ wine3Local }}<br />
             持有數量{{ wine3num }}

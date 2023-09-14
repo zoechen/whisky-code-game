@@ -11,31 +11,27 @@
         <div v-if="game == 'result'">
           <div class="itemCard">
             <div class="itemContent">
-              <h2>Dr. No</h2>
-              <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
+              <p>Dr. No</p>
             </div>
-            <div class="itemContent">
+            <div class="itemContent max">
               漲幅 <b>230%</b><br/>總價值提昇為<br />
               金額{{ wine1Totle }}<br />持有數量{{ (wine1old + wine1two + wine1new) }}
             </div>
           </div>
           <div class="itemCard">
-            <div class="itemContent">
-              <h2>Goldfinger</h2>
-            <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
 
-            </div>
             <div class="itemContent">
+              <p>Goldfinger</p>
+            </div>
+            <div class="itemContent max">
               漲幅<b>4295.45%</b><br/>總價值提昇為<br />金額{{ wine2Totle }}<br />持有數量{{ (wine2old + wine2two + wine2new) }}
             </div>
           </div>
           <div class="itemCard">
             <div class="itemContent">
-              <h2>Thunderball</h2>
-            <img src="../assets/images/macallan12.png" alt="" class="pic"/>
-
+              <p>Thunderball</p>
             </div>
-            <div class="itemContent">
+            <div class="itemContent max">
               漲幅<b>912.5%</b><br/>總價值提昇為<br />金額{{ wine3Totle}}<br />持有數量{{ (wine3old + wine3two + wine3new) }}
             </div>
           </div>

@@ -224,11 +224,11 @@ function initWine(){
 }
 
 .itemCard {
-  height: 18vh;
+  height: 20vh;
   width: calc(100vw-8rem);
   border-radius: 1.2rem;
   background-color: rgba(0, 0, 0, 0.7);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: flex;
 }
 .itemCard img {
@@ -237,8 +237,18 @@ function initWine(){
   flex: 1;
   filter:grayscale(100%)
 }
+
+
 .itemCard .itemContent {
   flex: 30%;
+  float: left;
+  color: #cda674;
+  padding: 0.4rem;
+  text-align: left;
+}
+
+.itemCard .itemContent.max {
+  flex: 50%;
   float: left;
   color: #cda674;
   padding: 0.4rem;
@@ -252,7 +262,15 @@ function initWine(){
   margin-top: 2.8rem;
   margin-right: 0.8rem;
 }
-
+.itemCard .itemContent .pic {
+  height: 10vh;
+  margin-top:0;
+  margin-left: 10vw;
+}
+.itemCard .itemContent p {
+  text-align: right;
+  color: #d5cdc4;
+}
 .ant-modal .ant-modal-content{
   color: #d5cdc4;
   background-color: #000;

@@ -9,7 +9,7 @@
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
             <h2>Dr. No</h2>
               目前市場價格 190,000/支<br />
               最低購買量 <b>1</b> 支
@@ -22,7 +22,7 @@
            </div>
           <div class="itemCard">
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
 
             <h2>Goldfinger</h2>
               目前市場價格 33,000/支<br />
@@ -36,7 +36,7 @@
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
 
             <h2>Thunderball</h2>
               目前市場價格 13,500/支<br />
@@ -55,7 +55,7 @@
         <div v-if="game == 'chart'">
           <div class="itemCard">
             <img src="../assets/images/macallan-30y.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
             <h2>Dr. No</h2>
             金額{{ wine1Totle }}<br />
             持有數量{{ (wine1old + wine1two + wine1new) }}
@@ -63,7 +63,7 @@
            </div>
           <div class="itemCard">
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
 
             <h2>Goldfinger</h2>
             金額{{ wine2Totle }}<br />
@@ -72,7 +72,7 @@
           </div>
           <div class="itemCard">
             <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic"/>
-            <div class="itemContent">
+            <div class="itemContent max">
 
             <h2>Thunderball</h2>
             金額{{ wine3Totle }}<br />
