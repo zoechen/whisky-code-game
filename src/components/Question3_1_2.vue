@@ -123,7 +123,7 @@ switch (redeemItem.value) {
   case 'wine1':
     cost.value = Number(cost.value) - Number(wine1num.value * 100000)
     money.value = Number(money.value) + Number(wine1num.value * 140000)
-    score.value = Number(score.value) + Number(wine1num.value * 40000)
+    score.value = Number(wine3num.value * 5500) + Number(wine2num.value * 8500) + Number(money.value)
     wine1num.value = 0
     setupScore(score.value, player)
     setWineNumber(player, { wine1_1: 0 })
@@ -132,7 +132,7 @@ switch (redeemItem.value) {
   case 'wine2':
     cost.value = Number(cost.value) - Number(wine2num.value * 2200)
     money.value = Number(money.value) + Number(wine2num.value * 8500)
-    score.value =  Number(score.value) + Number(wine2num.value * 5300)
+    score.value =  Number(wine1num.value * 14000) + Number(wine3num.value * 5500) + Number(money.value)
     wine2num.value = 0
     setupScore(score.value, player)
     setWineNumber(player, { wine2_1: 0 })
@@ -141,7 +141,7 @@ switch (redeemItem.value) {
   case 'wine3':
     cost.value = Number(cost.value) - Number(wine3num.value * 4000)
     money.value = Number(money.value) + Number(wine3num.value * 5500)
-    score.value =  Number(score.value) + Number(wine2num.value * 1500)
+    score.value =  Number(wine1num.value * 14000) + Number(wine2num.value * 8500) + Number(money.value)
     wine3num.value = 0
     setupScore(score.value, player)
     setWineNumber(player, { wine3_1: 0 })

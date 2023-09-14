@@ -132,7 +132,7 @@ function redeemMoney(){
       cost.value = Number(cost.value) - wine1old.value * 100000
       cost.value = Number(cost.value) - wine1new.value * 140000
       money.value = Number(money.value) + (wine1old.value + wine1new.value) * 190000
-      score.value = Number(score.value) + wine1old.value * (190000-100000) + wine1new.value * (140000-100000)
+      score.value = (wine3old.value + wine3new.value) * 13500 + (wine2old.value + wine2new.value) * 33000 + money.value
       setupScore(score.value, player)
       wine1old.value = 0
       wine1new.value = 0
@@ -144,7 +144,7 @@ function redeemMoney(){
       cost.value = Number(cost.value) - wine2old.value * 2200
       cost.value = Number(cost.value) - wine2new.value * 8500
       money.value = Number(money.value) + (wine2old.value + wine2new.value) * 33000
-      score.value = Number(score.value) + wine2old.value * (33000-2200) + wine2new.value * (33000-8500)
+      score.value = (wine3old.value + wine3new.value) * 13500 + (wine1old.value + wine1new.value) * 190000 + money.value
       setupScore(score.value, player)
       wine2old.value = 0
       wine2new.value = 0
@@ -156,7 +156,7 @@ function redeemMoney(){
       cost.value = Number(cost.value) - wine3old.value * 4000
       cost.value = Number(cost.value) - wine3new.value * 5500
       money.value = Number(money.value) + (wine3old.value+wine3new.value) * 13500
-      score.value = Number(score.value) + wine3old.value * (13500-4000) + wine3new.value * (13500-5500)
+      score.value = (wine2old.value + wine2new.value) * 33000 + (wine1old.value + wine1new.value) * 190000 + money.value
       setupScore(score.value, player)
       wine3old.value = 0
       wine3new.value = 0
