@@ -44,7 +44,7 @@
           <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
             :disabled="wine3num == 0">贖回</a-button>
         </div>
-        <a-button class="btn" @click="setScore()">目前的籌碼有</a-button>
+        <a-button class="btn" @click="setScore()">確定</a-button>
       </div>
         <div v-if="game == 'myScore'">
         <div class="rule">

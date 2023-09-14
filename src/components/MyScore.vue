@@ -9,7 +9,7 @@
       <p> 持有數量{{ wine1old + wine1two + wine1new }}</p>
       <h2>Goldfinger</h2>
       <p> 持有數量{{ wine2old + wine2two + wine2new }}</p>
-      <h2>Thunderbal</h2>
+      <h2>Thunderball</h2>
       <p> 持有數量{{ wine3old + wine3two + wine3new }}</p>
     </div>
     <a-button class="btn" @click="goNext('WineAns')">這三支酒其實是…</a-button>

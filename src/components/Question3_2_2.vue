@@ -31,7 +31,7 @@
           </div>
           <div class="itemCard">
             <div class="itemContent">
-              <h2>Thunderbal</h2>
+              <h2>Thunderball</h2>
               <img src="../assets/images/macallan12.png" alt="" class="pic"/>
             </div>
             <div class="itemContent">
@@ -41,7 +41,7 @@
             <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3' " :disabled="(wine3old + wine3new)==0">贖回</a-button>
           </div>
          
-          <a-button class="btn" @click="game = 'myScore';setScore()">目前的籌碼有</a-button>
+          <a-button class="btn" @click="game = 'myScore';setScore()">確定</a-button>
         </div>
         <div v-if="game == 'myScore'">
           <div class="rule">
@@ -54,7 +54,7 @@
           <div class="tips"> 持有數量{{ wine1old + wine1new }}</div>
           <h2>Goldfinger</h2>
           <div class="tips"> 持有數量{{ wine2old + wine2new }}</div>
-          <h2>Thunderbal</h2>
+          <h2>Thunderball</h2>
           <div class="tips"> 持有數量{{ wine3old + wine3new }}</div>
         </div>
       </div>

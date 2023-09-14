@@ -70,7 +70,7 @@
         <div class="itemCard">
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
           <div class="itemContent">
-            <h2>Thunderbal</h2>
+            <h2>Thunderball</h2>
             金額{{ wine3Local }}<br />
             持有數量{{ wine3num }}
           </div>
