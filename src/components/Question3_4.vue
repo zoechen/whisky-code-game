@@ -31,7 +31,7 @@
           </div>
           <div class="itemCard">
             <div class="itemContent">
-              <h2>Thunderbal</h2>
+              <h2>Thunderball</h2>
             <img src="../assets/images/macallan12.png" alt="" class="pic"/>
 
             </div>

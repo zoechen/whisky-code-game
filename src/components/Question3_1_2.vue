@@ -4,45 +4,47 @@
     <div class="question s03">
       <div v-if="game == 'result'">
         <div class="itemCard">
-          <div class="itemContent">
-            <h2>Dr. No</h2>
           <img src="../assets/images/macallan-30y.png" alt="" class="pic" />
+          <div class="itemContent">
+            <p>Dr. No</p>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1'"
+            :disabled="wine1num == 0">贖回</a-button>
           </div>
+
           <div class="itemContent">
             
             漲幅 <b>140%</b><br />總價值提昇為<br />
-            金額{{ wine1num * 140000 }}<br />
+            金額{{ wine1Totle }}<br />
             持有數量{{ wine1num }}
           </div>
-          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine1'"
-            :disabled="wine1num == 0">贖回</a-button>
+          
         </div>
         <div class="itemCard">
-          <div class="itemContent">
-            <h2>Goldfinger</h2>
           <img src="../assets/images/macallan-edition-no.1.png" alt="" class="pic" />
-
+          <div class="itemContent">
+            <p>Goldfinger</p>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2'"
+            :disabled="wine2num == 0">贖回</a-button>
           </div>
           <div class="itemContent">
             
-            漲幅<b>386.36%</b><br />總價值提昇為<br />金額{{ wine2num * 8500 }}<br />持有數量{{ wine2num }}
+            漲幅<b>386.36%</b><br />總價值提昇為<br />金額{{ wine2Totle }}<br />持有數量{{ wine2num }}
           </div>
-          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine2'"
-            :disabled="wine2num == 0">贖回</a-button>
+          
         </div>
         <div class="itemCard">
-          <div class="itemContent">
-            <h2>Thunderball</h2>
           <img src="../assets/images/macallan12.png" alt="" class="pic" />
-
+          <div class="itemContent">
+            <p>Thunderball</p>
+            <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
+            :disabled="wine3num == 0">贖回</a-button>
           </div>
           
           <div class="itemContent">
             
-            漲幅<b>137.5%</b><br />總價值提昇為<br />金額{{ wine3num * 5500 }}<br />持有數量{{ wine3num }}
+            漲幅<b>137.5%</b><br />總價值提昇為<br />金額{{ wine3Totle }}<br />持有數量{{ wine3num }}
           </div>
-          <a-button size="small" class="btn" @click="isVisible = true; redeemItem = 'wine3'"
-            :disabled="wine3num == 0">贖回</a-button>
+    
         </div>
         <a-button class="btn" @click="setScore()">確定</a-button>
       </div>
@@ -96,7 +98,9 @@ const totalLocal = computed(() => Number(total.value).toLocaleString() )
 const isVisible = ref(false)
 const isDone = ref(false)
 const redeemItem = ref('')
-
+const wine1Totle = computed(()=> Number(wine1num.value * 140000 ).toLocaleString() )
+const wine2Totle = computed(()=> Number(wine2num.value * 8500 ).toLocaleString() )
+const wine3Totle = computed(()=> Number(wine3num.value * 5500 ).toLocaleString() )
 
 onMounted(() => {
   getWine(player.userID)

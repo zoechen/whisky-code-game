@@ -238,7 +238,7 @@ function initWine(){
   filter:grayscale(100%)
 }
 .itemCard .itemContent {
-  flex: 50vw;
+  flex: 30%;
   float: left;
   color: #cda674;
   padding: 0.4rem;
