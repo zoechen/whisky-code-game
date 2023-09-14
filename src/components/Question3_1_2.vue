@@ -102,16 +102,20 @@ onMounted(() => {
   getWine(player.userID)
   getPlayerScore(player.userID)
   setTimeout(()=>{
-    money.value = localStorage.getItem('money') || player.money
-    score.value = localStorage.getItem('score') || player.score
-    cost.value = localStorage.getItem('cost') || player.cost
-    total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
+    setALL()
+  },1000)
+
+})
+
+function setALL(){
+    money.value = player.money 
+    score.value = player.score
+    cost.value = player.cost
     wine1num.value = Number(localStorage.getItem('wine1_1'))
     wine2num.value = Number(localStorage.getItem('wine2_1'))
     wine3num.value = Number(localStorage.getItem('wine3_1'))
-  },500)
-
-})
+    total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 
+}
 
 function redeemMoney() {
 
@@ -156,12 +160,6 @@ function setScore() {
   total.value = wine1num.value * 140000 + wine2num.value * 8500 + wine3num.value * 5500 + Number(money.value)
   setupScore(total.value, player)
   setupMoneyCost(player, cost.value, money.value)
-
-  setTimeout(()=>{
-    money.value = localStorage.getItem('money') || player.money
-    score.value = localStorage.getItem('score') || player.score
-    cost.value = localStorage.getItem('cost') || player.cost
-  },500)
   isDone.value = true
   game.value = 'myScore';
 }

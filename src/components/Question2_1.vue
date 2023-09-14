@@ -73,7 +73,7 @@ onMounted(() => {
 
 function goGamble() {
   setTimer = setInterval(() => { countdownTimer() }, 1000)
-  setTimeout(() => { clearTimeout(setTimer);wait.value = 0 }, 6000)
+  setTimeout(() => { clearTimeout(setTimer);wait.value = 0 }, 5500)
 }
 
 function countdownTimer() {
@@ -89,20 +89,20 @@ function countdownTimer() {
         result.value = 'team'
       }
     }
-    updateResult({
-      userID: player.userID,
-      result: result.value
-    })
-    socket.emit('who', {
-      [player.userID]: result.value
-    })
+    // updateResult({
+    //   userID: player.userID,
+    //   result: result.value
+    // })
+    // socket.emit('who', {
+    //   [player.userID]: result.value
+    // })
   } else if (wait.value == 0) {
     game.value = "resultWait"
     end.value = '3'
     getResults()
     setTimeout(()=>{
       game.value = 'result'
-    },1000)
+    },500)
   }
 }
 
@@ -168,7 +168,7 @@ function goNext() {
     setTimeout(() => {
     game.value = 'gamble'
     wait.value = 5
-    goGamble()}, 3000)
+    goGamble()}, 2000)
   }
 }
 </script>

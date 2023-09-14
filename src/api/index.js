@@ -40,6 +40,7 @@ export const player = reactive({
   })
 export const allPlayer = ref(null)  
 
+
 export function findID(userID){
     $http.get(`/getOne/${userID}`).then((res)=>{
         player.name = res.data.name
@@ -326,10 +327,10 @@ export function setupMoneyCost(player, cost, money){
         cost: cost,
         money: money   
     })
-    localStorage.setItem('cost', cost)
-    localStorage.setItem('money', money)
-    player.cost = cost
-    player.money = money
+        localStorage.setItem('cost', cost)
+        localStorage.setItem('money', money)
+        player.cost = cost
+        player.money = money
 }
 
 

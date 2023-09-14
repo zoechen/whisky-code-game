@@ -106,18 +106,24 @@ onMounted(() => {
   getWine(player.userID)
   getPlayerMoneyCost(player.userID)
   setTimeout(()=>{
+    setALL()
+  },1000)
+
+})
+
+function setALL(){
   wine1old.value = Number(localStorage.getItem('wine1_1'))
   wine2old.value = Number(localStorage.getItem('wine2_1'))
   wine3old.value = Number(localStorage.getItem('wine3_1'))
   wine1new.value = Number(localStorage.getItem('wine1_2'))
   wine2new.value = Number(localStorage.getItem('wine2_2'))
   wine3new.value = Number(localStorage.getItem('wine3_2'))
-  // profit.value = (wine1old.value * 14000 + wine2old.value * 8500 + wine3old.value * 5500) - Number(cost.value)
   score.value = localStorage.getItem('score') || player.score
   cost.value = localStorage.getItem('cost') || player.cost
   money.value = localStorage.getItem('money') || player.money
-  },500)
-})
+}
+
+
 
 function redeemMoney(){
   
@@ -179,11 +185,6 @@ function setScore(){
   localStorage.setItem('wine2_2', wine2new.value)
   localStorage.setItem('wine3_2', wine3new.value)
 
-  setTimeout(()=>{
-    money.value = localStorage.getItem('money') || player.money
-    score.value = localStorage.getItem('score') || player.score
-    cost.value = localStorage.getItem('cost') || player.cost
-  },500)
 }
 
 function goNext(next) {

@@ -88,7 +88,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,setupScore,getWine,getPlayerMoneyCost } from '../api/index'
+import { setupMoneyCost, setStep, getPlayerScore, player, step, setWineNumber,getWine,getPlayerMoneyCost } from '../api/index'
 
 const game = ref('buyit')
 const wine1num = ref(0)
@@ -136,12 +136,26 @@ watch(wine3num, (newValue, oldValue) => {
 
 
 onMounted(() => {
+  initWine()
   getPlayerScore(player.userID)
   setTimeout(()=>{
   money.value = Number(localStorage.getItem('score') )|| Number(player.score)
   },500)
 })
 
+function initWine(){
+  setWineNumber(player, {
+    wine1_1: 0,
+    wine2_1: 0,
+    wine3_1: 0,
+    wine1_2: 0,
+    wine2_2: 0,
+    wine3_2: 0,
+    wine1_3: 0,
+    wine2_3: 0,
+    wine3_3: 0
+    })
+}
 
 function tobuyWine() {
   cost.value = wine1num.value * 100000 + wine3num.value * 4000 + wine2num.value * 2200
