@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+    <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
     <div class="question s03">
         <div v-if="game == 'rule'">
           <div class="rule">
@@ -91,7 +91,6 @@
 import { ref, onMounted, computed } from 'vue'
 import { setStep, getPlayerScore, player, step,setWineNumber } from '../api/index'
 import { socket } from "@/socket"
-
 socket.on("adminStep", (v) => {
   if(v == 'investment01'){
     goNext('Question3_1_1')

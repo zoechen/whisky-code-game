@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+    <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
     <div class="question s03">
       <div v-if="game == 'buyit'">
         <div class="title">加碼收藏</div>
@@ -14,7 +14,7 @@
             目前市場價格 140,000/支<br />
             最低購買量 <b>1</b> 支
             <a-input-group compact>
-              <a-button @click="wine1new -= 1">-</a-button>
+              <a-button @click="wine1new -= 1" :disabled="wine1new<=0">-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine1new" style="width: 50px" disabled />
               <a-button @click="wine1new += 1" :disabled="money<140000">+</a-button>
             </a-input-group>
@@ -27,7 +27,7 @@
             目前市場價格 8,500/支<br />
             最低購買量 <b>10</b> 支
             <a-input-group compact>
-              <a-button @click="wine2new -= 10" >-</a-button>
+              <a-button @click="wine2new -= 10" :disabled="wine2new<=0" >-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine2new" style="width: 50px" disabled />
               <a-button @click="wine2new += 10" :disabled="money<85000">+</a-button>
             </a-input-group>
@@ -41,7 +41,7 @@
             目前市場價格 5,500/支<br />
             最低購買量 <b>5</b> 支
             <a-input-group compact>
-              <a-button @click="wine3new -= 5" >-</a-button>
+              <a-button @click="wine3new -= 5" :disabled="wine3new<=0">-</a-button>
               <a-input-number min="0" type="number" v-model:value="wine3new" style="width: 50px" disabled />
               <a-button @click="wine3new += 5" :disabled="money<(5500 * 5)">+</a-button>
             </a-input-group>

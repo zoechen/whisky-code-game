@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+  <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
   <div class="question conutdown">
     <div v-if="game == '01'" class="info">
     <p class="title">恭喜您現在的籌碼有<br/>{{  scoreLocal  }}</p>

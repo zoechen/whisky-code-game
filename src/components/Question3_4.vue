@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+    <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
     <div class="question s03">
       <div v-if="game == 'chart'">
           <div class="flexChart">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+    <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
     <div class="question s02">
       <div class="pk">
       <div class="rule">
@@ -24,12 +24,13 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, player } from '../api/index'
 import { socket } from "@/socket"
 const score = computed(() => Number(player.score).toLocaleString() )
-
+socket.emit("connect")
 socket.on("adminStep", (v) => {
   if(v == 'investment00'){
     goNext('Question3_0')
   }
 });
+
 
 function goNext(next) {
   setStep(next, player)

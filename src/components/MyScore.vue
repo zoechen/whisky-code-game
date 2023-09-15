@@ -1,5 +1,5 @@
 <template>
-  <div class="logo">{{ player.userID }} : {{ player.score }}</div>
+  <div class="logo">探員 {{ player.userID }} 籌碼 {{ player.score }}</div>
   <div class="rank">
     <p class="title">最後結果</p>
     <div class="rule">
