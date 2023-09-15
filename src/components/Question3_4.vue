@@ -6,7 +6,7 @@
           <div class="flexChart">
             <Line :data="lineData" :options="lineOptions" />
           </div>
-          <a-button class="btn" @click="game = 'result'; seeProfit()">查看獲利</a-button>
+          <a-button class="btn" @click="game = 'result'; seeProfit()">查看增值</a-button>
         </div>
         <div v-if="game == 'result'">
           <div class="itemCard">

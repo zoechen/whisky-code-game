@@ -1,12 +1,12 @@
 <template>
-    <div class="logo"></div>
-    <div class="container">
+  <div class="logo"></div>
+  <div class="container">
 
     <a-tabs v-model:activeKey="activeKey" type="card">
-    <a-tab-pane key="1" tab="遊戲控制">
+      <a-tab-pane key="1" tab="遊戲控制">
         {{ socketStatus }}
         <a-card>
-        <a-row :gutter="[4, 16]">
+          <a-row :gutter="[4, 16]">
             <!-- <a-divider>第二段試玩控制</a-divider>
             <a-col :span="12"><a-button @click="resultPass('Question2_0')">1 結束倒數</a-button></a-col>
             <a-col :span="12"><a-button @click="resultPass('gambleWait')">2 準備開始</a-button></a-col>
@@ -17,137 +17,131 @@
             <a-col :span="12"><a-button @click="resultPass('NextRound')">正式開炲</a-button></a-col>
             <a-col :span="12"><a-button @click="resultPass('forceStop')">強制結束</a-button></a-col> -->
             <a-divider>第三段控制</a-divider>
-            <a-col :span="12"><a-button @click="resultPass('investment00')">投資說明</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('investment01')">投資一</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('investment03')">投資三</a-button></a-col>
-            <a-col :span="12"><a-button @click="resultPass('WineAns')">看解答</a-button></a-col>
-        </a-row>
+            <a-col :span="24"><a-button @click="resultPass('investment00')">投資說明</a-button></a-col>
+            <a-col :span="24"><a-button @click="resultPass('investment01')">投資一</a-button></a-col>
+            <a-col :span="24"><a-button @click="resultPass('investment02')">投資二</a-button></a-col>
+            <a-col :span="24"><a-button @click="resultPass('investment03')">投資三</a-button></a-col>
+            <!-- <a-col :span="12"><a-button @click="resultPass('WineAns')">看解答</a-button></a-col> -->
+          </a-row>
         </a-card>
-    </a-tab-pane>
-    <a-tab-pane key="2" tab="排名前十">
-      <a-button @click="getRank">刷新</a-button>
-        <a-table
-        :columns="rankcolumns"
-        row-key="_id"
-        :data-source="rankList"
-        >
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="排名前十">
+        <a-button @click="getRank">刷新</a-button>
+        <a-table :columns="rankcolumns" row-key="_id" :data-source="rankList">
         </a-table>
 
-    </a-tab-pane>
-    <a-tab-pane key="3" tab="總名單"> 
-      <a-table
-        :columns="columns"
-        row-key="_id"
-        :data-source="allPlayer"
-        >
-        <template #bodyCell="{ column, text, record }">
-          <template v-if="column.key === 'operation'">
-            <a @click="isPop = true; formState = record;">設定</a>
+      </a-tab-pane>
+      <a-tab-pane key="3" tab="總名單">
+        <a-button @click="getAllPlayer">刷新</a-button>
+        <a-table :columns="columns" row-key="_id" :data-source="allPlayer">
+          <template #bodyCell="{ column, text, record }">
+            <template v-if="column.key === 'operation'">
+              <a @click="isPop = true; formState = record;">設定</a>
+            </template>
           </template>
-        </template>
+          <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
+            <div style="padding: 8px">
+              <a-input ref="searchInput" :placeholder="`Search ${column.dataIndex}`" :value="selectedKeys[0]"
+                style="width: 188px; margin-bottom: 8px; display: block"
+                @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+                @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)" />
+              <a-button type="primary" size="small" style="width: 90px; margin-right: 8px"
+                @click="handleSearch(selectedKeys, confirm, column.dataIndex)">
+                <template #icon>
+                  <SearchOutlined />
+                </template>
+                Search
+              </a-button>
+              <a-button size="small" style="width: 90px" @click="handleReset(clearFilters)">
+                Reset
+              </a-button>
+            </div>
+          </template>
         </a-table>
-    </a-tab-pane>
-    <a-tab-pane key="4" tab="記錄">
-      <a-button @click="getRecord">刷新</a-button>
-        <a-table
-        :columns="recordcolumns"
-        row-key="_id"
-        :data-source="recordList"
-        >
-        <template
-      #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
-    >
-    <div style="padding: 8px">
-        <a-input
-          ref="searchInput"
-          :placeholder="`Search ${column.dataIndex}`"
-          :value="selectedKeys[0]"
-          style="width: 188px; margin-bottom: 8px; display: block"
-          @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
-          @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)"
-        />
-        <a-button
-          type="primary"
-          size="small"
-          style="width: 90px; margin-right: 8px"
-          @click="handleSearch(selectedKeys, confirm, column.dataIndex)"
-        >
-          <template #icon><SearchOutlined /></template>
-          Search
-        </a-button>
-        <a-button size="small" style="width: 90px" @click="handleReset(clearFilters)">
-          Reset
-        </a-button>
-      </div>
-  </template>
+      </a-tab-pane>
+      <a-tab-pane key="4" tab="記錄">
+        <a-button @click="getRecord">刷新</a-button>
+        <a-table :columns="recordcolumns" row-key="_id" :data-source="recordList">
+          <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
+            <div style="padding: 8px">
+              <a-input ref="searchInput" :placeholder="`Search ${column.dataIndex}`" :value="selectedKeys[0]"
+                style="width: 188px; margin-bottom: 8px; display: block"
+                @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+                @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)" />
+              <a-button type="primary" size="small" style="width: 90px; margin-right: 8px"
+                @click="handleSearch(selectedKeys, confirm, column.dataIndex)">
+                <template #icon>
+                  <SearchOutlined />
+                </template>
+                Search
+              </a-button>
+              <a-button size="small" style="width: 90px" @click="handleReset(clearFilters)">
+                Reset
+              </a-button>
+            </div>
+          </template>
         </a-table>
-    </a-tab-pane>
+      </a-tab-pane>
 
-  </a-tabs>
-  <a-modal v-model:visible="isPop" title="" ok-text="送出" cancel-text="取消" id="redeemDialog"
-    :bodyStyle="{ color: '#d5cdc4' }" @ok="setPlayer(formState)">
-    <a-form
-    ref="formRef"
-    :model="formState"
-    :rules="rules"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
-  >
-    <a-form-item label="ID" name="userID">
-     {{ formState.userID }} 
-    </a-form-item>
-    <a-form-item label="步驟" name="step">
-      <a-select v-model:value="formState.step" placeholder="">
-        <a-select-option value="NewOne">NewOne</a-select-option>
-        <a-select-option value="Question1_1">Question1_1</a-select-option>
-        <a-select-option value="Question1_2">Question1_2</a-select-option>
-        <a-select-option value="Question1_3">Question1_3</a-select-option>
-        <a-select-option value="Question1_4">Question1_4</a-select-option>
-        <a-select-option value="Question1_5">Question1_5</a-select-option>
-        <a-select-option value="Question2_0">Question2_0</a-select-option>
-        <a-select-option value="Question2_1">Question2_1</a-select-option>
-        <a-select-option value="Question2_2">Question2_2</a-select-option>
-        <a-select-option value="Question2_3">Question2_3</a-select-option>
-        <a-select-option value="Question3_0">Question3_0</a-select-option>
-        <a-select-option value="Question3_1_1">Question3_1_1</a-select-option>
-        <a-select-option value="Question3_1_2">Question3_1_2</a-select-option>
-        <a-select-option value="Question3_2_1">Question3_2_1</a-select-option>
-        <a-select-option value="Question3_2_2">Question3_2_2</a-select-option>
-        <a-select-option value="Question3_3">Question3_3</a-select-option>
-        <a-select-option value="Question3_4">Question3_4</a-select-option>
-        <a-select-option value="MyScore">MyScore</a-select-option>
-        <a-select-option value="WineAns">WineAns</a-select-option>
-      </a-select>
-    </a-form-item>
-    <a-form-item ref="score" label="籌碼" name="score">
-      <a-input v-model:value="formState.score" />
-    </a-form-item>
-  </a-form>
-  </a-modal>
-    </div>
+    </a-tabs>
+    <a-modal v-model:visible="isPop" title="" ok-text="送出" cancel-text="取消" id="redeemDialog"
+      :bodyStyle="{ color: '#d5cdc4' }" @ok="setPlayer(formState)">
+      <a-form ref="formRef" :model="formState" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+        <a-form-item label="ID" name="userID">
+          {{ formState.userID }}
+        </a-form-item>
+        <a-form-item label="步驟" name="step">
+          <a-select v-model:value="formState.step" placeholder="">
+            <a-select-option value="NewOne">NewOne</a-select-option>
+            <a-select-option value="Question1_1">Question1_1</a-select-option>
+            <a-select-option value="Question1_2">Question1_2</a-select-option>
+            <a-select-option value="Question1_3">Question1_3</a-select-option>
+            <a-select-option value="Question1_4">Question1_4</a-select-option>
+            <a-select-option value="Question1_5">Question1_5</a-select-option>
+            <a-select-option value="Question2_0">Question2_0</a-select-option>
+            <a-select-option value="Question2_1">Question2_1</a-select-option>
+            <a-select-option value="Question2_2">Question2_2</a-select-option>
+            <a-select-option value="Question2_3">Question2_3</a-select-option>
+            <a-select-option value="Question3_0">Question3_0</a-select-option>
+            <a-select-option value="Question3_1_1">Question3_1_1</a-select-option>
+            <a-select-option value="Question3_1_2">Question3_1_2</a-select-option>
+            <a-select-option value="Question3_2_1">Question3_2_1</a-select-option>
+            <a-select-option value="Question3_2_2">Question3_2_2</a-select-option>
+            <a-select-option value="Question3_3">Question3_3</a-select-option>
+            <a-select-option value="Question3_4">Question3_4</a-select-option>
+            <a-select-option value="MyScore">MyScore</a-select-option>
+            <a-select-option value="WineAns">WineAns</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item ref="score" label="籌碼" name="score">
+          <a-input v-model:value="formState.score" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+  </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, watch, computed, KeepAlive } from 'vue'
 import { socket, state } from "@/socket"
-import { getPlayerIDList, playerListID, createMatchList, getMatchList, 
-        matchList, deleteMatchData, allPlayer, getAllPlayer, getRank,
-         rankList, setupPlayer, recordList, getRecord } from '../api/index'
-import { usePagination } from 'vue-request';
-import axios from 'axios';
+import {
+  getPlayerIDList, playerListID, createMatchList,
+  deleteMatchData, allPlayer, getAllPlayer, getRank,
+  rankList, setupPlayer, recordList, getRecord
+} from '../api/index'
+
 
 const n = ref(5)
 const m = ref(10)
 const teamA = ref([])
 const teamB = ref([])
-const isPop =ref(false)
+const isPop = ref(false)
 const activeKey = ref("1")
 const socketStatus = ref('')
 const formState = reactive({
-  name:'',
-  score:0,
+  name: '',
+  score: 0,
   step: '',
-  userID:''
+  userID: ''
 })
 
 const recordcolumns = [
@@ -164,15 +158,15 @@ const recordcolumns = [
         }, 100);
       }
     },
-  },{
+  }, {
     title: '時間',
     dataIndex: 'created',
     width: '30%'
-  },{
+  }, {
     title: '步驟',
     dataIndex: 'step',
     width: '20%'
-  },{
+  }, {
     title: '總分',
     dataIndex: 'score',
     width: '20%'
@@ -188,23 +182,23 @@ const rankcolumns = [
     title: 'ID',
     dataIndex: 'userID',
     width: '10%'
-  },{
+  }, {
     title: '匿稱',
     dataIndex: 'name',
     width: '20%'
-  },{
+  }, {
     title: '總分',
     dataIndex: 'score',
     width: '20%'
   },
-  
+
 ]
 const columns = [
   {
     title: 'ID',
     dataIndex: 'userID',
     width: '5%'
-  },{
+  }, {
     title: '匿稱',
     dataIndex: 'name',
     width: '20%'
@@ -212,7 +206,16 @@ const columns = [
   {
     title: '步驟',
     dataIndex: 'step',
-    width: '25%'
+    width: '25%',
+    customFilterDropdown: true,
+    onFilter: (value, record) => record.step.indexOf(value) === 0,
+    onFilterDropdownOpenChange: visible => {
+      if (visible) {
+        setTimeout(() => {
+          searchInput.value.focus();
+        }, 100);
+      }
+    }
   },{
     title: '總分',
     dataIndex: 'score',
@@ -226,42 +229,43 @@ const columns = [
   },
 ]
 
-const queryData = params => {
-  return axios.get('https://whisky-code-server.onrender.com/api/getAll', {
-    params,
-  });
-}
 
 onMounted(() => {
-    getMatchList()
-    getPlayerIDList()
-    getAllPlayer()
-    getRank()
-    getRecord()
+  getPlayerIDList()
+  getAllPlayer()
+  getRank()
+  getRecord()
+  keepSocketAlive()
 })
 
-function setPlayer(player){
+function keepSocketAlive() {
+  setInterval(() => {
+    socket.emit('keep-alive','Ya! I am alive.')
+  }, 3000);
+}
+
+function setPlayer(player) {
   setupPlayer(player)
   isPop.value = false
 }
 
 function resultPass(v) {
-    socketStatus.value = v
-    socket.emit('adminStep', v)
-    if (v == 'NextRound') {
-        n.value -= 1
-        if (n.value == 0) {
-            m.value -= 1
-            n.value = 0
-        }
-        socket.emit('zero') 
-    } else if (v == 'changeMatch') {
-        setTimeout(() => { socket.emit('gambleWait', v) }, 300)
+  socketStatus.value = v
+  socket.emit('adminStep', v)
+  if (v == 'NextRound') {
+    n.value -= 1
+    if (n.value == 0) {
+      m.value -= 1
+      n.value = 0
     }
+    socket.emit('zero')
+  } else if (v == 'changeMatch') {
+    setTimeout(() => { socket.emit('gambleWait', v) }, 300)
+  }
 }
 
 function createMatchData12() {
-    const copyArr = [...playerListID.value];
+  const copyArr = [...playerListID.value];
 
   while (copyArr.length > 0) {
     const randomIndex = Math.floor(Math.random() * copyArr.length);
@@ -273,28 +277,28 @@ function createMatchData12() {
       teamB.value.push(randomElement);
     }
   }
-    console.log(teamA.value, teamB.value)
-    setTimeout(() => {
-         updateMatchData()
-    }, 500);
+  console.log(teamA.value, teamB.value)
+  setTimeout(() => {
+    updateMatchData()
+  }, 500);
 }
 
-function updateMatchData(){
-    deleteMatchData()
-        setTimeout(() =>{
-            for (let i = 0; i < teamA.value.length; i++) {
-                let matchData = {
-                    matchID: i,
-                    teamA: teamA.value[i],
-                    teamB: teamB.value[i],
-                }
-                createMatchList(matchData)
-            }
+function updateMatchData() {
+  deleteMatchData()
+  setTimeout(() => {
+    for (let i = 0; i < teamA.value.length; i++) {
+      let matchData = {
+        matchID: i,
+        teamA: teamA.value[i],
+        teamB: teamB.value[i],
+      }
+      createMatchList(matchData)
+    }
 
-        },1000)
-        setTimeout(() =>{
-            getMatchList()
-        },5000)
+  }, 1000)
+  setTimeout(() => {
+    getMatchList()
+  }, 5000)
 }
 
 
@@ -302,23 +306,23 @@ function updateMatchData(){
 
 <style>
 #app {
-    padding: 0;
+  padding: 0;
 }
 
 .logo {
-    width: 100vw;
-    background: url('../assets/images/logo-01.png') no-repeat;
-    background-position: center left;
-    background-size: auto 60%;
-    height: 6vh;
+  width: 100vw;
+  background: url('../assets/images/logo-01.png') no-repeat;
+  background-position: center left;
+  background-size: auto 60%;
+  height: 6vh;
 }
 
 .container {
-    margin: 0 auto;
-    min-width: 80vw;
-    height: 100%;
-    background-color: #d5cdc4;
-    text-align: center;
-    padding: 2rem;
+  margin: 0 auto;
+  min-width: 80vw;
+  height: 100%;
+  background-color: #d5cdc4;
+  text-align: center;
+  padding: 2rem;
 }
 </style>
