@@ -24,7 +24,6 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { step, setStep, player } from '../api/index'
 import { socket } from "@/socket"
 const score = computed(() => Number(player.score).toLocaleString() )
-socket.emit("connect")
 socket.on("adminStep", (v) => {
   if(v == 'investment00'){
     goNext('Question3_0')

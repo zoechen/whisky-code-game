@@ -5,14 +5,14 @@
     
       <div class="pk" v-if="game == 'gambleWait'">
         <p class="tips">第{{ n }}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }}<br/>你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" size="large" disabled>合作</a-button>
         <a-button class="btn w50" size="large" disabled>獨享</a-button>
         <div class="tips">準備一下，馬上要開始了</div>
       </div>
       <div class="pk" v-if="game == 'gamble'">
         <p class="tips">第{{ n }}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }}<br/>你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large"
           @click="result = 'team'">合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large"
@@ -21,7 +21,7 @@
       </div>
       <div class="pk" v-if="game == 'resultWait'">
         <p class="tips">第{{ n }}局</p>
-        <p class="title">{{ player.name }},你的對手是{{ competitorName || "AI ROBOT" }}</p>
+        <p class="title">{{ player.name }}<br/>你的對手是{{ competitorName || "AI ROBOT" }}</p>
         <a-button class="btn w50" :class="{ active: result == 'team' }" size="large" disabled>合作</a-button>
         <a-button class="btn w50" :class="{ active: result == 'solo' }" size="large" disabled>獨享</a-button>
       </div>
@@ -131,11 +131,6 @@ function whoWin(me, yo) {
   console.log(me, yo)
 }
 
-function forceStop(next){
-  setStep(next, player)
-    step.value = next
-}
-
 function goNext() {
   result.value = '0'
   let score = Number(player.score)
@@ -189,6 +184,8 @@ function goNext() {
   color: #cda674;
   font-size: 2rem;
   padding-bottom: 1.6rem;
+  text-shadow: #000 0.02rem 0.02rem;
+  font-weight: 600;
 }
 .question.s02 .btn{
   background-color: #cda674;
@@ -234,9 +231,23 @@ function goNext() {
   background: url('../assets/images/battle-bg.png') no-repeat center;
   background-position: bottom center;
   background-size: auto 105%;
-  padding-top:6rem;
+  padding-top:40%;
   color: #cda674;
 }
+
+.question.s02 .pk .amount{
+  font-size: 2.4rem;
+  color: #cda674;
+}
+
+.question.s02 .pk .header{
+  color: #f5f1ea;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-top:2rem;
+  text-shadow: #000 0.01rem 0.01rem;
+}
+
 .question.s02  .end{
   height: 82vh;
   width: 100vw;
@@ -246,6 +257,7 @@ function goNext() {
   font-size: 2.4rem;
   margin-top:18rem;
   text-shadow: #000 0.01rem 0.01rem;
+  font-weight: 600;
 }
 .question.s02 .pin{
   position: absolute;
@@ -278,18 +290,7 @@ function goNext() {
   background-size: auto 105%;
 }
 
-.question.s02 .pk .amount{
-  font-size: 2.4rem;
-  color: #cda674;
-}
 
-.question.s02 .pk .header{
-  color: #f5f1ea;
-  font-size: 2.4rem;
-  font-weight: 600;
-  margin-top:2rem;
-  text-shadow: #000 0.01rem 0.01rem;
-}
 
 .action{
   text-align: center;
